@@ -1,0 +1,257 @@
+{
+  "module": "System Security & Assembly",
+  "blocks": [
+    {
+      "after_h2": "2. CPU Architecture",
+      "title": "CPU, ISA e fondamenta architetturali",
+      "questions": [
+        {
+          "q": "Quale famiglia di ISA caratterizza i processori x86/x64?",
+          "choices": ["RISC (Reduced Instruction Set Computing)", "CISC (Complex Instruction Set Computing)", "VLIW (Very Long Instruction Word)", "EPIC (Explicitly Parallel Instruction Computing)"],
+          "correct": 1,
+          "explanation": "x86 e x64 (Intel/AMD) sono CISC: istruzioni complesse e di lunghezza variabile. ARM invece e' RISC."
+        },
+        {
+          "q": "In x86, quale registro svolge il ruolo concettuale di Program Counter (PC), ossia contiene l'indirizzo della prossima istruzione?",
+          "choices": ["ESP", "EBP", "EIP", "EAX"],
+          "correct": 2,
+          "explanation": "EIP (Instruction Pointer) e' il PC in x86. E' il target #1 dei buffer overflow."
+        },
+        {
+          "q": "Quale componente della CPU esegue le operazioni aritmetiche e logiche come add, sub, and, xor?",
+          "choices": ["Control Unit (CU)", "Arithmetic Logic Unit (ALU)", "Memory Management Unit (MMU)", "Floating Point Unit (FPU)"],
+          "correct": 1,
+          "explanation": "L'ALU si occupa di operazioni aritmetiche e logiche; la CU orchestra fetch-decode-execute."
+        },
+        {
+          "q": "Quale delle seguenti affermazioni e' VERA riguardo al rapporto x86 vs x64?",
+          "choices": ["x64 e' un'architettura totalmente diversa da x86", "x86 e' un'estensione di x64", "x64 e' un'estensione di x86: prefisso E -> R nei registri", "x86 e x64 condividono solo il nome ma non l'ISA"],
+          "correct": 2,
+          "explanation": "x64 estende x86: EAX diventa RAX, EIP diventa RIP, ecc. Imparare x86 da' ~80-90% di x64."
+        },
+        {
+          "q": "Codice compilato per x86 viene eseguito nativamente su un processore ARM (es. Apple M1)?",
+          "choices": ["Si, l'ISA e' universale", "No, serve emulazione/traduzione (es. Rosetta 2)", "Si, ma solo se il codice e' 32-bit", "Si, perche' entrambi sono CISC"],
+          "correct": 1,
+          "explanation": "L'ISA e' specifica per CPU: codice x86 non gira nativamente su ARM. Apple Silicon usa Rosetta 2 per tradurre."
+        }
+      ]
+    },
+    {
+      "after_h2": "3. Registri x86 (e mapping x64)",
+      "title": "Registri x86, mapping x64 e ruolo nei BO",
+      "questions": [
+        {
+          "q": "Su x86, in quale registro viene restituito il valore di ritorno di una funzione (calling convention cdecl)?",
+          "choices": ["EBX", "EAX", "ECX", "EDX"],
+          "correct": 1,
+          "explanation": "EAX (Accumulator) contiene il valore di ritorno della funzione e il numero della syscall in int 0x80."
+        },
+        {
+          "q": "Qual e' il nome 64-bit del registro EAX?",
+          "choices": ["XAX", "AX64", "RAX", "EEAX"],
+          "correct": 2,
+          "explanation": "Prefisso R = 64-bit, E = 32-bit, nessuno = 16-bit. Quindi EAX -> RAX."
+        },
+        {
+          "q": "Quale registro x86 punta al TOP dello stack e cambia ad ogni push/pop?",
+          "choices": ["EBP", "ESP", "ESI", "EIP"],
+          "correct": 1,
+          "explanation": "ESP (Stack Pointer) e' il top mobile dello stack. EBP e' la base fissa del frame corrente."
+        },
+        {
+          "q": "Quale registro rappresenta la BASE FISSA dello stack frame corrente, usato per accedere a parametri e local vars?",
+          "choices": ["ESP", "EBP", "ESI", "EDI"],
+          "correct": 1,
+          "explanation": "EBP (Base Pointer) e' fisso durante la funzione: [ebp+8] = primo param, [ebp-4] = prima local var."
+        },
+        {
+          "q": "Riferendoci al naming dei sotto-registri: cosa rappresenta AL?",
+          "choices": ["Gli 8 bit alti di AX", "Gli 8 bit bassi di AX", "I 16 bit alti di EAX", "Un alias di RAX"],
+          "correct": 1,
+          "explanation": "AX e' il 16-bit, suddiviso in AH (high 8 bit) e AL (low 8 bit). EAX = 32-bit, RAX = 64-bit."
+        }
+      ]
+    },
+    {
+      "after_h2": "4. Process Memory Layout",
+      "title": "Process memory layout e meccanica dello stack",
+      "questions": [
+        {
+          "q": "In che direzione cresce lo STACK in un processo Linux x86?",
+          "choices": ["Verso indirizzi piu' ALTI", "Verso indirizzi piu' BASSI", "Resta fisso, si usa solo l'heap", "Dipende dal compilatore"],
+          "correct": 1,
+          "explanation": "Lo stack cresce verso indirizzi BASSI (high -> low). PUSH decrementa ESP di 4 (x86) o 8 (x64)."
+        },
+        {
+          "q": "In che direzione cresce l'HEAP?",
+          "choices": ["Verso indirizzi BASSI", "Verso indirizzi ALTI (via brk/sbrk)", "Non cresce: e' a dimensione fissa", "Cresce in entrambe le direzioni"],
+          "correct": 1,
+          "explanation": "L'heap cresce verso indirizzi ALTI tramite brk/sbrk/malloc. Storicamente collideva con lo stack in mezzo."
+        },
+        {
+          "q": "Quale segmento di memoria contiene globali/statiche NON inizializzate e viene azzerato dall'OS al load time?",
+          "choices": ["DATA", "BSS", "HEAP", "TEXT"],
+          "correct": 1,
+          "explanation": "BSS (Block Started by Symbol) contiene globali non inizializzate, zero-filled al load. Non occupa spazio nel binario."
+        },
+        {
+          "q": "Quali sono i permessi tipici del segmento TEXT/CODE?",
+          "choices": ["RW- (read/write)", "RWX (read/write/execute)", "R-X (read/execute, no write)", "--X (execute only)"],
+          "correct": 2,
+          "explanation": "TEXT e' R-X: read-only per impedire patching a runtime, eseguibile per girare il codice."
+        },
+        {
+          "q": "Eseguendo PUSH EAX su x86, cosa succede a ESP?",
+          "choices": ["ESP += 4, poi [ESP] = EAX", "ESP -= 4, poi [ESP] = EAX", "ESP -= 8, poi [ESP] = EAX", "ESP non cambia"],
+          "correct": 1,
+          "explanation": "PUSH su x86: ESP -= 4 (decremento, stack cresce verso il basso), poi scrive il valore al nuovo [ESP]. Su x64 sarebbe -= 8."
+        }
+      ]
+    },
+    {
+      "after_h2": "6. Stack Frames, Prologue/Epilogue, Calling Convention",
+      "title": "Stack frames, prologue/epilogue e calling convention",
+      "questions": [
+        {
+          "q": "Quale sequenza di istruzioni rappresenta il PROLOGUE classico di una funzione x86 (cdecl)?",
+          "choices": ["mov esp, ebp ; pop ebp ; ret", "push ebp ; mov ebp, esp ; sub esp, N", "pop ebp ; mov ebp, esp ; add esp, N", "call ebp ; ret"],
+          "correct": 1,
+          "explanation": "Prologue: salva EBP del caller, imposta nuovo EBP = ESP, alloca N byte per locals decrementando ESP."
+        },
+        {
+          "q": "Quale istruzione singola e' equivalente a 'mov esp, ebp ; pop ebp'?",
+          "choices": ["ret", "leave", "enter", "iret"],
+          "correct": 1,
+          "explanation": "'leave' compatta l'epilogue: ripristina ESP a EBP e poi pop EBP. Tipicamente seguita da 'ret'."
+        },
+        {
+          "q": "Dato un frame cdecl con EBP fisso, dove si trova il PRIMO parametro della funzione?",
+          "choices": ["[ebp-4]", "[ebp+4]", "[ebp+8]", "[esp+0]"],
+          "correct": 2,
+          "explanation": "[ebp+0] = saved EBP, [ebp+4] = return address, [ebp+8] = primo parametro. Le local vars stanno a [ebp-4], [ebp-8], ecc."
+        },
+        {
+          "q": "Cosa fa esattamente l'istruzione 'call <addr>' in x86?",
+          "choices": ["Solo un salto incondizionato (= jmp)", "Push del return address (EIP next) sullo stack + jmp <addr>", "Pop di EIP dallo stack", "Salva ESP in EBP e salta"],
+          "correct": 1,
+          "explanation": "call = push EIP corrente (indirizzo dell'istruzione successiva nel caller) + jmp. ret fa il contrario: pop in EIP."
+        },
+        {
+          "q": "Durante un buffer overflow classico su stack, quale obiettivo principale persegue l'attaccante?",
+          "choices": ["Sovrascrivere ESP", "Sovrascrivere il SAVED RETURN ADDRESS (EIP salvato) per dirottare il flusso al ret", "Modificare il segmento TEXT", "Aumentare la dimensione dell'heap"],
+          "correct": 1,
+          "explanation": "Scrivendo oltre il buffer locale (verso indirizzi alti), si sovrascrive saved EBP e poi il return address. Al ret, EIP punta dove vuole l'attaccante."
+        }
+      ]
+    },
+    {
+      "after_h2": "8. Sintassi Intel vs AT&T",
+      "title": "Toolchain di build, Intel vs AT&T",
+      "questions": [
+        {
+          "q": "Quale e' l'ordine corretto della pipeline di build da sorgente C ad eseguibile?",
+          "choices": ["Compiler -> Preprocessor -> Linker -> Assembler", "Preprocessor -> Compiler -> Assembler -> Linker", "Assembler -> Compiler -> Linker -> Preprocessor", "Linker -> Loader -> Compiler -> Assembler"],
+          "correct": 1,
+          "explanation": "Pipeline: cpp (preprocessor) -> cc1 (compiler) -> as/nasm (assembler) -> ld (linker) -> loader (a runtime)."
+        },
+        {
+          "q": "In sintassi Intel (NASM) l'istruzione 'mov eax, ebx' significa:",
+          "choices": ["EBX = EAX", "EAX = EBX", "Scambio EAX <-> EBX", "Confronta EAX con EBX"],
+          "correct": 1,
+          "explanation": "Intel usa l'ordine dest, src: 'mov eax, ebx' copia il valore di EBX in EAX. In AT&T sarebbe 'movl %ebx, %eax'."
+        },
+        {
+          "q": "Quale assembler usa di DEFAULT la sintassi AT&T su Linux?",
+          "choices": ["NASM", "MASM", "GAS (GNU Assembler)", "FASM"],
+          "correct": 2,
+          "explanation": "GAS (default toolchain GCC/binutils) usa AT&T di default. NASM, MASM e FASM usano Intel."
+        },
+        {
+          "q": "In sintassi AT&T, l'istruzione 'movl $4, %eax' indica:",
+          "choices": ["Sposta il contenuto della memoria all'indirizzo 4 in EAX", "Sposta il valore immediato 4 in EAX (suffisso l = long/32-bit)", "Sposta EAX nella locazione 4", "Errore di sintassi"],
+          "correct": 1,
+          "explanation": "AT&T: $ = immediato, % = registro, ordine src,dest, suffisso l = 32-bit. Equivale a Intel 'mov eax, 4'."
+        },
+        {
+          "q": "Per impostare la sintassi Intel nel disassembly di GDB si usa:",
+          "choices": ["set syntax intel", "set disassembly-flavor intel", "switch-flavor intel", "use intel"],
+          "correct": 1,
+          "explanation": "Comando GDB: 'set disassembly-flavor intel'. Senza, GDB mostra AT&T (default Linux)."
+        }
+      ]
+    },
+    {
+      "after_h2": "10. Hello World in Assembly + Syscall Linux",
+      "title": "NASM, syscall Linux x86 e direttive data/bss",
+      "questions": [
+        {
+          "q": "In NASM, quale direttiva dichiara l'entry point del programma riconosciuto dal linker ld?",
+          "choices": ["global _main", "global _start", "extern _start", "entry _start"],
+          "correct": 1,
+          "explanation": "'global _start' espone _start come simbolo per ld. E' l'entry point standard su Linux ELF."
+        },
+        {
+          "q": "Per invocare una syscall su Linux x86 (32-bit) si usa l'istruzione:",
+          "choices": ["syscall", "sysenter", "int 0x80", "call kernel"],
+          "correct": 2,
+          "explanation": "Su Linux x86 si usa 'int 0x80'. Su Linux x64 si usa l'istruzione 'syscall' (ABI System V con RDI/RSI/RDX/R10/R8/R9)."
+        },
+        {
+          "q": "Quale combinazione di registri si usa per sys_write su Linux x86 (int 0x80)?",
+          "choices": ["EAX=4, EBX=fd, ECX=buf, EDX=count", "EAX=1, EBX=buf, ECX=count, EDX=fd", "RAX=4, RDI=fd, RSI=buf, RDX=count", "EAX=3, EBX=fd, ECX=buf, EDX=count"],
+          "correct": 0,
+          "explanation": "sys_write = 4 in EAX. EBX=fd (1=stdout), ECX=pointer al buffer, EDX=lunghezza. Poi int 0x80."
+        },
+        {
+          "q": "Quale direttiva NASM riserva 1 byte non inizializzato in sezione .bss?",
+          "choices": ["db 1", "resb 1", "dd 1", "dw 1"],
+          "correct": 1,
+          "explanation": "resb = reserve byte (.bss, non inizializzato). db = define byte (.data, inizializzato). resw/resd/resq per 2/4/8 byte."
+        },
+        {
+          "q": "Comandi corretti per assemblare e linkare un sorgente NASM 32-bit su Linux:",
+          "choices": ["gcc -m32 prog.asm -o prog", "nasm -f elf64 prog.asm && ld prog.o -o prog", "nasm -f elf32 -o prog.o prog.asm && ld -m elf_i386 -o prog prog.o", "as prog.asm -o prog"],
+          "correct": 2,
+          "explanation": "NASM: -f elf32 per oggetto 32-bit; ld: -m elf_i386 per linkare formato 32-bit Linux."
+        }
+      ]
+    },
+    {
+      "after_h2": "12. Idiomi assembly ricorrenti & quick reference istruzioni",
+      "title": "Idiomi assembly, GDB e collegamento ai buffer overflow",
+      "questions": [
+        {
+          "q": "Perche' negli shellcode si preferisce 'xor eax, eax' rispetto a 'mov eax, 0'?",
+          "choices": ["E' piu' lento ma piu' leggibile", "Genera bytecode senza null byte (0x00), evitando di interrompere stringhe null-terminated", "Funziona solo in modalita' kernel", "Setta tutti i flag a 1"],
+          "correct": 1,
+          "explanation": "'mov eax, 0' contiene byte 0x00 nell'opcode; 'xor eax, eax' no. Cruciale per shellcode iniettato in funzioni come strcpy."
+        },
+        {
+          "q": "In NASM, qual e' la differenza tra 'mov eax, val' e 'mov eax, [val]'?",
+          "choices": ["Sono equivalenti", "'val' = indirizzo di val; '[val]' = valore contenuto all'indirizzo val", "'[val]' = indirizzo; 'val' = valore", "'[val]' funziona solo in .bss"],
+          "correct": 1,
+          "explanation": "Senza parentesi: la label e' un indirizzo (immediato). Con parentesi quadre: dereferenziazione, accedi al contenuto."
+        },
+        {
+          "q": "L'istruzione 'lea eax, [ebx+4]' fa:",
+          "choices": ["Carica in EAX il valore in memoria all'indirizzo ebx+4", "Carica in EAX l'INDIRIZZO calcolato ebx+4 (senza accedere alla memoria)", "Somma 4 a EBX e lo mette in EAX", "Equivale a mov eax, [ebx+4]"],
+          "correct": 1,
+          "explanation": "LEA (Load Effective Address) calcola l'indirizzo effettivo SENZA dereferenziare. Usata anche per aritmetica veloce."
+        },
+        {
+          "q": "Quale comando GDB esamina la memoria all'indirizzo di 'var' come stringa?",
+          "choices": ["print var", "info var", "x /s &var", "show var"],
+          "correct": 2,
+          "explanation": "x /s <addr> esamina come stringa null-terminated. x /x = hex, x /d = decimale, x /i = istruzione disassemblata."
+        },
+        {
+          "q": "In un classico stack-based buffer overflow, l'ordine in cui si sovrascrivono le strutture (scrivendo dal buffer locale verso indirizzi crescenti) e':",
+          "choices": ["return address -> saved EBP -> buffer", "buffer -> saved EBP -> return address (saved EIP)", "buffer -> return address -> saved EBP", "saved EBP -> buffer -> return address"],
+          "correct": 1,
+          "explanation": "Il buffer locale sta a [ebp-N]. Scrivendo oltre, si supera EBP (sovrascrive saved EBP a [ebp+0]) e poi il return address a [ebp+4]."
+        }
+      ]
+    }
+  ]
+}

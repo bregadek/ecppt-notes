@@ -1,0 +1,432 @@
+{
+  "module": "Privilege Escalation",
+  "blocks": [
+    {
+      "after_h2": "2. Windows Privilege Escalation",
+      "title": "Windows Privesc - Enumerazione, Power⁠Up, servizi e DLL hijacking",
+      "questions": [
+        {
+          "q": "Quale cmdlet di Power⁠Up esegue un audit completo di privilege escalation su Windows?",
+          "choices": [
+            "Get-PrivescAudit",
+            "Invoke-PrivescAudit",
+            "Invoke-AllChecks",
+            "Find-PrivescVector"
+          ],
+          "correct": 1,
+          "explanation": "Invoke-PrivescAudit (alias moderno di Invoke-AllChecks) e' la funzione principale di Power⁠Up che esegue tutti i controlli di privesc."
+        },
+        {
+          "q": "Quale comando mostra i privilegi del token dell'utente corrente, utile per individuare SeImpersonatePrivilege?",
+          "choices": [
+            "whoami /groups",
+            "whoami /priv",
+            "whoami /all /fo list",
+            "net user %username%"
+          ],
+          "correct": 1,
+          "explanation": "whoami /priv elenca i privilegi assegnati al token corrente; SeImpersonatePrivilege e' il prerequisito per gli attacchi Potato."
+        },
+        {
+          "q": "Quale strumento di Sysinternals viene tipicamente usato per verificare i permessi su un servizio Windows (ACL)?",
+          "choices": [
+            "icacls.exe",
+            "accesschk.exe",
+            "sc.exe sdshow",
+            "PsService.exe"
+          ],
+          "correct": 1,
+          "explanation": "accesschk.exe -uwcqv <user> <service> mostra rapidamente se un utente ha permessi di modifica (SERVICE_CHANGE_CONFIG) su un servizio."
+        },
+        {
+          "q": "In un attacco di DLL hijacking, dove cerca il PROCESSO una DLL non specificata con path assoluto, secondo l'ordine di ricerca standard di Windows (SafeDllSearchMode abilitato)?",
+          "choices": [
+            "Prima nella cartella System32, poi nella directory dell'eseguibile",
+            "Prima nella directory dell'eseguibile, poi System32, System, Windows, CWD, PATH",
+            "Solo nelle directory elencate in PATH",
+            "Solo nella cartella corrente (CWD)"
+          ],
+          "correct": 1,
+          "explanation": "Con SafeDllSearchMode l'ordine e': directory dell'app -> System32 -> System -> Windows -> directory corrente -> PATH. La directory dell'eseguibile e' il primo target di hijacking."
+        },
+        {
+          "q": "Quale comando sfrutta un servizio con permessi insicuri per sostituirne il binario e ottenere SYSTEM?",
+          "choices": [
+            "sc.exe config <svc> binPath= \"C:\\path\\evil.exe\"",
+            "net start <svc> /SYSTEM",
+            "wmic service call <svc> Execute",
+            "schtasks /change /TN <svc> /TR evil.exe"
+          ],
+          "correct": 0,
+          "explanation": "sc.exe config <svc> binPath= \"...\" cambia l'eseguibile lanciato dal servizio. Riavviando il servizio (net stop/start) si esegue il payload come LocalSystem."
+        }
+      ]
+    },
+    {
+      "after_h2": "3. Linux Privilege Escalation",
+      "title": "Linux Privesc - SUID, SUDO, GTFOBins e LD_PRELOAD",
+      "questions": [
+        {
+          "q": "Quale comando elenca tutti i file SUID presenti nel filesystem?",
+          "choices": [
+            "find / -type f -perm 4000 2>/dev/null",
+            "find / -perm -u=s -type f 2>/dev/null",
+            "ls -laR / | grep '^-rws'",
+            "Entrambi A e B"
+          ],
+          "correct": 3,
+          "explanation": "Sia 'find / -type f -perm 4000' sia 'find / -perm -u=s -type f' trovano i binari con bit SUID. Entrambe le forme sono valide ed equivalenti."
+        },
+        {
+          "q": "Quale comando mostra quali binari l'utente puo' eseguire come root tramite sudo?",
+          "choices": [
+            "sudo -V",
+            "sudo -l",
+            "cat /etc/sudoers",
+            "id -G"
+          ],
+          "correct": 1,
+          "explanation": "sudo -l elenca i comandi consentiti dalla configurazione sudo per l'utente corrente. Va poi confrontato con GTFOBins per cercare bypass."
+        },
+        {
+          "q": "Hai accesso a /etc/passwd in scrittura. Quale strumento generi l'hash di una password da aggiungere per creare un utente root?",
+          "choices": [
+            "openssl passwd -1 'password'",
+            "mkpasswd --hash=sha512 'password'",
+            "hashcat -m 1800 'password'",
+            "Entrambi A e B"
+          ],
+          "correct": 3,
+          "explanation": "Sia 'openssl passwd -1' (MD5 crypt) sia 'mkpasswd' generano hash compatibili con /etc/passwd. Si appende poi una riga tipo 'attacker:$1$...:0:0::/root:/bin/bash'."
+        },
+        {
+          "q": "LD_PRELOAD e' sfruttabile per privesc quando:",
+          "choices": [
+            "Il binario SUID accetta variabili d'ambiente arbitrarie",
+            "sudo e' configurato con env_keep+=LD_PRELOAD per un binario eseguibile dall'utente",
+            "L'utente puo' scrivere in /etc/ld.so.conf",
+            "Tutte le precedenti tranne A (LD_PRELOAD e' ignorato dai SUID)"
+          ],
+          "correct": 1,
+          "explanation": "I binari SUID ignorano LD_PRELOAD per default. L'attacco classico richiede sudo con 'Defaults env_keep += \"LD_PRELOAD\"' per un comando lecito, caricando una shared library malevola."
+        },
+        {
+          "q": "Quale comando elenca i file con capabilities Linux assegnate (alternativa moderna ai SUID)?",
+          "choices": [
+            "find / -cap -type f",
+            "getcap -r / 2>/dev/null",
+            "capsh --print",
+            "lsattr -R /"
+          ],
+          "correct": 1,
+          "explanation": "getcap -r / elenca i binari con file capabilities. Esempi sfruttabili: cap_setuid+ep su python/perl permette di ottenere root."
+        }
+      ]
+    },
+    {
+      "after_h2": "4. Cheat sheet enumeration (da memorizzare)",
+      "title": "Enumerazione - comandi e tool da ricordare per l'esame",
+      "questions": [
+        {
+          "q": "Quale comando Windows mostra patch installate e versione esatta del SO, utile per cercare exploit del kernel?",
+          "choices": [
+            "ver",
+            "systeminfo",
+            "wmic os get caption",
+            "Get-HotFix"
+          ],
+          "correct": 1,
+          "explanation": "systeminfo riporta versione, build, hotfix installate. L'output puo' essere passato a Windows-Exploit-Suggester per cercare CVE applicabili."
+        },
+        {
+          "q": "Su Linux, quale file/comando legge la cronologia dei comandi che potrebbe contenere password in chiaro?",
+          "choices": [
+            "~/.bash_history e cat /etc/shadow",
+            "history e ~/.bash_history",
+            "/var/log/auth.log",
+            "lastcomm"
+          ],
+          "correct": 1,
+          "explanation": "history e ~/.bash_history possono contenere comandi con password in chiaro (mysql -p, curl -u user:pass, ecc.)."
+        },
+        {
+          "q": "Quale script automatizza l'enumerazione di privesc su Linux?",
+          "choices": [
+            "winPEAS.sh",
+            "LinPEAS.sh / linux-smart-enumeration (lse.sh) / LinEnum.sh",
+            "Blood⁠Hound.py",
+            "Power⁠Up.sh"
+          ],
+          "correct": 1,
+          "explanation": "LinPEAS, LSE e LinEnum sono i tre script di enumerazione automatizzata Linux piu' usati durante un pentest."
+        },
+        {
+          "q": "Su Windows, dove si trova tipicamente il file di history di PowerShell che puo' contenere credenziali?",
+          "choices": [
+            "C:\\Windows\\Temp\\powershell_history.txt",
+            "%APPDATA%\\Microsoft\\Windows\\PowerShell\\PSReadLine\\ConsoleHost_history.txt",
+            "C:\\Users\\<u>\\Documents\\PowerShell.log",
+            "HKCU\\Software\\Microsoft\\PowerShell\\History"
+          ],
+          "correct": 1,
+          "explanation": "PSReadLine salva la history in %APPDATA%\\Microsoft\\Windows\\PowerShell\\PSReadLine\\ConsoleHost_history.txt - controllo obbligatorio in fase di post-exploitation."
+        },
+        {
+          "q": "Quale comando Linux trova file scrivibili da tutti gli utenti (world-writable)?",
+          "choices": [
+            "find / -perm -2 -type f 2>/dev/null",
+            "find / -writable -type f 2>/dev/null",
+            "find / -perm -o+w -type f 2>/dev/null",
+            "Tutte le precedenti sono valide"
+          ],
+          "correct": 3,
+          "explanation": "Tutte e tre le forme individuano file scrivibili dagli 'others'. -writable filtra invece in base all'utente corrente, utile anche per gruppi."
+        }
+      ]
+    },
+    {
+      "after_h2": "5. Token & Potato chain history",
+      "title": "Token impersonation - evoluzione Potato chain",
+      "questions": [
+        {
+          "q": "Qual e' l'ordine cronologico di evoluzione degli attacchi Potato?",
+          "choices": [
+            "JuicyPotato -> RottenPotato -> PrintSpoofer -> RoguePotato",
+            "RottenPotato -> JuicyPotato -> RoguePotato -> PrintSpoofer",
+            "PrintSpoofer -> RoguePotato -> JuicyPotato -> RottenPotato",
+            "RottenPotato -> PrintSpoofer -> JuicyPotato -> RoguePotato"
+          ],
+          "correct": 1,
+          "explanation": "L'evoluzione storica e': RottenPotato (2016) -> JuicyPotato (2018) -> RoguePotato (2020) -> PrintSpoofer (2020). Ogni iterazione aggira mitigazioni introdotte da Microsoft."
+        },
+        {
+          "q": "Quale privilegio del token e' necessario per usare la famiglia Potato/PrintSpoofer?",
+          "choices": [
+            "SeDebugPrivilege",
+            "SeImpersonatePrivilege (o SeAssignPrimaryTokenPrivilege)",
+            "SeBackupPrivilege",
+            "SeTakeOwnershipPrivilege"
+          ],
+          "correct": 1,
+          "explanation": "SeImpersonatePrivilege permette di impersonare token altrui; e' tipicamente assegnato a service account come IIS AppPool, MSSQL, ecc."
+        },
+        {
+          "q": "Perche' JuicyPotato non funziona piu' a partire da Windows 10 1809 / Server 2019?",
+          "choices": [
+            "Microsoft ha rimosso SeImpersonatePrivilege dai service account",
+            "Il DCOM server BITS non risponde piu' sulla porta 6666 forzata da JuicyPotato",
+            "Antivirus Defender lo blocca",
+            "Il PowerShell ExecutionPolicy lo impedisce"
+          ],
+          "correct": 1,
+          "explanation": "Microsoft ha patchato il comportamento del DCOM server che JuicyPotato sfruttava per autenticarsi su porta arbitraria. RoguePotato e PrintSpoofer sono nati per bypassare questa mitigazione."
+        },
+        {
+          "q": "PrintSpoofer abusa di quale servizio/named pipe?",
+          "choices": [
+            "Il servizio BITS via DCOM",
+            "Il servizio Print Spooler via pipe \\\\.\\pipe\\spoolss",
+            "Il servizio WMI via DCOM",
+            "Il servizio RPC Endpoint Mapper"
+          ],
+          "correct": 1,
+          "explanation": "PrintSpoofer sfrutta una funzionalita' del servizio Print Spooler (named pipe spoolss) per costringere il SYSTEM ad autenticarsi e impersonarne il token."
+        },
+        {
+          "q": "Quale strumento moderno e' considerato un'alternativa universale ai Potato per ottenere SYSTEM con SeImpersonatePrivilege?",
+          "choices": [
+            "Mimi⁠katz",
+            "GodPotato / PrintSpoofer",
+            "Em⁠pire",
+            "WinPEAS"
+          ],
+          "correct": 1,
+          "explanation": "GodPotato (per versioni recenti di Windows Server) e PrintSpoofer sono gli strumenti di riferimento attuali per abusare di SeImpersonatePrivilege."
+        }
+      ]
+    },
+    {
+      "after_h2": "6. Tabelle differenze",
+      "title": "Differenze chiave Windows vs Linux e tool comparison",
+      "questions": [
+        {
+          "q": "Equivalente Linux del comando Windows 'whoami /priv':",
+          "choices": [
+            "id",
+            "sudo -l + cat /proc/self/status (CapEff)",
+            "groups",
+            "getent passwd"
+          ],
+          "correct": 1,
+          "explanation": "Su Linux i privilegi sono modellati con UID/GID (id), capabilities (CapEff in /proc/self/status) e regole sudo (sudo -l)."
+        },
+        {
+          "q": "Quale tecnica e' specifica di Windows e NON ha equivalente diretto su Linux?",
+          "choices": [
+            "Kernel exploit",
+            "DLL hijacking / Unquoted Service Path / UAC bypass",
+            "Cron job sfruttabile",
+            "SUID misconfiguration"
+          ],
+          "correct": 1,
+          "explanation": "DLL hijacking, Unquoted Service Path e UAC bypass sono specifici dell'architettura Windows (PE loader, SCM, integrity levels)."
+        },
+        {
+          "q": "Quale tool e' l'equivalente Windows di LinPEAS?",
+          "choices": [
+            "Power⁠View",
+            "WinPEAS / PrivescCheck / Power⁠Up",
+            "Blood⁠Hound",
+            "Seatbelt da solo"
+          ],
+          "correct": 1,
+          "explanation": "WinPEAS (analogo di LinPEAS), PrivescCheck (PowerShell) e Power⁠Up coprono l'enumerazione automatizzata di privesc su Windows. Seatbelt si concentra su recon di sistema."
+        },
+        {
+          "q": "Su Linux il bit SUID si rappresenta come:",
+          "choices": [
+            "Lettera 't' nella sezione owner",
+            "Lettera 's' nella sezione owner (es. -rwsr-xr-x)",
+            "Lettera 'S' nella sezione group",
+            "Lettera 'x' maiuscola"
+          ],
+          "correct": 1,
+          "explanation": "SUID = 's' al posto di 'x' nei permessi owner. SGID = 's' nei permessi group. Sticky = 't' negli others."
+        },
+        {
+          "q": "Quale dei seguenti NON e' un vettore di Windows privesc trattato nel modulo?",
+          "choices": [
+            "Registry autoruns scrivibili",
+            "Unattended.xml / sysprep.inf con credenziali",
+            "Credential Manager",
+            "Setuid binary su NTFS"
+          ],
+          "correct": 3,
+          "explanation": "Il concetto di SUID e' Unix-specifico e non esiste su NTFS. Gli altri (autoruns, unattended files, Credential Manager) sono classici vettori Windows."
+        }
+      ]
+    },
+    {
+      "after_h2": "7. Attack chains tipiche d'esame",
+      "title": "Attack chains e checklist esame eCPPT",
+      "questions": [
+        {
+          "q": "Hai una shell come service account IIS con SeImpersonatePrivilege su Windows Server 2019. Quale e' il path piu' rapido a SYSTEM?",
+          "choices": [
+            "Eseguire JuicyPotato.exe -t * -p cmd.exe",
+            "Eseguire PrintSpoofer.exe -i -c cmd.exe",
+            "Eseguire Mimi⁠katz sekur⁠lsa::logonpasswords",
+            "Cercare un kernel exploit"
+          ],
+          "correct": 1,
+          "explanation": "Su Server 2019 JuicyPotato non funziona. PrintSpoofer (o RoguePotato) e' il vettore di scelta sfruttando SeImpersonatePrivilege via Print Spooler."
+        },
+        {
+          "q": "Su Linux trovi che /etc/passwd e' world-writable. Quale e' il next step corretto?",
+          "choices": [
+            "Aggiungere una riga 'root2:x:0:0::/root:/bin/bash' e fare su root2 senza password",
+            "Generare un hash con 'openssl passwd -1' e aggiungere 'root2:<hash>:0:0::/root:/bin/bash', poi 'su root2'",
+            "Cambiare la password di root con 'passwd root'",
+            "Eseguire chmod 4755 /bin/bash"
+          ],
+          "correct": 1,
+          "explanation": "Su sistemi moderni la password e' in /etc/shadow ma /etc/passwd accetta ancora un hash nel secondo campo (compatibilita'). Senza password (campo vuoto + 'x') la voce non darebbe accesso."
+        },
+        {
+          "q": "Hai sudo -l che mostra '(root) NOPASSWD: /usr/bin/vim'. Come escali?",
+          "choices": [
+            "sudo vim -c ':!/bin/sh'",
+            "sudo vim /etc/shadow",
+            "sudo vim --version",
+            "Non e' sfruttabile"
+          ],
+          "correct": 0,
+          "explanation": "GTFOBins vim: 'sudo vim -c \":!/bin/sh\"' esegue una shell come root sfruttando il comando di escape di vim. Pattern simile per nano, less, find, awk, ecc."
+        },
+        {
+          "q": "Durante un'enumerazione Windows trovi un servizio con 'Unquoted Service Path' = 'C:\\Program Files\\My App\\service.exe'. Quale file puoi piazzare per privesc se hai write in C:\\?",
+          "choices": [
+            "C:\\Program.exe",
+            "C:\\Program Files\\My.exe",
+            "C:\\Program Files\\My App\\service.exe.bak",
+            "C:\\Windows\\System32\\service.exe"
+          ],
+          "correct": 0,
+          "explanation": "Con un path non quotato Windows tenta in ordine: C:\\Program.exe, C:\\Program Files\\My.exe, infine quello reale. Il primo write-target abusabile e' tipicamente C:\\Program.exe (se si ha write in C:\\)."
+        },
+        {
+          "q": "Quale di queste sequenze rappresenta una corretta chain di privesc su Linux trovando un cron job root che esegue /opt/script.sh world-writable?",
+          "choices": [
+            "Aggiungere a /opt/script.sh: 'cp /bin/bash /tmp/bash && chmod +s /tmp/bash', attendere il cron, poi '/tmp/bash -p'",
+            "Eseguire direttamente /opt/script.sh come utente normale",
+            "Cambiare permessi a /etc/crontab",
+            "Aggiungere l'utente al gruppo cron"
+          ],
+          "correct": 0,
+          "explanation": "Scrivere nel file eseguito da root via cron permette RCE come root. Creare un bash SUID (chmod +s) e poi eseguirlo con -p (preserva EUID) e' il pattern classico."
+        }
+      ]
+    },
+    {
+      "after_h2": "8. Punti d'attenzione eCPPT — riepilogo finale",
+      "title": "Riepilogo finale e punti chiave per l'esame eCPPT",
+      "questions": [
+        {
+          "q": "Quale strumento NON e' uno script PowerShell di privesc enumeration?",
+          "choices": [
+            "Power⁠Up.ps1",
+            "PrivescCheck.ps1",
+            "Sherlock.ps1",
+            "linux-exploit-suggester.sh"
+          ],
+          "correct": 3,
+          "explanation": "linux-exploit-suggester.sh e' uno script bash per Linux. Power⁠Up, PrivescCheck e Sherlock sono moduli PowerShell per Windows privesc."
+        },
+        {
+          "q": "UAC bypass con UACMe richiede tipicamente:",
+          "choices": [
+            "Privilegi di SYSTEM gia' acquisiti",
+            "Un utente nel gruppo Administrators con processo a Medium Integrity Level",
+            "SeDebugPrivilege",
+            "Accesso fisico alla console"
+          ],
+          "correct": 1,
+          "explanation": "UAC bypass non e' privesc 'reale': eleva da Medium IL ad High IL per un utente gia' in Administrators. Senza essere admin, UACMe non e' applicabile."
+        },
+        {
+          "q": "In un attacco DLL hijacking, qual e' l'export minimo che la DLL malevola DEVE implementare?",
+          "choices": [
+            "main()",
+            "DllMain() (con switch DLL_PROCESS_ATTACH)",
+            "WinMain()",
+            "Service_Main()"
+          ],
+          "correct": 1,
+          "explanation": "Una DLL caricata via LoadLibrary esegue DllMain() con reason=DLL_PROCESS_ATTACH. Il payload va inserito li' per esecuzione immediata."
+        },
+        {
+          "q": "Quale comando dump le credenziali salvate nel Windows Credential Manager?",
+          "choices": [
+            "cmdkey /list e poi runas /savecred /user:<u> cmd",
+            "vaultcmd /listcreds:'Windows Credentials' /all",
+            "mimi⁠katz: vault::cred /patch",
+            "Tutte le precedenti sono utili a contesti diversi"
+          ],
+          "correct": 3,
+          "explanation": "cmdkey/runas permette riuso, vaultcmd elenca le credenziali, mimi⁠katz puo' decifrarle. Sono tecniche complementari su Credential Manager."
+        },
+        {
+          "q": "Quale e' il modo piu' affidabile per identificare vettori di privesc su un sistema sconosciuto in fase d'esame?",
+          "choices": [
+            "Lanciare subito un kernel exploit",
+            "Eseguire enumerazione automatizzata (WinPEAS/LinPEAS) + controllo manuale di whoami /priv, sudo -l, SUID, servizi",
+            "Brute-forzare la password di root",
+            "Riavviare il sistema in single user mode"
+          ],
+          "correct": 1,
+          "explanation": "L'approccio corretto e' enumerazione esaustiva (automatizzata + manuale) prima di tentare exploit. Kernel exploit sono ultimi resort per rischio di crash."
+        }
+      ]
+    }
+  ]
+}

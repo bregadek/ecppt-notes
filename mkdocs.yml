@@ -1,0 +1,91 @@
+site_name: eCPPT Study Notes
+site_description: Appunti completi per l'esame eCPPT 2024 (45 domande pratiche)
+site_author: Mattia
+docs_dir: docs
+site_dir: site
+use_directory_urls: true
+
+theme:
+  name: material
+  language: it
+  palette:
+    - scheme: slate
+      primary: indigo
+      accent: cyan
+      toggle:
+        icon: material/weather-sunny
+        name: Passa a tema chiaro
+    - scheme: default
+      primary: indigo
+      accent: cyan
+      toggle:
+        icon: material/weather-night
+        name: Passa a tema scuro
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.top
+    - navigation.tracking
+    - search.suggest
+    - search.highlight
+    - search.share
+    - content.code.copy
+    - content.code.annotate
+    - content.tabs.link
+    - toc.integrate
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - footnotes
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+      auto_title: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
+  - pymdownx.caret
+  - pymdownx.mark
+  - toc:
+      permalink: true
+      toc_depth: 3
+
+plugins:
+  - search:
+      lang:
+        - en
+        - it
+  - tags:
+      tags_file: tags.md
+
+extra_javascript:
+  - javascripts/clipboard-clean.js
+  - javascripts/progress.js
+  - javascripts/nav-collapse.js
+  - javascripts/quiz.js
+extra_css:
+  - stylesheets/extra.css
+
+nav:
+  - Home: index.md
+  - Assembly: 01_System_Security_Assembly.md
+  - Network: 02_Network_Penetration_Testing.md
+  - PowerShell: 03_PowerShell_for_Pentesters.md
+  - Priv. Esc.: 04_Privilege_Escalation.md
+  - Pivoting: 05_Lateral_Movement_Pivoting.md
+  - Active Directory: 06_Active_Directory.md
+  - Client-Side: 07_Client_Side_Attacks.md
+  - C2: 08_Command_Control.md
+  - BOF: 09_Buffer_Overflows.md
+  - Cheat Sheet: 10_Cheatsheet.md
+  - Tag: tags.md

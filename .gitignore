@@ -1,0 +1,26 @@
+# Video sorgenti del corso (proprietari INE, NON committare)
+*.mp4
+
+# Trascrizioni generate da Whisper (grandi, non necessarie per il sito)
+*.txt
+*.srt
+
+# Python
+_tools/whisper-env/
+__pycache__/
+*.pyc
+
+# Output MkDocs
+site/
+
+# Artefatti runtime
+_tools/transcribe.log
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Claude Code settings locali
+.claude/

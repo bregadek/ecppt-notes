@@ -1,0 +1,149 @@
+{
+  "module": "Active Directory",
+  "blocks": [
+    {
+      "after_h2": "PARTE 2 — AD AUTHENTICATION",
+      "title": "AD Primer + Authentication (Users, OUs, Trusts, Kerberos, NTLM)",
+      "questions": [
+        {
+          "q": "Nel flusso Kerberos standard, con quale chiave viene cifrato il TGT restituito dall'AS al client?",
+          "choices": ["Con la long-term key dell'utente che fa AS-REQ", "Con la long-term key dell'account `KRBTGT`", "Con la session key generata dal client", "Con la chiave del service account proprietario dell'SPN"],
+          "correct": 1,
+          "explanation": "Il TGT e' sempre cifrato con la long-term key di `KRBTGT`: solo il KDC puo' decifrarlo nelle successive TGS-REQ. La key dell'utente cifra invece la session key allegata."
+        },
+        {
+          "q": "Quale flag UAC di un account utente lo rende vulnerabile ad AS-REP Roasting?",
+          "choices": ["`TRUSTED_FOR_DELEGATION`", "`PASSWD_NOTREQD`", "`DONT_REQ_PREAUTH`", "`SMARTCARD_REQUIRED`"],
+          "correct": 2,
+          "explanation": "L'AS-REP Roasting richiede che l'utente abbia il flag `DONT_REQ_PREAUTH` (UAC bit `0x400000`), che disabilita la preautenticazione Kerberos e permette al KDC di rispondere senza challenge."
+        },
+        {
+          "q": "Un DN AD legge `CN=John Doe,CN=Users,DC=foobank,DC=inc`. Perche' non posso linkare direttamente una GPO al contenitore `Users`?",
+          "choices": ["Perche' `Users` e' una OU di sistema protetta", "Perche' `Users` e' un container (`CN=`), non una OU (`OU=`), e i container non supportano GPO link diretto", "Perche' serve essere Schema Admin per linkare GPO ai container default", "Perche' `gpupdate /force` non e' supportato sui container"],
+          "correct": 1,
+          "explanation": "I default `Users` e `Computers` sono container (`CN=`) e non OU (`OU=`): non supportano il GPO link diretto. `Domain Controllers` invece e' una OU e supporta il link."
+        },
+        {
+          "q": "Qual e' la differenza fondamentale tra direzione del trust e direzione dell'accesso in AD?",
+          "choices": ["Sono sempre uguali: trust A->B significa che A accede a B", "Sono opposte: se il trust va da A (trusting) verso B (trusted), sono gli utenti di B che accedono alle risorse di A", "La direzione dell'accesso esiste solo per i forest trust", "Dipende dal fatto che il trust sia transitive o meno"],
+          "correct": 1,
+          "explanation": "Il trusting domain (A) concede l'accesso; il trusted domain (B) e' quello i cui utenti vengono accettati. Direzione trust A->B implica direzione accesso B->A: e' un trick frequente nelle MCQ."
+        },
+        {
+          "q": "Perche' Pass-the-Hash funziona contro NTLM ma non contro Kerberos puro?",
+          "choices": ["Perche' Kerberos usa solo AES256 e non e' crackabile", "Perche' NTLM e' challenge-response e l'NT hash basta a calcolare la response, mentre Kerberos autentica via ticket firmati dal KDC", "Perche' NTLM non ha mutual authentication e Kerberos si", "Perche' l'NT hash non esiste in ambienti Kerberos-only"],
+          "correct": 1,
+          "explanation": "In NTLM la response e' una funzione di challenge + NT hash, quindi conoscere l'hash basta. Kerberos usa ticket emessi dal KDC: l'equivalente di PtH e' Pass-the-Ticket (ticket rubato) o Overpass-the-Hash (NT hash -> nuovo TGT)."
+        }
+      ]
+    },
+    {
+      "after_h2": "PARTE 4 — ENUMERATION",
+      "title": "Methodology + Enumeration (Blood⁠Hound, Sharp⁠Hound, Power⁠View)",
+      "questions": [
+        {
+          "q": "Quale collection method di `Sharp⁠Hound` raccoglie il dataset piu' completo per un'analisi Blood⁠Hound di pentest?",
+          "choices": ["`-c Default`", "`-c Session`", "`-c All`", "`-c LoggedOn`"],
+          "correct": 2,
+          "explanation": "`Invoke-Blood⁠Hound -CollectionMethod All` (o `Sharp⁠Hound.exe -c All`) raccoglie tutto: group, sessioni, trust, ACL, container. E' il default consigliato per i pentest."
+        },
+        {
+          "q": "Quale cmdlet di Power⁠View elenca gli utenti vulnerabili ad AS-REP Roasting?",
+          "choices": ["`Get-DomainUser -SPN`", "`Get-DomainUser -PreauthNotRequired`", "`Get-DomainUser -AllowDelegation`", "`Get-NetUser -AsRepRoastable`"],
+          "correct": 1,
+          "explanation": "`Get-DomainUser -PreauthNotRequired` filtra gli utenti con `DONT_REQ_PREAUTH`, target diretto dell'AS-REP Roasting. `-SPN` invece elenca i Kerberoastable."
+        },
+        {
+          "q": "Hai un foothold come domain user low-priv. Quale comando Power⁠View ti dice immediatamente su quali host sei local admin (per pianificare lateral movement)?",
+          "choices": ["`Find-InterestingDomainAcl`", "`Get-NetGroupMember \"Domain Admins\"`", "`Find-LocalAdminAccess`", "`Get-DomainController`"],
+          "correct": 2,
+          "explanation": "`Find-LocalAdminAccess` itera sui computer del dominio e restituisce quelli su cui il current user e' local admin: e' il primo passo per scegliere il pivot di lateral movement."
+        },
+        {
+          "q": "In Blood⁠Hound, quale combinazione di edge identifica un principal con DCSync rights (preludio a un Golden Ticket)?",
+          "choices": ["`GenericAll` + `WriteDACL`", "`GetChanges` + `GetChangesAll`", "`AllowedToDelegate` + `WriteOwner`", "`HasSession` + `AdminTo`"],
+          "correct": 1,
+          "explanation": "I DCSync rights corrispondono ai due ACE `DS-Replication-Get-Changes` (`GetChanges`) e `DS-Replication-Get-Changes-All` (`GetChangesAll`), modellati come edge omonimi verso il nodo `Domain`."
+        },
+        {
+          "q": "Quale database persiste i dati di Blood⁠Hound, interrogati poi via Cypher?",
+          "choices": ["MongoDB", "PostgreSQL", "Neo4j", "Elasticsearch"],
+          "correct": 2,
+          "explanation": "Blood⁠Hound usa Neo4j come graph database backend; le query pre-built e custom della tab Analysis sono Cypher contro Neo4j."
+        }
+      ]
+    },
+    {
+      "after_h2": "PARTE 6 — PRIVILEGE ESCALATION KERBEROS",
+      "title": "Initial Access + Kerberos PrivEsc (Spraying, AS-REP, Kerberoasting)",
+      "questions": [
+        {
+          "q": "Hai estratto un TGS Kerberos da un service account con Kerberoasting. Quale modalita' di `hashcat` usi per crackarlo?",
+          "choices": ["`-m 5500` (NetNTLMv1)", "`-m 5600` (NetNTLMv2)", "`-m 13100` (Kerberos 5 TGS-REP etype 23)", "`-m 18200` (Kerberos 5 AS-REP etype 23)"],
+          "correct": 2,
+          "explanation": "Il TGS del Kerberoasting si cracca con `hashcat -m 13100` (prefisso `$krb5tgs$23$`). `-m 18200` e' invece per AS-REP Roasting."
+        },
+        {
+          "q": "Da Linux, senza credenziali di dominio ma con una lista di username, quale comando esegue AS-REP Roasting?",
+          "choices": ["`impacket-GetUserSPNs research.security.local/ -usersfile users.txt -no-pass`", "`impacket-GetNPUsers research.security.local/ -usersfile users.txt -no-pass -format hashcat -outputfile asrep.hashes`", "`impacket-secretsdump research.security.local/ -usersfile users.txt -just-dc-user krbtgt`", "`kerbrute userenum -d research.security.local users.txt`"],
+          "correct": 1,
+          "explanation": "`impacket-GetNPUsers` con `-no-pass` esegue AS-REP Roasting senza credenziali, partendo da una lista di utenti. `GetUser⁠SPNs.py` e' per Kerberoasting e richiede credenziali valide."
+        },
+        {
+          "q": "Stai facendo Password Spraying con `Invoke-DomainPasswordSpray`. Qual e' la regola d'oro per evitare il lockout degli account?",
+          "choices": ["Provare massimo 5 password per account per ciclo", "Usare una sola password per account per ciclo e aspettare almeno l'observation window della Domain Password Policy tra i cicli", "Usare sempre il flag `-Force` che disabilita il lockout", "Eseguire lo spray solo fuori orario di lavoro"],
+          "correct": 1,
+          "explanation": "Il principio dello spraying e' 1 password / molti utenti per ciclo, con attesa >= observation window della password policy. `DomainPasswordSpray` legge la policy e suggerisce il wait time automaticamente."
+        },
+        {
+          "q": "Quale di queste affermazioni distingue correttamente Kerberoasting da AS-REP Roasting?",
+          "choices": ["Kerberoasting richiede credenziali valide e colpisce account con SPN; AS-REP Roasting non richiede credenziali e colpisce account con preauth disabilitata", "Kerberoasting non richiede credenziali; AS-REP Roasting richiede un domain user valido", "Entrambi richiedono Domain Admin per essere eseguiti", "Kerberoasting produce hash `-m 18200`; AS-REP Roasting produce hash `-m 13100`"],
+          "correct": 0,
+          "explanation": "Kerberoasting richiede un valid domain user (per chiedere TGS al KDC) e colpisce account con SPN. AS-REP Roasting non richiede credenziali (basta una username list con `GetNP⁠Users.py`) e colpisce utenti con `DONT_REQ_PREAUTH`."
+        },
+        {
+          "q": "Con quale comando `Rub⁠eus` estrai in un colpo solo gli hash TGS di tutti gli account Kerberoastable e li salvi su file?",
+          "choices": ["`.\\Rub⁠eus.exe asreproast /outfile:tgs.hashes`", "`.\\Rub⁠eus.exe kerberoast /outfile:tgs.hashes`", "`.\\Rub⁠eus.exe dump /service:krbtgt`", "`.\\Rub⁠eus.exe asktgt /outfile:tgs.hashes`"],
+          "correct": 1,
+          "explanation": "`Rub⁠eus.exe kerberoast /outfile:tgs.hashes` enumera gli SPN, richiede i TGS e li dumpa in formato crackable. `asreproast` e' invece per AS-REP, `dump` lista i ticket, `asktgt` richiede un TGT."
+        }
+      ]
+    },
+    {
+      "after_h2": "PARTE 8 — PERSISTENCE",
+      "title": "Lateral Movement + Persistence (PtH, PtT, Golden, Silver)",
+      "questions": [
+        {
+          "q": "Quale comando Mimi⁠katz spawna una nuova shell PowerShell impersonando `Administrator` via Pass-the-Hash usando il suo NT hash?",
+          "choices": ["`kerberos::p⁠tt /user:Administrator /domain:research.security.local /ntlm:<HASH>`", "`sekur⁠lsa::pth /user:Administrator /domain:research.security.local /ntlm:<HASH> /run:powershell.exe`", "`lsa⁠dump::lsa /inject /name:Administrator /ntlm:<HASH>`", "`kerberos::gol⁠den /user:Administrator /ntlm:<HASH> /ptt`"],
+          "correct": 1,
+          "explanation": "Pass-the-Hash si esegue con `sekur⁠lsa::pth` specificando `/user`, `/domain`, `/ntlm` e `/run` per la shell da lanciare. `kerberos::p⁠tt` e' Pass-the-Ticket, `kerberos::gol⁠den` forgia ticket."
+        },
+        {
+          "q": "Quale chiave NTLM e' necessaria per forgiare un Golden Ticket valido in tutto il dominio?",
+          "choices": ["L'NT hash dell'account `Administrator` del dominio", "L'NT hash del computer account del Domain Controller (es. `PROD$`)", "L'NT hash dell'account `KRBTGT`", "L'AES256 key di un qualsiasi service account con SPN"],
+          "correct": 2,
+          "explanation": "Il Golden Ticket e' un TGT forgiato cifrato con l'NT hash di `KRBTGT`. Solo chi possiede quell'hash (DA o utente con DCSync rights) puo' forgiare TGT validi nel dominio."
+        },
+        {
+          "q": "Stai forgiando un Silver Ticket per accedere alla share `\\\\prod.research.security.local\\C$`. Quale combinazione di parametri Mimi⁠katz e' corretta?",
+          "choices": ["`kerberos::gol⁠den /krbtgt:<HASH> /target:prod.research.security.local /service:CIFS /ptt`", "`kerberos::gol⁠den /domain:research.security.local /sid:<DOMAIN_SID> /target:prod.research.security.local /service:CIFS /rc4:<PROD$_NT> /user:Administrator /ptt`", "`kerberos::p⁠tt /service:CIFS /target:prod.research.security.local /rc4:<ADMIN_NT>`", "`sekur⁠lsa::pth /service:CIFS /target:prod.research.security.local /ntlm:<PROD$_NT>`"],
+          "correct": 1,
+          "explanation": "Il Silver per `CIFS` su un host richiede `/service:CIFS`, `/target:<host>`, e `/rc4:` con l'NT hash del computer account che ospita il servizio (qui `PROD$`), oltre a `/sid:` del dominio. Non si usa `/krbtgt`."
+        },
+        {
+          "q": "Errore tipico del Golden Ticket: passi `/sid:S-1-5-21-xxxx-yyyy-zzzz-500` e il KDC rifiuta il ticket. Qual e' la causa?",
+          "choices": ["Il RID 500 non e' valido per Golden Ticket, serve 512", "Hai passato il SID dell'account `Administrator` (con RID `-500` finale) invece del SID del dominio (senza RID)", "Manca il parametro `/groups:519` per Enterprise Admins", "Mimi⁠katz richiede il SID in formato esadecimale, non in formato S-1-5"],
+          "correct": 1,
+          "explanation": "`/sid` deve essere il SID del DOMINIO, senza il RID finale. Passare il SID di un principal (es. Administrator, che finisce in `-500`) e' un errore classico del video di Alexis: la soluzione e' `klist purge` e rigenerare col SID corretto."
+        },
+        {
+          "q": "Perche' Silver Ticket genera molto meno rumore di Golden Ticket sul Domain Controller?",
+          "choices": ["Perche' usa AES256 invece di RC4", "Perche' e' presentato direttamente al servizio target e non interagisce con il KDC (no eventi 4768/4769 sul DC)", "Perche' Mimi⁠katz lo firma con una key effimera che non viene loggata", "Perche' il PAC viene rimosso dal ticket"],
+          "correct": 1,
+          "explanation": "Il Silver Ticket e' un TGS gia' forgiato presentato direttamente al servizio (sfruttando il fatto che la PAC validation e' opzionale e disabilitata di default). Non genera AS-REQ ne' TGS-REQ sul KDC, quindi nessun evento 4768/4769 sul DC."
+        }
+      ]
+    }
+  ]
+}

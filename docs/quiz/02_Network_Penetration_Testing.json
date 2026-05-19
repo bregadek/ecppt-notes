@@ -1,0 +1,276 @@
+{
+  "module": "Network Penetration Testing",
+  "blocks": [
+    {
+      "after_h2": "3. Host discovery: tecniche e Nmap",
+      "title": "Methodology, networking & host discovery",
+      "questions": [
+        {
+          "q": "Quale flag Nmap esegue SOLO host discovery (ping scan) senza port scanning?",
+          "choices": ["-Pn", "-sn", "-sS", "-sV"],
+          "correct": 1,
+          "explanation": "-sn (no port scan) effettua solo la fase di host discovery. -Pn al contrario SALTA la discovery e tratta tutti gli host come up."
+        },
+        {
+          "q": "Stai facendo discovery su una /24 della tua stessa LAN. Quale tecnica di host discovery e' la piu' affidabile e veloce?",
+          "choices": ["ICMP echo request", "TCP SYN ping su 443", "ARP scan", "UDP ping su porta 40125"],
+          "correct": 2,
+          "explanation": "Sulla stessa subnet Nmap usa automaticamente ARP (-PR): bypassa i firewall host-based e funziona anche se ICMP e' filtrato."
+        },
+        {
+          "q": "Quale opzione forza Nmap a saltare la host discovery e a trattare ogni target come attivo?",
+          "choices": ["-sn", "-Pn", "-n", "-PE"],
+          "correct": 1,
+          "explanation": "-Pn (no ping) e' fondamentale quando ICMP/probe sono filtrati e si vuole comunque port-scannare."
+        },
+        {
+          "q": "Nella metodologia di un pentest, in quale fase rientra l'attivita' di banner grabbing e fingerprinting dei servizi?",
+          "choices": ["Information gathering", "Vulnerability assessment", "Exploitation", "Reporting"],
+          "correct": 0,
+          "explanation": "Banner grabbing/service detection appartengono alla fase di information gathering/enumeration, propedeutica al vulnerability assessment."
+        },
+        {
+          "q": "Cosa fa il flag -PE di Nmap?",
+          "choices": ["TCP SYN ping", "ICMP Echo Request ping", "UDP ping", "ARP ping"],
+          "correct": 1,
+          "explanation": "-PE invia ICMP Echo Request. -PS=TCP SYN, -PU=UDP, -PR=ARP."
+        }
+      ]
+    },
+    {
+      "after_h2": "5. Service version & OS detection",
+      "title": "Port scanning & fingerprinting",
+      "questions": [
+        {
+          "q": "Quale scan Nmap NON completa il three-way handshake TCP?",
+          "choices": ["-sT (TCP connect)", "-sS (SYN/stealth)", "-sA (ACK)", "Tutti completano il handshake"],
+          "correct": 1,
+          "explanation": "-sS (SYN/half-open) invia SYN e su SYN/ACK risponde RST senza completare. -sT invece usa la connect() del SO e completa il 3WHS."
+        },
+        {
+          "q": "Devi scansionare TUTTE le 65535 porte TCP con detection di versione e OS, salvando in tutti i formati. Quale comando e' corretto?",
+          "choices": [
+            "nmap -sU -p- -A -oA report target",
+            "nmap -sS -p- -sV -O -oA report target",
+            "nmap -sn -p 1-65535 -sV target",
+            "nmap -Pn -F -sV -O target"
+          ],
+          "correct": 1,
+          "explanation": "-p- = tutte le 65535 porte TCP; -sV version; -O OS detect; -oA salva in normal/XML/grepable. -F sarebbe fast scan (top 100)."
+        },
+        {
+          "q": "Cosa significa una porta in stato 'filtered' nell'output di Nmap?",
+          "choices": [
+            "La porta e' chiusa e risponde con RST",
+            "Nmap non ha ricevuto risposta: probabilmente un firewall droppa i pacchetti",
+            "La porta e' aperta ma il servizio non risponde",
+            "Il servizio e' protetto da TLS"
+          ],
+          "correct": 1,
+          "explanation": "'filtered' = nessuna risposta o ICMP unreachable: un firewall sta filtrando. 'closed' = RST ricevuto."
+        },
+        {
+          "q": "Quale flag combina OS detection, version detection, script scanning e traceroute?",
+          "choices": ["-A", "-sC", "-sV", "-O"],
+          "correct": 0,
+          "explanation": "-A (aggressive) = -O + -sV + -sC + --traceroute. Comodo ma rumoroso e non stealth."
+        },
+        {
+          "q": "Vuoi una scansione UDP delle top 100 porte. Quale comando?",
+          "choices": [
+            "nmap -sU --top-ports 100 target",
+            "nmap -sT -p U:1-100 target",
+            "nmap -sU -p- target",
+            "nmap -sS -F target"
+          ],
+          "correct": 0,
+          "explanation": "-sU = UDP scan, --top-ports 100 limita alle 100 piu' comuni. UDP e' lento: limitare le porte e' best practice."
+        }
+      ]
+    },
+    {
+      "after_h2": "8. Optimization & timing",
+      "title": "NSE, evasione firewall/IDS & timing",
+      "questions": [
+        {
+          "q": "Quale categoria NSE contiene script che potrebbero crashare il servizio target?",
+          "choices": ["safe", "default", "intrusive", "discovery"],
+          "correct": 2,
+          "explanation": "'intrusive' include script invasivi che possono causare crash o essere rilevati. 'safe' al contrario non dovrebbe avere effetti collaterali."
+        },
+        {
+          "q": "Comando Nmap per eseguire tutti gli script della categoria 'vuln' sul target:",
+          "choices": [
+            "nmap --script=vuln target",
+            "nmap -sV --vuln target",
+            "nmap -sC=vuln target",
+            "nmap --nse vuln target"
+          ],
+          "correct": 0,
+          "explanation": "--script=<categoria|nome> e' la sintassi corretta. -sC esegue solo gli script 'default'."
+        },
+        {
+          "q": "Quale combinazione di flag aiuta a EVADERE un IDS frammentando i pacchetti e usando decoy?",
+          "choices": [
+            "-T5 -A -Pn",
+            "-f -D RND:10 --data-length 25",
+            "-sS -sV -O",
+            "-oA -v --reason"
+          ],
+          "correct": 1,
+          "explanation": "-f frammenta IP, -D inietta IP decoy (RND:10 = 10 random), --data-length aggiunge payload per alterare la firma."
+        },
+        {
+          "q": "Quale template di timing Nmap e' il PIU' LENTO, usato per evasione IDS (1 probe ogni 5 minuti)?",
+          "choices": ["-T0 (paranoid)", "-T1 (sneaky)", "-T2 (polite)", "-T3 (normal)"],
+          "correct": 0,
+          "explanation": "-T0 paranoid serializza i probe con attese lunghissime (5 min). -T1 sneaky ~15 sec. Default = -T3."
+        },
+        {
+          "q": "A cosa serve --source-port 53 (o -g 53) in Nmap?",
+          "choices": [
+            "Fa partire la scansione dalla porta 53 del target",
+            "Spoofing della porta sorgente per bypassare regole firewall che fidano del DNS",
+            "Forza Nmap a usare UDP",
+            "Esegue lookup DNS inverso"
+          ],
+          "correct": 1,
+          "explanation": "Molti firewall permettono traffico in uscita/ingresso con source port 53 (DNS) o 88 (Kerberos): si puo' abusare di queste regole troppo permissive."
+        }
+      ]
+    },
+    {
+      "after_h2": "10. Service enumeration",
+      "title": "Output Nmap e service enumeration (SMB/SNMP)",
+      "questions": [
+        {
+          "q": "Quale flag salva l'output Nmap in formato normale, XML e grepable simultaneamente?",
+          "choices": ["-oN", "-oX", "-oG", "-oA"],
+          "correct": 3,
+          "explanation": "-oA <basename> genera basename.nmap, basename.xml e basename.gnmap in un colpo solo."
+        },
+        {
+          "q": "Per importare risultati Nmap in Metasploit/workspace, quale formato e' richiesto da db_import?",
+          "choices": ["Normal (-oN)", "Grepable (-oG)", "XML (-oX)", "Script kiddie (-oS)"],
+          "correct": 2,
+          "explanation": "db_import in msfconsole consuma XML (-oX). E' lo standard machine-readable."
+        },
+        {
+          "q": "Quale tool enumera SMB shares, utenti, gruppi e password policy via null session?",
+          "choices": ["snmpwalk", "enum4linux", "onesixtyone", "rpcclient -N"],
+          "correct": 1,
+          "explanation": "enum4linux (e -ng) e' lo script wrapper classico per enumerazione SMB/SAMBA: shares, users, groups, policy."
+        },
+        {
+          "q": "Quale community string SNMPv1/v2c read-only e' il default piu' comune da provare?",
+          "choices": ["admin", "private", "public", "snmp"],
+          "correct": 2,
+          "explanation": "'public' = read-only default; 'private' = read-write default. Sempre da testare in enumerazione SNMP."
+        },
+        {
+          "q": "Comando corretto per fare brute-force di community string SNMP con onesixtyone:",
+          "choices": [
+            "onesixtyone -c communities.txt 10.0.0.1",
+            "snmpwalk -v2c -c public 10.0.0.1",
+            "snmp-check 10.0.0.1 -c public",
+            "smbmap -H 10.0.0.1 -u guest"
+          ],
+          "correct": 0,
+          "explanation": "onesixtyone e' uno scanner SNMP rapido per brute delle community: -c wordlist. snmpwalk e snmp-check enumerano DOPO aver trovato la community."
+        }
+      ]
+    },
+    {
+      "after_h2": "12. Cheat sheet Nmap (master table)",
+      "title": "Attack labs (SMB Relay, MSSQL, NTLM) & Nmap master",
+      "questions": [
+        {
+          "q": "Nell'attacco SMB Relay, quale combinazione di tool e' tipicamente usata?",
+          "choices": [
+            "Responder + ntlmrelayx (impacket)",
+            "Hydra + Medusa",
+            "Nmap + Nikto",
+            "Blood⁠Hound + Sharp⁠Hound"
+          ],
+          "correct": 0,
+          "explanation": "Responder avvelena LLMNR/NBT-NS catturando l'autenticazione, ntlmrelayx (impacket) la rilancia verso target con SMB signing disabilitato."
+        },
+        {
+          "q": "Quale precondizione e' INDISPENSABILE sul target perche' un attacco SMB Relay vada a buon fine?",
+          "choices": [
+            "SMB signing required = enabled",
+            "SMB signing NOT required (disabilitato/non enforced)",
+            "Guest account abilitato",
+            "Null session abilitata"
+          ],
+          "correct": 1,
+          "explanation": "Se SMB signing e' REQUIRED il relay fallisce: il server scarta la sessione non firmata. Nmap script smb2-security-mode lo rileva."
+        },
+        {
+          "q": "Per ottenere RCE su MSSQL con credenziali valide, quale stored procedure abusi tipicamente?",
+          "choices": ["sp_help", "xp_cmdshell", "sp_who2", "xp_logininfo"],
+          "correct": 1,
+          "explanation": "xp_cmdshell esegue comandi OS come l'account del servizio SQL Server. Va abilitata se disattiva (sp_configure)."
+        },
+        {
+          "q": "Quale tool impacket usi per autenticarti su MSSQL e tentare impersonation di un altro login?",
+          "choices": ["psexec.py", "mssqlclient.py", "smbexec.py", "wmiexec.py"],
+          "correct": 1,
+          "explanation": "mssqlclient.py (impacket) supporta auth Win/SQL, xp_cmdshell e EXECUTE AS per impersonation."
+        },
+        {
+          "q": "Quale flag Nmap mostra la RAGIONE per cui una porta e' classificata in un certo stato?",
+          "choices": ["-v", "--reason", "-d", "--open"],
+          "correct": 1,
+          "explanation": "--reason mostra il pacchetto/evento (syn-ack, reset, no-response) che ha portato Nmap alla classificazione. Utile in troubleshooting/evasione."
+        }
+      ]
+    },
+    {
+      "after_h2": "15. Punti d'attenzione per l'esame eCPPT",
+      "title": "Hashcat, porte e punti d'attenzione eCPPT",
+      "questions": [
+        {
+          "q": "Quale Hashcat mode corrisponde a NTLMv2?",
+          "choices": ["1000", "5500", "5600", "1800"],
+          "correct": 2,
+          "explanation": "Hashcat: 1000=NTLM, 5500=NetNTLMv1, 5600=NetNTLMv2, 1800=sha512crypt. NTLMv2 e' quello tipico catturato da Responder."
+        },
+        {
+          "q": "Quale Hashcat mode usi per crackare hash NTLM 'puri' (dump SAM/NTDS)?",
+          "choices": ["1000", "5500", "5600", "3000 (LM)"],
+          "correct": 0,
+          "explanation": "Mode 1000 = NTLM. 3000 = LM (legacy). 5500/5600 sono challenge-response di rete."
+        },
+        {
+          "q": "Quale porta corrisponde a SMB su TCP nativo (non NetBIOS)?",
+          "choices": ["139", "445", "389", "636"],
+          "correct": 1,
+          "explanation": "445/TCP = SMB direct (CIFS). 139/TCP = NetBIOS Session Service. 389/636 = LDAP/LDAPS."
+        },
+        {
+          "q": "Quali porte sono associate a MSSQL Server?",
+          "choices": [
+            "TCP 1433 e UDP 1434 (browser)",
+            "TCP 3306 e UDP 3306",
+            "TCP 1521 e UDP 1521",
+            "TCP 5432 e UDP 5432"
+          ],
+          "correct": 0,
+          "explanation": "MSSQL: 1433/TCP engine, 1434/UDP SQL Server Browser. 3306=MySQL, 1521=Oracle, 5432=PostgreSQL."
+        },
+        {
+          "q": "Per l'esame eCPPT 2024, quale e' la sequenza CORRETTA di un attacco lab tipico contro un target SMB con signing disabilitato?",
+          "choices": [
+            "Nmap discovery -> Responder LLMNR poisoning -> ntlmrelayx verso target -> esecuzione comandi/dump SAM -> crack offline con hashcat",
+            "Nmap -sU -> snmpwalk -> Metasploit ms17-010 -> mimi⁠katz",
+            "Hydra SSH brute -> sudo -l -> SUID enumeration",
+            "Blood⁠Hound -> Kerberoasting -> Golden Ticket -> DCSync"
+          ],
+          "correct": 0,
+          "explanation": "Catena classica SMB Relay: discovery -> identifica target senza SMB signing -> Responder cattura NTLMv2 -> ntlmrelayx rilancia -> esecuzione/secretsdump -> crack offline NTLM se serve."
+        }
+      ]
+    }
+  ]
+}

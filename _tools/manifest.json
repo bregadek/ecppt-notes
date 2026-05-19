@@ -1,0 +1,1465 @@
+{
+  "version": 1,
+  "entries": {
+    "Active Directory Penetration Testing\\01_Introduction.mp4": {
+      "txt": "Active Directory Penetration Testing\\01_Introduction.txt",
+      "srt": "Active Directory Penetration Testing\\01_Introduction.srt",
+      "duration_sec": 671.521125,
+      "elapsed_sec": 39.53438687324524,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 10548,
+      "timestamp": "2026-05-16 17:34:17"
+    },
+    "Active Directory Penetration Testing\\010_AS-REP Roasting.mp4": {
+      "txt": "Active Directory Penetration Testing\\010_AS-REP Roasting.txt",
+      "srt": "Active Directory Penetration Testing\\010_AS-REP Roasting.srt",
+      "duration_sec": 939.1310625,
+      "elapsed_sec": 68.25559258460999,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 12229,
+      "timestamp": "2026-05-16 17:46:02"
+    },
+    "Active Directory Penetration Testing\\011_Kerberoasting.mp4": {
+      "txt": "Active Directory Penetration Testing\\011_Kerberoasting.txt",
+      "srt": "Active Directory Penetration Testing\\011_Kerberoasting.srt",
+      "duration_sec": 1024.0464375,
+      "elapsed_sec": 54.25525426864624,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 11946,
+      "timestamp": "2026-05-16 17:46:57"
+    },
+    "Active Directory Penetration Testing\\012_AD Lateral Movement_ Pass-the-Hash.mp4": {
+      "txt": "Active Directory Penetration Testing\\012_AD Lateral Movement_ Pass-the-Hash.txt",
+      "srt": "Active Directory Penetration Testing\\012_AD Lateral Movement_ Pass-the-Hash.srt",
+      "duration_sec": 1177.901875,
+      "elapsed_sec": 82.14647340774536,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 14281,
+      "timestamp": "2026-05-16 17:48:19"
+    },
+    "Active Directory Penetration Testing\\013_AD Lateral Movement_ Pass-the-Ticket.mp4": {
+      "txt": "Active Directory Penetration Testing\\013_AD Lateral Movement_ Pass-the-Ticket.txt",
+      "srt": "Active Directory Penetration Testing\\013_AD Lateral Movement_ Pass-the-Ticket.srt",
+      "duration_sec": 1069.3718125,
+      "elapsed_sec": 79.56673789024353,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 13315,
+      "timestamp": "2026-05-16 17:49:38"
+    },
+    "Active Directory Penetration Testing\\014_AD Persistence_ Golden Ticket.mp4": {
+      "txt": "Active Directory Penetration Testing\\014_AD Persistence_ Golden Ticket.txt",
+      "srt": "Active Directory Penetration Testing\\014_AD Persistence_ Golden Ticket.srt",
+      "duration_sec": 1432.7640625,
+      "elapsed_sec": 92.90496611595154,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 15193,
+      "timestamp": "2026-05-16 17:51:11"
+    },
+    "Active Directory Penetration Testing\\015_AD Persistence_ Silver Ticket.mp4": {
+      "txt": "Active Directory Penetration Testing\\015_AD Persistence_ Silver Ticket.txt",
+      "srt": "Active Directory Penetration Testing\\015_AD Persistence_ Silver Ticket.srt",
+      "duration_sec": 1790.4675,
+      "elapsed_sec": 125.00602626800537,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 20205,
+      "timestamp": "2026-05-16 17:53:16"
+    },
+    "Active Directory Penetration Testing\\02_Users, Groups & Computers.mp4": {
+      "txt": "Active Directory Penetration Testing\\02_Users, Groups & Computers.txt",
+      "srt": "Active Directory Penetration Testing\\02_Users, Groups & Computers.srt",
+      "duration_sec": 2450.5875625,
+      "elapsed_sec": 179.35223078727722,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 34089,
+      "timestamp": "2026-05-16 17:56:16"
+    },
+    "Active Directory Penetration Testing\\03_Organizational Units (OUs).mp4": {
+      "txt": "Active Directory Penetration Testing\\03_Organizational Units (OUs).txt",
+      "srt": "Active Directory Penetration Testing\\03_Organizational Units (OUs).srt",
+      "duration_sec": 1254.016875,
+      "elapsed_sec": 90.78014779090881,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 16002,
+      "timestamp": "2026-05-16 17:57:46"
+    },
+    "Active Directory Penetration Testing\\04_Active Directory Authentication.mp4": {
+      "txt": "Active Directory Penetration Testing\\04_Active Directory Authentication.txt",
+      "srt": "Active Directory Penetration Testing\\04_Active Directory Authentication.srt",
+      "duration_sec": 673.8895625,
+      "elapsed_sec": 52.62161588668823,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 9524,
+      "timestamp": "2026-05-16 17:58:39"
+    },
+    "Active Directory Penetration Testing\\05_Trees, Forests & Trusts.mp4": {
+      "txt": "Active Directory Penetration Testing\\05_Trees, Forests & Trusts.txt",
+      "srt": "Active Directory Penetration Testing\\05_Trees, Forests & Trusts.srt",
+      "duration_sec": 475.776875,
+      "elapsed_sec": 36.22942852973938,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 6695,
+      "timestamp": "2026-05-16 17:59:15"
+    },
+    "Active Directory Penetration Testing\\06_AD Penetration Testing Methodology.mp4": {
+      "txt": "Active Directory Penetration Testing\\06_AD Penetration Testing Methodology.txt",
+      "srt": "Active Directory Penetration Testing\\06_AD Penetration Testing Methodology.srt",
+      "duration_sec": 900.7716875,
+      "elapsed_sec": 70.96779370307922,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 13175,
+      "timestamp": "2026-05-16 18:00:26"
+    },
+    "Active Directory Penetration Testing\\07_Password Spraying.mp4": {
+      "txt": "Active Directory Penetration Testing\\07_Password Spraying.txt",
+      "srt": "Active Directory Penetration Testing\\07_Password Spraying.srt",
+      "duration_sec": 718.3325,
+      "elapsed_sec": 53.468225955963135,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 9507,
+      "timestamp": "2026-05-16 18:01:20"
+    },
+    "Active Directory Penetration Testing\\08_AD Enumeration_ BloodHound.mp4": {
+      "txt": "Active Directory Penetration Testing\\08_AD Enumeration_ BloodHound.txt",
+      "srt": "Active Directory Penetration Testing\\08_AD Enumeration_ BloodHound.srt",
+      "duration_sec": 1255.758375,
+      "elapsed_sec": 93.870685338974,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 16359,
+      "timestamp": "2026-05-16 18:02:54"
+    },
+    "Active Directory Penetration Testing\\09_AD Enumeration_ PowerView.mp4": {
+      "txt": "Active Directory Penetration Testing\\09_AD Enumeration_ PowerView.txt",
+      "srt": "Active Directory Penetration Testing\\09_AD Enumeration_ PowerView.srt",
+      "duration_sec": 1731.7906875,
+      "elapsed_sec": 126.55142760276794,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 21527,
+      "timestamp": "2026-05-16 18:05:00"
+    },
+    "Client-Side Attacks\\010_Resource Development & Weaponization.mp4": {
+      "txt": "Client-Side Attacks\\010_Resource Development & Weaponization.txt",
+      "srt": "Client-Side Attacks\\010_Resource Development & Weaponization.srt",
+      "duration_sec": 2248.063125,
+      "elapsed_sec": 181.9927282333374,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 34112,
+      "timestamp": "2026-05-16 18:08:02"
+    },
+    "Client-Side Attacks\\011_VBA Macro Fundamentals.mp4": {
+      "txt": "Client-Side Attacks\\011_VBA Macro Fundamentals.txt",
+      "srt": "Client-Side Attacks\\011_VBA Macro Fundamentals.srt",
+      "duration_sec": 1099.3023125,
+      "elapsed_sec": 75.89740586280823,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 16280,
+      "timestamp": "2026-05-16 18:09:18"
+    },
+    "Client-Side Attacks\\012_VBA Macro Development - Part 1.mp4": {
+      "txt": "Client-Side Attacks\\012_VBA Macro Development - Part 1.txt",
+      "srt": "Client-Side Attacks\\012_VBA Macro Development - Part 1.srt",
+      "duration_sec": 1647.688,
+      "elapsed_sec": 92.25281739234924,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 21579,
+      "timestamp": "2026-05-16 18:10:50"
+    },
+    "Client-Side Attacks\\013_VBA Macro Development - Part 2.mp4": {
+      "txt": "Client-Side Attacks\\013_VBA Macro Development - Part 2.txt",
+      "srt": "Client-Side Attacks\\013_VBA Macro Development - Part 2.srt",
+      "duration_sec": 1675.598375,
+      "elapsed_sec": 86.63994097709656,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 19753,
+      "timestamp": "2026-05-16 18:12:17"
+    },
+    "Client-Side Attacks\\014_Weaponizing VBA Macros with MSF.mp4": {
+      "txt": "Client-Side Attacks\\014_Weaponizing VBA Macros with MSF.txt",
+      "srt": "Client-Side Attacks\\014_Weaponizing VBA Macros with MSF.srt",
+      "duration_sec": 1603.1985625,
+      "elapsed_sec": 85.10599255561829,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 19546,
+      "timestamp": "2026-05-16 18:13:42"
+    },
+    "Client-Side Attacks\\015_VBA PowerShell Dropper.mp4": {
+      "txt": "Client-Side Attacks\\015_VBA PowerShell Dropper.txt",
+      "srt": "Client-Side Attacks\\015_VBA PowerShell Dropper.srt",
+      "duration_sec": 1459.49025,
+      "elapsed_sec": 74.15892481803894,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 16992,
+      "timestamp": "2026-05-16 18:14:56"
+    },
+    "Client-Side Attacks\\016_VBA Reverse Shell Macro with Powercat.mp4": {
+      "txt": "Client-Side Attacks\\016_VBA Reverse Shell Macro with Powercat.txt",
+      "srt": "Client-Side Attacks\\016_VBA Reverse Shell Macro with Powercat.srt",
+      "duration_sec": 1768.942625,
+      "elapsed_sec": 98.94715857505798,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 22997,
+      "timestamp": "2026-05-16 18:16:35"
+    },
+    "Client-Side Attacks\\017_Using ActiveX Controls for Macro Execution.mp4": {
+      "txt": "Client-Side Attacks\\017_Using ActiveX Controls for Macro Execution.txt",
+      "srt": "Client-Side Attacks\\017_Using ActiveX Controls for Macro Execution.srt",
+      "duration_sec": 1795.413375,
+      "elapsed_sec": 102.78584599494934,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 24853,
+      "timestamp": "2026-05-16 18:18:18"
+    },
+    "Client-Side Attacks\\018_Pretexting Phishing Documents.mp4": {
+      "txt": "Client-Side Attacks\\018_Pretexting Phishing Documents.txt",
+      "srt": "Client-Side Attacks\\018_Pretexting Phishing Documents.srt",
+      "duration_sec": 1223.1343125,
+      "elapsed_sec": 66.41372394561768,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 15403,
+      "timestamp": "2026-05-16 18:19:24"
+    },
+    "Client-Side Attacks\\019_HTML Applications (HTA).mp4": {
+      "txt": "Client-Side Attacks\\019_HTML Applications (HTA).txt",
+      "srt": "Client-Side Attacks\\019_HTML Applications (HTA).srt",
+      "duration_sec": 1592.517375,
+      "elapsed_sec": 97.94099688529968,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 22722,
+      "timestamp": "2026-05-16 18:21:02"
+    },
+    "Client-Side Attacks\\01_Course Introduction.mp4": {
+      "txt": "Client-Side Attacks\\01_Course Introduction.txt",
+      "srt": "Client-Side Attacks\\01_Course Introduction.srt",
+      "duration_sec": 696.529,
+      "elapsed_sec": 43.892104625701904,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 10922,
+      "timestamp": "2026-05-16 18:21:46"
+    },
+    "Client-Side Attacks\\020_HTA Attacks.mp4": {
+      "txt": "Client-Side Attacks\\020_HTA Attacks.txt",
+      "srt": "Client-Side Attacks\\020_HTA Attacks.srt",
+      "duration_sec": 773.2709375,
+      "elapsed_sec": 48.621803522109985,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 11039,
+      "timestamp": "2026-05-16 18:22:35"
+    },
+    "Client-Side Attacks\\021_Automating Macro Development with MacroPack - Part 1.mp4": {
+      "txt": "Client-Side Attacks\\021_Automating Macro Development with MacroPack - Part 1.txt",
+      "srt": "Client-Side Attacks\\021_Automating Macro Development with MacroPack - Part 1.srt",
+      "duration_sec": 1536.510875,
+      "elapsed_sec": 94.44692277908325,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 23289,
+      "timestamp": "2026-05-16 18:24:09"
+    },
+    "Client-Side Attacks\\022_Automating Macro Development with MacroPack - Part 2.mp4": {
+      "txt": "Client-Side Attacks\\022_Automating Macro Development with MacroPack - Part 2.txt",
+      "srt": "Client-Side Attacks\\022_Automating Macro Development with MacroPack - Part 2.srt",
+      "duration_sec": 1663.0828125,
+      "elapsed_sec": 93.00895524024963,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 21629,
+      "timestamp": "2026-05-16 18:25:42"
+    },
+    "Client-Side Attacks\\023_File Smuggling with HTML & JavaScript.mp4": {
+      "txt": "Client-Side Attacks\\023_File Smuggling with HTML & JavaScript.txt",
+      "srt": "Client-Side Attacks\\023_File Smuggling with HTML & JavaScript.srt",
+      "duration_sec": 1459.606375,
+      "elapsed_sec": 85.3917088508606,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 21333,
+      "timestamp": "2026-05-16 18:27:08"
+    },
+    "Client-Side Attacks\\024_Initial Access Via Spear Phishing Attachment.mp4": {
+      "txt": "Client-Side Attacks\\024_Initial Access Via Spear Phishing Attachment.txt",
+      "srt": "Client-Side Attacks\\024_Initial Access Via Spear Phishing Attachment.srt",
+      "duration_sec": 1787.58825,
+      "elapsed_sec": 98.18728423118591,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 23026,
+      "timestamp": "2026-05-16 18:28:46"
+    },
+    "Client-Side Attacks\\025_Establishing a Shell Through the Victim's Browser.mp4": {
+      "txt": "Client-Side Attacks\\025_Establishing a Shell Through the Victim's Browser.txt",
+      "srt": "Client-Side Attacks\\025_Establishing a Shell Through the Victim's Browser.srt",
+      "duration_sec": 1637.7034375,
+      "elapsed_sec": 86.20845413208008,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 20415,
+      "timestamp": "2026-05-16 18:30:12"
+    },
+    "Client-Side Attacks\\026_Course Conclusion.mp4": {
+      "txt": "Client-Side Attacks\\026_Course Conclusion.txt",
+      "srt": "Client-Side Attacks\\026_Course Conclusion.srt",
+      "duration_sec": 521.10225,
+      "elapsed_sec": 30.448235988616943,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 8195,
+      "timestamp": "2026-05-16 18:30:42"
+    },
+    "Client-Side Attacks\\02_Introduction to Client-Side Attacks.mp4": {
+      "txt": "Client-Side Attacks\\02_Introduction to Client-Side Attacks.txt",
+      "srt": "Client-Side Attacks\\02_Introduction to Client-Side Attacks.srt",
+      "duration_sec": 1495.04,
+      "elapsed_sec": 86.56298279762268,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 24396,
+      "timestamp": "2026-05-16 18:32:09"
+    },
+    "Client-Side Attacks\\03_Client-Side Attack Vectors.mp4": {
+      "txt": "Client-Side Attacks\\03_Client-Side Attack Vectors.txt",
+      "srt": "Client-Side Attacks\\03_Client-Side Attack Vectors.srt",
+      "duration_sec": 583.1691875,
+      "elapsed_sec": 32.91819405555725,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 9375,
+      "timestamp": "2026-05-16 18:32:42"
+    },
+    "Client-Side Attacks\\04_Client-Side Information Gathering.mp4": {
+      "txt": "Client-Side Attacks\\04_Client-Side Information Gathering.txt",
+      "srt": "Client-Side Attacks\\04_Client-Side Information Gathering.srt",
+      "duration_sec": 1155.2624375,
+      "elapsed_sec": 66.67898154258728,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 18324,
+      "timestamp": "2026-05-16 18:33:49"
+    },
+    "Client-Side Attacks\\05_Client Fingerprinting.mp4": {
+      "txt": "Client-Side Attacks\\05_Client Fingerprinting.txt",
+      "srt": "Client-Side Attacks\\05_Client Fingerprinting.srt",
+      "duration_sec": 2141.019125,
+      "elapsed_sec": 126.88991355895996,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 31954,
+      "timestamp": "2026-05-16 18:35:56"
+    },
+    "Client-Side Attacks\\06_Introduction to Social Engineering_1717706352952.mp4": {
+      "txt": "Client-Side Attacks\\06_Introduction to Social Engineering_1717706352952.txt",
+      "srt": "Client-Side Attacks\\06_Introduction to Social Engineering_1717706352952.srt",
+      "duration_sec": 2173.202,
+      "elapsed_sec": 125.07774662971497,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 34387,
+      "timestamp": "2026-05-16 18:38:01"
+    },
+    "Client-Side Attacks\\07_Pretexting.mp4": {
+      "txt": "Client-Side Attacks\\07_Pretexting.txt",
+      "srt": "Client-Side Attacks\\07_Pretexting.srt",
+      "duration_sec": 1689.7393125,
+      "elapsed_sec": 98.83043336868286,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 26212,
+      "timestamp": "2026-05-16 18:39:39"
+    },
+    "Client-Side Attacks\\08_Phishing with Gophish - Part 1.mp4": {
+      "txt": "Client-Side Attacks\\08_Phishing with Gophish - Part 1.txt",
+      "srt": "Client-Side Attacks\\08_Phishing with Gophish - Part 1.srt",
+      "duration_sec": 1409.7066875,
+      "elapsed_sec": 85.39499187469482,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 22302,
+      "timestamp": "2026-05-16 18:41:05"
+    },
+    "Client-Side Attacks\\09_Phishing with Gophish - Part 2.mp4": {
+      "txt": "Client-Side Attacks\\09_Phishing with Gophish - Part 2.txt",
+      "srt": "Client-Side Attacks\\09_Phishing with Gophish - Part 2.srt",
+      "duration_sec": 1650.660125,
+      "elapsed_sec": 89.9711127281189,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 21433,
+      "timestamp": "2026-05-16 18:42:35"
+    },
+    "Command & Control (C2C&C)\\010_Red Team Ops with Starkiller.mp4": {
+      "txt": "Command & Control (C2C&C)\\010_Red Team Ops with Starkiller.txt",
+      "srt": "Command & Control (C2C&C)\\010_Red Team Ops with Starkiller.srt",
+      "duration_sec": 1078.6598125,
+      "elapsed_sec": 63.45299458503723,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 15495,
+      "timestamp": "2026-05-16 18:43:38"
+    },
+    "Command & Control (C2C&C)\\011_ Course Conclusion.mp4": {
+      "txt": "Command & Control (C2C&C)\\011_ Course Conclusion.txt",
+      "srt": "Command & Control (C2C&C)\\011_ Course Conclusion.srt",
+      "duration_sec": 268.1440625,
+      "elapsed_sec": 20.213818311691284,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 4149,
+      "timestamp": "2026-05-16 18:43:58"
+    },
+    "Command & Control (C2C&C)\\01_Course Introduction.mp4": {
+      "txt": "Command & Control (C2C&C)\\01_Course Introduction.txt",
+      "srt": "Command & Control (C2C&C)\\01_Course Introduction.srt",
+      "duration_sec": 434.53825,
+      "elapsed_sec": 36.77580142021179,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 6960,
+      "timestamp": "2026-05-16 18:44:35"
+    },
+    "Command & Control (C2C&C)\\02_Introduction to Command & Control.mp4": {
+      "txt": "Command & Control (C2C&C)\\02_Introduction to Command & Control.txt",
+      "srt": "Command & Control (C2C&C)\\02_Introduction to Command & Control.srt",
+      "duration_sec": 1054.16275,
+      "elapsed_sec": 88.0191740989685,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 16725,
+      "timestamp": "2026-05-16 18:46:03"
+    },
+    "Command & Control (C2C&C)\\03_Introduction to C2 Frameworks.mp4": {
+      "txt": "Command & Control (C2C&C)\\03_Introduction to C2 Frameworks.txt",
+      "srt": "Command & Control (C2C&C)\\03_Introduction to C2 Frameworks.srt",
+      "duration_sec": 846.0655,
+      "elapsed_sec": 71.42826771736145,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 13928,
+      "timestamp": "2026-05-16 18:47:15"
+    },
+    "Command & Control (C2C&C)\\05_ C2 Framework Terminology.mp4": {
+      "txt": "Command & Control (C2C&C)\\05_ C2 Framework Terminology.txt",
+      "srt": "Command & Control (C2C&C)\\05_ C2 Framework Terminology.srt",
+      "duration_sec": 486.016875,
+      "elapsed_sec": 40.2462797164917,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 7346,
+      "timestamp": "2026-05-16 18:47:55"
+    },
+    "Command & Control (C2C&C)\\06_C2 Deployment & Operation.mp4": {
+      "txt": "Command & Control (C2C&C)\\06_C2 Deployment & Operation.txt",
+      "srt": "Command & Control (C2C&C)\\06_C2 Deployment & Operation.srt",
+      "duration_sec": 976.5384375,
+      "elapsed_sec": 84.56507229804993,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 15390,
+      "timestamp": "2026-05-16 18:49:20"
+    },
+    "Command & Control (C2C&C)\\07_The C2 Matrix - Choosing the Correct C2 Framework.mp4": {
+      "txt": "Command & Control (C2C&C)\\07_The C2 Matrix - Choosing the Correct C2 Framework.txt",
+      "srt": "Command & Control (C2C&C)\\07_The C2 Matrix - Choosing the Correct C2 Framework.srt",
+      "duration_sec": 1032.591375,
+      "elapsed_sec": 86.9582576751709,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 15876,
+      "timestamp": "2026-05-16 18:50:46"
+    },
+    "Command & Control (C2C&C)\\08_Introduction to PowerShell-Empire.mp4": {
+      "txt": "Command & Control (C2C&C)\\08_Introduction to PowerShell-Empire.txt",
+      "srt": "Command & Control (C2C&C)\\08_Introduction to PowerShell-Empire.srt",
+      "duration_sec": 1014.3869375,
+      "elapsed_sec": 88.27980995178223,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 15580,
+      "timestamp": "2026-05-16 18:52:15"
+    },
+    "Command & Control (C2C&C)\\09_ Red Team Ops with PowerShell-Empire.mp4": {
+      "txt": "Command & Control (C2C&C)\\09_ Red Team Ops with PowerShell-Empire.txt",
+      "srt": "Command & Control (C2C&C)\\09_ Red Team Ops with PowerShell-Empire.srt",
+      "duration_sec": 2766.56475,
+      "elapsed_sec": 225.54475784301758,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 38032,
+      "timestamp": "2026-05-16 18:56:00"
+    },
+    "Exploit Development Buffer Overflows\\01_Course Introduction.mp4": {
+      "txt": "Exploit Development Buffer Overflows\\01_Course Introduction.txt",
+      "srt": "Exploit Development Buffer Overflows\\01_Course Introduction.srt",
+      "duration_sec": 369.708125,
+      "elapsed_sec": 27.0295991897583,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 5042,
+      "timestamp": "2026-05-16 18:56:27"
+    },
+    "Exploit Development Buffer Overflows\\02_Introduction to Buffer Overflows.mp4": {
+      "txt": "Exploit Development Buffer Overflows\\02_Introduction to Buffer Overflows.txt",
+      "srt": "Exploit Development Buffer Overflows\\02_Introduction to Buffer Overflows.srt",
+      "duration_sec": 1192.693,
+      "elapsed_sec": 93.57652735710144,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 15965,
+      "timestamp": "2026-05-16 18:58:01"
+    },
+    "Exploit Development Buffer Overflows\\03_Finding Buffer Overflows.mp4": {
+      "txt": "Exploit Development Buffer Overflows\\03_Finding Buffer Overflows.txt",
+      "srt": "Exploit Development Buffer Overflows\\03_Finding Buffer Overflows.srt",
+      "duration_sec": 511.0711875,
+      "elapsed_sec": 37.9037401676178,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 6729,
+      "timestamp": "2026-05-16 18:58:39"
+    },
+    "Exploit Development Buffer Overflows\\04_Finding Buffer Overflows with Fuzzing.mp4": {
+      "txt": "Exploit Development Buffer Overflows\\04_Finding Buffer Overflows with Fuzzing.txt",
+      "srt": "Exploit Development Buffer Overflows\\04_Finding Buffer Overflows with Fuzzing.srt",
+      "duration_sec": 1886.5516875,
+      "elapsed_sec": 128.5281481742859,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 20322,
+      "timestamp": "2026-05-16 19:00:47"
+    },
+    "Exploit Development Buffer Overflows\\05_Windows Stack Overflows.mp4": {
+      "txt": "Exploit Development Buffer Overflows\\05_Windows Stack Overflows.txt",
+      "srt": "Exploit Development Buffer Overflows\\05_Windows Stack Overflows.srt",
+      "duration_sec": 227.99675,
+      "elapsed_sec": 17.322930574417114,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 3141,
+      "timestamp": "2026-05-16 19:01:05"
+    },
+    "Exploit Development Buffer Overflows\\06_Structured Exception Handling (SEH).mp4": {
+      "txt": "Exploit Development Buffer Overflows\\06_Structured Exception Handling (SEH).txt",
+      "srt": "Exploit Development Buffer Overflows\\06_Structured Exception Handling (SEH).srt",
+      "duration_sec": 269.0960625,
+      "elapsed_sec": 18.946807146072388,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 3590,
+      "timestamp": "2026-05-16 19:01:24"
+    },
+    "Exploit Development Buffer Overflows\\07_Windows SEH Overflow (EasyChat).mp4": {
+      "txt": "Exploit Development Buffer Overflows\\07_Windows SEH Overflow (EasyChat).txt",
+      "srt": "Exploit Development Buffer Overflows\\07_Windows SEH Overflow (EasyChat).srt",
+      "duration_sec": 722.6514375,
+      "elapsed_sec": 47.779547929763794,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 7418,
+      "timestamp": "2026-05-16 19:02:11"
+    },
+    "Exploit Development Buffer Overflows\\08_Course Conclusion.mp4": {
+      "txt": "Exploit Development Buffer Overflows\\08_Course Conclusion.txt",
+      "srt": "Exploit Development Buffer Overflows\\08_Course Conclusion.srt",
+      "duration_sec": 211.1158125,
+      "elapsed_sec": 16.24268078804016,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 3108,
+      "timestamp": "2026-05-16 19:02:28"
+    },
+    "Lateral Movement & Pivoting\\010_Pass-the-Hash with WMIExec.mp4": {
+      "txt": "Lateral Movement & Pivoting\\010_Pass-the-Hash with WMIExec.txt",
+      "srt": "Lateral Movement & Pivoting\\010_Pass-the-Hash with WMIExec.srt",
+      "duration_sec": 665.9715,
+      "elapsed_sec": 55.49397420883179,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 9791,
+      "timestamp": "2026-05-16 19:03:23"
+    },
+    "Lateral Movement & Pivoting\\011_Linux Lateral Movement Techniques.mp4": {
+      "txt": "Lateral Movement & Pivoting\\011_Linux Lateral Movement Techniques.txt",
+      "srt": "Lateral Movement & Pivoting\\011_Linux Lateral Movement Techniques.srt",
+      "duration_sec": 1688.369375,
+      "elapsed_sec": 126.23242473602295,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 19711,
+      "timestamp": "2026-05-16 19:05:29"
+    },
+    "Lateral Movement & Pivoting\\012_Pivoting & Port Forwarding with Metasploit.mp4": {
+      "txt": "Lateral Movement & Pivoting\\012_Pivoting & Port Forwarding with Metasploit.txt",
+      "srt": "Lateral Movement & Pivoting\\012_Pivoting & Port Forwarding with Metasploit.srt",
+      "duration_sec": 1299.2958125,
+      "elapsed_sec": 102.09814238548279,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 17881,
+      "timestamp": "2026-05-16 19:07:11"
+    },
+    "Lateral Movement & Pivoting\\013_Pivoting with SOCKS Proxy.mp4": {
+      "txt": "Lateral Movement & Pivoting\\013_Pivoting with SOCKS Proxy.txt",
+      "srt": "Lateral Movement & Pivoting\\013_Pivoting with SOCKS Proxy.srt",
+      "duration_sec": 1044.50325,
+      "elapsed_sec": 82.98041200637817,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 13759,
+      "timestamp": "2026-05-16 19:08:34"
+    },
+    "Lateral Movement & Pivoting\\014_Pivoting via SSH Tunneling.mp4": {
+      "txt": "Lateral Movement & Pivoting\\014_Pivoting via SSH Tunneling.txt",
+      "srt": "Lateral Movement & Pivoting\\014_Pivoting via SSH Tunneling.srt",
+      "duration_sec": 1322.5854375,
+      "elapsed_sec": 107.31577181816101,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 18647,
+      "timestamp": "2026-05-16 19:10:22"
+    },
+    "Lateral Movement & Pivoting\\015_Pivoting with reGeorg.mp4": {
+      "txt": "Lateral Movement & Pivoting\\015_Pivoting with reGeorg.txt",
+      "srt": "Lateral Movement & Pivoting\\015_Pivoting with reGeorg.srt",
+      "duration_sec": 1298.668875,
+      "elapsed_sec": 95.73146915435791,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 15695,
+      "timestamp": "2026-05-16 19:11:58"
+    },
+    "Lateral Movement & Pivoting\\016_Course Conclusion.mp4": {
+      "txt": "Lateral Movement & Pivoting\\016_Course Conclusion.txt",
+      "srt": "Lateral Movement & Pivoting\\016_Course Conclusion.srt",
+      "duration_sec": 446.6358125,
+      "elapsed_sec": 36.39245057106018,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 6774,
+      "timestamp": "2026-05-16 19:12:34"
+    },
+    "Lateral Movement & Pivoting\\01_Course Introduction.mp4": {
+      "txt": "Lateral Movement & Pivoting\\01_Course Introduction.txt",
+      "srt": "Lateral Movement & Pivoting\\01_Course Introduction.srt",
+      "duration_sec": 693.1853125,
+      "elapsed_sec": 52.41920733451843,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 10041,
+      "timestamp": "2026-05-16 19:13:26"
+    },
+    "Lateral Movement & Pivoting\\02_Introduction to Lateral Movement & Pivoting.mp4": {
+      "txt": "Lateral Movement & Pivoting\\02_Introduction to Lateral Movement & Pivoting.txt",
+      "srt": "Lateral Movement & Pivoting\\02_Introduction to Lateral Movement & Pivoting.srt",
+      "duration_sec": 627.7050625,
+      "elapsed_sec": 49.67366600036621,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 9506,
+      "timestamp": "2026-05-16 19:14:16"
+    },
+    "Lateral Movement & Pivoting\\03_Windows Lateral Movement Techniques.mp4": {
+      "txt": "Lateral Movement & Pivoting\\03_Windows Lateral Movement Techniques.txt",
+      "srt": "Lateral Movement & Pivoting\\03_Windows Lateral Movement Techniques.srt",
+      "duration_sec": 1168.7531875,
+      "elapsed_sec": 96.02227902412415,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 17910,
+      "timestamp": "2026-05-16 19:15:52"
+    },
+    "Lateral Movement & Pivoting\\04_Lateral Movement with PsExec.mp4": {
+      "txt": "Lateral Movement & Pivoting\\04_Lateral Movement with PsExec.txt",
+      "srt": "Lateral Movement & Pivoting\\04_Lateral Movement with PsExec.srt",
+      "duration_sec": 2441.299625,
+      "elapsed_sec": 195.94548630714417,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 36198,
+      "timestamp": "2026-05-16 19:19:08"
+    },
+    "Lateral Movement & Pivoting\\05_Lateral Movement with SMBExec.mp4": {
+      "txt": "Lateral Movement & Pivoting\\05_Lateral Movement with SMBExec.txt",
+      "srt": "Lateral Movement & Pivoting\\05_Lateral Movement with SMBExec.srt",
+      "duration_sec": 771.6455625,
+      "elapsed_sec": 61.49777412414551,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 10824,
+      "timestamp": "2026-05-16 19:20:09"
+    },
+    "Lateral Movement & Pivoting\\06_Lateral Movement with CrackMapExec.mp4": {
+      "txt": "Lateral Movement & Pivoting\\06_Lateral Movement with CrackMapExec.txt",
+      "srt": "Lateral Movement & Pivoting\\06_Lateral Movement with CrackMapExec.srt",
+      "duration_sec": 1706.3648125,
+      "elapsed_sec": 143.01252102851868,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 24658,
+      "timestamp": "2026-05-16 19:22:32"
+    },
+    "Lateral Movement & Pivoting\\07_Lateral Movement via RDP.mp4": {
+      "txt": "Lateral Movement & Pivoting\\07_Lateral Movement via RDP.txt",
+      "srt": "Lateral Movement & Pivoting\\07_Lateral Movement via RDP.srt",
+      "duration_sec": 1134.92175,
+      "elapsed_sec": 87.87484169006348,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 14432,
+      "timestamp": "2026-05-16 19:24:00"
+    },
+    "Lateral Movement & Pivoting\\08_Lateral Movement via WinRM.mp4": {
+      "txt": "Lateral Movement & Pivoting\\08_Lateral Movement via WinRM.txt",
+      "srt": "Lateral Movement & Pivoting\\08_Lateral Movement via WinRM.srt",
+      "duration_sec": 1684.677375,
+      "elapsed_sec": 143.07769179344177,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 25932,
+      "timestamp": "2026-05-16 19:26:23"
+    },
+    "Lateral Movement & Pivoting\\09_Pass-the-Hash with Metasploit.mp4": {
+      "txt": "Lateral Movement & Pivoting\\09_Pass-the-Hash with Metasploit.txt",
+      "srt": "Lateral Movement & Pivoting\\09_Pass-the-Hash with Metasploit.srt",
+      "duration_sec": 494.701125,
+      "elapsed_sec": 42.51791286468506,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 7631,
+      "timestamp": "2026-05-16 19:27:06"
+    },
+    "Network Penetration Testing\\010_Host Discovery with Nmap - Part 2.mp4": {
+      "txt": "Network Penetration Testing\\010_Host Discovery with Nmap - Part 2.txt",
+      "srt": "Network Penetration Testing\\010_Host Discovery with Nmap - Part 2.srt",
+      "duration_sec": 1401.3010625,
+      "elapsed_sec": 124.08447289466858,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 21348,
+      "timestamp": "2026-05-16 19:29:10"
+    },
+    "Network Penetration Testing\\011_Port Scanning with Nmap.mp4": {
+      "txt": "Network Penetration Testing\\011_Port Scanning with Nmap.txt",
+      "srt": "Network Penetration Testing\\011_Port Scanning with Nmap.srt",
+      "duration_sec": 2202.5055625,
+      "elapsed_sec": 181.47920656204224,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 31522,
+      "timestamp": "2026-05-16 19:32:12"
+    },
+    "Network Penetration Testing\\012_Service Version & OS Detection.mp4": {
+      "txt": "Network Penetration Testing\\012_Service Version & OS Detection.txt",
+      "srt": "Network Penetration Testing\\012_Service Version & OS Detection.srt",
+      "duration_sec": 972.8464375,
+      "elapsed_sec": 78.50465512275696,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 13510,
+      "timestamp": "2026-05-16 19:33:30"
+    },
+    "Network Penetration Testing\\013_Nmap Scripting Engine (NSE).mp4": {
+      "txt": "Network Penetration Testing\\013_Nmap Scripting Engine (NSE).txt",
+      "srt": "Network Penetration Testing\\013_Nmap Scripting Engine (NSE).srt",
+      "duration_sec": 1938.2393125,
+      "elapsed_sec": 153.0867884159088,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 27171,
+      "timestamp": "2026-05-16 19:36:03"
+    },
+    "Network Penetration Testing\\014_Firewall Detection & IDS Evasion.mp4": {
+      "txt": "Network Penetration Testing\\014_Firewall Detection & IDS Evasion.txt",
+      "srt": "Network Penetration Testing\\014_Firewall Detection & IDS Evasion.srt",
+      "duration_sec": 1575.8686875,
+      "elapsed_sec": 127.26884365081787,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 21273,
+      "timestamp": "2026-05-16 19:38:10"
+    },
+    "Network Penetration Testing\\015_Optimizing Nmap Scans.mp4": {
+      "txt": "Network Penetration Testing\\015_Optimizing Nmap Scans.txt",
+      "srt": "Network Penetration Testing\\015_Optimizing Nmap Scans.srt",
+      "duration_sec": 1217.7705625,
+      "elapsed_sec": 99.09198951721191,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 16508,
+      "timestamp": "2026-05-16 19:39:50"
+    },
+    "Network Penetration Testing\\016_Nmap Output Formats.mp4": {
+      "txt": "Network Penetration Testing\\016_Nmap Output Formats.txt",
+      "srt": "Network Penetration Testing\\016_Nmap Output Formats.srt",
+      "duration_sec": 1293.072875,
+      "elapsed_sec": 104.9428071975708,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 18080,
+      "timestamp": "2026-05-16 19:41:34"
+    },
+    "Network Penetration Testing\\017_Introduction to Enumeration.mp4": {
+      "txt": "Network Penetration Testing\\017_Introduction to Enumeration.txt",
+      "srt": "Network Penetration Testing\\017_Introduction to Enumeration.srt",
+      "duration_sec": 348.18325,
+      "elapsed_sec": 29.152430534362793,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 5194,
+      "timestamp": "2026-05-16 19:42:04"
+    },
+    "Network Penetration Testing\\018_SMB___NetBIOS_Enumeration.mp4.mp4": {
+      "txt": "Network Penetration Testing\\018_SMB___NetBIOS_Enumeration.mp4.txt",
+      "srt": "Network Penetration Testing\\018_SMB___NetBIOS_Enumeration.mp4.srt",
+      "duration_sec": 2298.6361875,
+      "elapsed_sec": 181.37188076972961,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 29631,
+      "timestamp": "2026-05-16 19:45:05"
+    },
+    "Network Penetration Testing\\019_SNMP_Enumeration.mp4.mp4": {
+      "txt": "Network Penetration Testing\\019_SNMP_Enumeration.mp4.txt",
+      "srt": "Network Penetration Testing\\019_SNMP_Enumeration.mp4.srt",
+      "duration_sec": 1012.6454375,
+      "elapsed_sec": 78.33937382698059,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 13730,
+      "timestamp": "2026-05-16 19:46:23"
+    },
+    "Network Penetration Testing\\01_Course Introduction.mp4": {
+      "txt": "Network Penetration Testing\\01_Course Introduction.txt",
+      "srt": "Network Penetration Testing\\01_Course Introduction.srt",
+      "duration_sec": 549.012625,
+      "elapsed_sec": 45.83787250518799,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 8699,
+      "timestamp": "2026-05-16 19:47:09"
+    },
+    "Network Penetration Testing\\020_Linux_Service_Enumeration.mp4.mp4": {
+      "txt": "Network Penetration Testing\\020_Linux_Service_Enumeration.mp4.txt",
+      "srt": "Network Penetration Testing\\020_Linux_Service_Enumeration.mp4.srt",
+      "duration_sec": 1942.976125,
+      "elapsed_sec": 160.61332511901855,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 26946,
+      "timestamp": "2026-05-16 19:49:50"
+    },
+    "Network Penetration Testing\\021_SMB_Relay_Attack.mp4.mp4": {
+      "txt": "Network Penetration Testing\\021_SMB_Relay_Attack.mp4.txt",
+      "srt": "Network Penetration Testing\\021_SMB_Relay_Attack.mp4.srt",
+      "duration_sec": 1208.4593125,
+      "elapsed_sec": 96.69689083099365,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 16642,
+      "timestamp": "2026-05-16 19:51:26"
+    },
+    "Network Penetration Testing\\022_MSSQL_DB_User_Impersonation_to_RCE.mp4.mp4": {
+      "txt": "Network Penetration Testing\\022_MSSQL_DB_User_Impersonation_to_RCE.mp4.txt",
+      "srt": "Network Penetration Testing\\022_MSSQL_DB_User_Impersonation_to_RCE.mp4.srt",
+      "duration_sec": 894.96675,
+      "elapsed_sec": 66.70627808570862,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 10743,
+      "timestamp": "2026-05-16 19:52:33"
+    },
+    "Network Penetration Testing\\023_Linux_Black-Box_Penetration_Test.mp4.mp4": {
+      "txt": "Network Penetration Testing\\023_Linux_Black-Box_Penetration_Test.mp4.txt",
+      "srt": "Network Penetration Testing\\023_Linux_Black-Box_Penetration_Test.mp4.srt",
+      "duration_sec": 1411.77325,
+      "elapsed_sec": 106.37213826179504,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 17542,
+      "timestamp": "2026-05-16 19:54:20"
+    },
+    "Network Penetration Testing\\024_Dumping___Cracking_NTLM_Hashes.mp4.mp4": {
+      "txt": "Network Penetration Testing\\024_Dumping___Cracking_NTLM_Hashes.mp4.txt",
+      "srt": "Network Penetration Testing\\024_Dumping___Cracking_NTLM_Hashes.mp4.srt",
+      "duration_sec": 841.05,
+      "elapsed_sec": 73.23507046699524,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 12765,
+      "timestamp": "2026-05-16 19:55:33"
+    },
+    "Network Penetration Testing\\025_Windows_Post-Exploitation_Lab.mp4.mp4": {
+      "txt": "Network Penetration Testing\\025_Windows_Post-Exploitation_Lab.mp4.txt",
+      "srt": "Network Penetration Testing\\025_Windows_Post-Exploitation_Lab.mp4.srt",
+      "duration_sec": 1272.9179375,
+      "elapsed_sec": 101.85617232322693,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 17209,
+      "timestamp": "2026-05-16 19:57:15"
+    },
+    "Network Penetration Testing\\026_Course Conclusion_1717745829269.mp4": {
+      "txt": "Network Penetration Testing\\026_Course Conclusion_1717745829269.txt",
+      "srt": "Network Penetration Testing\\026_Course Conclusion_1717745829269.srt",
+      "duration_sec": 333.9029375,
+      "elapsed_sec": 27.82597064971924,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 5372,
+      "timestamp": "2026-05-16 19:57:42"
+    },
+    "Network Penetration Testing\\02_Active Information Gathering.mp4": {
+      "txt": "Network Penetration Testing\\02_Active Information Gathering.txt",
+      "srt": "Network Penetration Testing\\02_Active Information Gathering.srt",
+      "duration_sec": 434.0041875,
+      "elapsed_sec": 38.580727338790894,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 7487,
+      "timestamp": "2026-05-16 19:58:21"
+    },
+    "Network Penetration Testing\\03_Networking Fundamentals.mp4": {
+      "txt": "Network Penetration Testing\\03_Networking Fundamentals.txt",
+      "srt": "Network Penetration Testing\\03_Networking Fundamentals.srt",
+      "duration_sec": 934.092375,
+      "elapsed_sec": 74.83411169052124,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 14146,
+      "timestamp": "2026-05-16 19:59:36"
+    },
+    "Network Penetration Testing\\04_Network Layer.mp4": {
+      "txt": "Network Penetration Testing\\04_Network Layer.txt",
+      "srt": "Network Penetration Testing\\04_Network Layer.srt",
+      "duration_sec": 1895.9789375,
+      "elapsed_sec": 154.270001411438,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 27691,
+      "timestamp": "2026-05-16 20:02:10"
+    },
+    "Network Penetration Testing\\05_Transport Layer.mp4": {
+      "txt": "Network Penetration Testing\\05_Transport Layer.txt",
+      "srt": "Network Penetration Testing\\05_Transport Layer.srt",
+      "duration_sec": 2245.764375,
+      "elapsed_sec": 175.1552858352661,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 31422,
+      "timestamp": "2026-05-16 20:05:05"
+    },
+    "Network Penetration Testing\\06_Network Mapping.mp4": {
+      "txt": "Network Penetration Testing\\06_Network Mapping.txt",
+      "srt": "Network Penetration Testing\\06_Network Mapping.srt",
+      "duration_sec": 778.8901875,
+      "elapsed_sec": 62.515064001083374,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 11891,
+      "timestamp": "2026-05-16 20:06:08"
+    },
+    "Network Penetration Testing\\07_Host Discovery Techniques.mp4": {
+      "txt": "Network Penetration Testing\\07_Host Discovery Techniques.txt",
+      "srt": "Network Penetration Testing\\07_Host Discovery Techniques.srt",
+      "duration_sec": 600.28225,
+      "elapsed_sec": 48.09479308128357,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 8619,
+      "timestamp": "2026-05-16 20:06:56"
+    },
+    "Network Penetration Testing\\08_Ping Sweeps.mp4": {
+      "txt": "Network Penetration Testing\\08_Ping Sweeps.txt",
+      "srt": "Network Penetration Testing\\08_Ping Sweeps.srt",
+      "duration_sec": 1401.3010625,
+      "elapsed_sec": 123.7161693572998,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 21348,
+      "timestamp": "2026-05-16 20:09:00"
+    },
+    "Network Penetration Testing\\09_Host Discovery with Nmap - Part 1.mp4": {
+      "txt": "Network Penetration Testing\\09_Host Discovery with Nmap - Part 1.txt",
+      "srt": "Network Penetration Testing\\09_Host Discovery with Nmap - Part 1.srt",
+      "duration_sec": 1570.1798125,
+      "elapsed_sec": 133.49856090545654,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 23370,
+      "timestamp": "2026-05-16 20:11:13"
+    },
+    "PowerShell for Pentesters\\010_Leveraging PowerShell During Exploitation.mp4": {
+      "txt": "PowerShell for Pentesters\\010_Leveraging PowerShell During Exploitation.txt",
+      "srt": "PowerShell for Pentesters\\010_Leveraging PowerShell During Exploitation.srt",
+      "duration_sec": 1546.541875,
+      "elapsed_sec": 135.38953948020935,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 23267,
+      "timestamp": "2026-05-16 20:13:29"
+    },
+    "PowerShell for Pentesters\\011_PowerShell-Empire.mp4": {
+      "txt": "PowerShell for Pentesters\\011_PowerShell-Empire.txt",
+      "srt": "PowerShell for Pentesters\\011_PowerShell-Empire.srt",
+      "duration_sec": 2058.9598125,
+      "elapsed_sec": 181.7585334777832,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 33466,
+      "timestamp": "2026-05-16 20:16:30"
+    },
+    "PowerShell for Pentesters\\012_AV Evasion with Shellter.mp4": {
+      "txt": "PowerShell for Pentesters\\012_AV Evasion with Shellter.txt",
+      "srt": "PowerShell for Pentesters\\012_AV Evasion with Shellter.srt",
+      "duration_sec": 1888.9665625,
+      "elapsed_sec": 158.18881845474243,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 28619,
+      "timestamp": "2026-05-16 20:19:09"
+    },
+    "PowerShell for Pentesters\\013_Obfuscating PowerShell Code.mp4": {
+      "txt": "PowerShell for Pentesters\\013_Obfuscating PowerShell Code.txt",
+      "srt": "PowerShell for Pentesters\\013_Obfuscating PowerShell Code.srt",
+      "duration_sec": 993.8373125,
+      "elapsed_sec": 88.1294858455658,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 15070,
+      "timestamp": "2026-05-16 20:20:37"
+    },
+    "PowerShell for Pentesters\\01_Course Introduction.mp4": {
+      "txt": "PowerShell for Pentesters\\01_Course Introduction.txt",
+      "srt": "PowerShell for Pentesters\\01_Course Introduction.srt",
+      "duration_sec": 460.0801875,
+      "elapsed_sec": 38.50157642364502,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 7273,
+      "timestamp": "2026-05-16 20:21:15"
+    },
+    "PowerShell for Pentesters\\02_Introduction to PowerShell.mp4": {
+      "txt": "PowerShell for Pentesters\\02_Introduction to PowerShell.txt",
+      "srt": "PowerShell for Pentesters\\02_Introduction to PowerShell.srt",
+      "duration_sec": 440.6450625,
+      "elapsed_sec": 39.36083149909973,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 6816,
+      "timestamp": "2026-05-16 20:21:55"
+    },
+    "PowerShell for Pentesters\\03_Why PowerShell_.mp4": {
+      "txt": "PowerShell for Pentesters\\03_Why PowerShell_.txt",
+      "srt": "PowerShell for Pentesters\\03_Why PowerShell_.srt",
+      "duration_sec": 515.483,
+      "elapsed_sec": 45.084126234054565,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 8000,
+      "timestamp": "2026-05-16 20:22:40"
+    },
+    "PowerShell for Pentesters\\04_The PowerShell CLI.mp4": {
+      "txt": "PowerShell for Pentesters\\04_The PowerShell CLI.txt",
+      "srt": "PowerShell for Pentesters\\04_The PowerShell CLI.srt",
+      "duration_sec": 819.7340625,
+      "elapsed_sec": 75.3580813407898,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 13513,
+      "timestamp": "2026-05-16 20:23:55"
+    },
+    "PowerShell for Pentesters\\05_Getting Comfortable with PowerShell.mp4": {
+      "txt": "PowerShell for Pentesters\\05_Getting Comfortable with PowerShell.txt",
+      "srt": "PowerShell for Pentesters\\05_Getting Comfortable with PowerShell.srt",
+      "duration_sec": 825.2371875,
+      "elapsed_sec": 63.54000210762024,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 10933,
+      "timestamp": "2026-05-16 20:24:59"
+    },
+    "PowerShell for Pentesters\\06_PowerShell Cmdlets.mp4": {
+      "txt": "PowerShell for Pentesters\\06_PowerShell Cmdlets.txt",
+      "srt": "PowerShell for Pentesters\\06_PowerShell Cmdlets.srt",
+      "duration_sec": 679.2998125,
+      "elapsed_sec": 59.312859535217285,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 10578,
+      "timestamp": "2026-05-16 20:25:58"
+    },
+    "PowerShell for Pentesters\\07_PowerShell Modules.mp4": {
+      "txt": "PowerShell for Pentesters\\07_PowerShell Modules.txt",
+      "srt": "PowerShell for Pentesters\\07_PowerShell Modules.srt",
+      "duration_sec": 251.866875,
+      "elapsed_sec": 22.939246654510498,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 4367,
+      "timestamp": "2026-05-16 20:26:21"
+    },
+    "PowerShell for Pentesters\\08_PowerShell Scripts.mp4": {
+      "txt": "PowerShell for Pentesters\\08_PowerShell Scripts.txt",
+      "srt": "PowerShell for Pentesters\\08_PowerShell Scripts.srt",
+      "duration_sec": 820.662875,
+      "elapsed_sec": 63.091639041900635,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 11032,
+      "timestamp": "2026-05-16 20:27:24"
+    },
+    "PowerShell for Pentesters\\09_PowerShell Objects.mp4": {
+      "txt": "PowerShell for Pentesters\\09_PowerShell Objects.txt",
+      "srt": "PowerShell for Pentesters\\09_PowerShell Objects.srt",
+      "duration_sec": 470.5059375,
+      "elapsed_sec": 43.4435179233551,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 7942,
+      "timestamp": "2026-05-16 20:28:07"
+    },
+    "Privilege Escalation\\010_ Access Token Impersonation.mp4": {
+      "txt": "Privilege Escalation\\010_ Access Token Impersonation.txt",
+      "srt": "Privilege Escalation\\010_ Access Token Impersonation.srt",
+      "duration_sec": 866.5919375,
+      "elapsed_sec": 68.5947835445404,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 12873,
+      "timestamp": "2026-05-16 20:29:16"
+    },
+    "Privilege Escalation\\011_Juicy Potato.mp4": {
+      "txt": "Privilege Escalation\\011_Juicy Potato.txt",
+      "srt": "Privilege Escalation\\011_Juicy Potato.srt",
+      "duration_sec": 1341.9044375,
+      "elapsed_sec": 99.72389578819275,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 17268,
+      "timestamp": "2026-05-16 20:30:56"
+    },
+    "Privilege Escalation\\012_Bypassing UAC with UACMe.mp4": {
+      "txt": "Privilege Escalation\\012_Bypassing UAC with UACMe.txt",
+      "srt": "Privilege Escalation\\012_Bypassing UAC with UACMe.srt",
+      "duration_sec": 1387.60125,
+      "elapsed_sec": 109.11507391929626,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 19095,
+      "timestamp": "2026-05-16 20:32:45"
+    },
+    "Privilege Escalation\\013_DLL Hijacking.mp4": {
+      "txt": "Privilege Escalation\\013_DLL Hijacking.txt",
+      "srt": "Privilege Escalation\\013_DLL Hijacking.srt",
+      "duration_sec": 1469.56775,
+      "elapsed_sec": 115.32815337181091,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 20134,
+      "timestamp": "2026-05-16 20:34:40"
+    },
+    "Privilege Escalation\\014_Locally Stored Credentials.mp4": {
+      "txt": "Privilege Escalation\\014_Locally Stored Credentials.txt",
+      "srt": "Privilege Escalation\\014_Locally Stored Credentials.srt",
+      "duration_sec": 306.5730625,
+      "elapsed_sec": 24.708883047103882,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 4380,
+      "timestamp": "2026-05-16 20:35:05"
+    },
+    "Privilege Escalation\\015_Misconfigured File Permissions.mp4": {
+      "txt": "Privilege Escalation\\015_Misconfigured File Permissions.txt",
+      "srt": "Privilege Escalation\\015_Misconfigured File Permissions.srt",
+      "duration_sec": 390.8383125,
+      "elapsed_sec": 29.616849899291992,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 5079,
+      "timestamp": "2026-05-16 20:35:34"
+    },
+    "Privilege Escalation\\016_Exploiting SUID Binaries.mp4": {
+      "txt": "Privilege Escalation\\016_Exploiting SUID Binaries.txt",
+      "srt": "Privilege Escalation\\016_Exploiting SUID Binaries.srt",
+      "duration_sec": 614.9805,
+      "elapsed_sec": 47.34157347679138,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 8061,
+      "timestamp": "2026-05-16 20:36:22"
+    },
+    "Privilege Escalation\\017_ Misconfigured SUDO Privileges.mp4": {
+      "txt": "Privilege Escalation\\017_ Misconfigured SUDO Privileges.txt",
+      "srt": "Privilege Escalation\\017_ Misconfigured SUDO Privileges.srt",
+      "duration_sec": 346.5810625,
+      "elapsed_sec": 27.86830186843872,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 4982,
+      "timestamp": "2026-05-16 20:36:50"
+    },
+    "Privilege Escalation\\018_ Shared Library Injection.mp4": {
+      "txt": "Privilege Escalation\\018_ Shared Library Injection.txt",
+      "srt": "Privilege Escalation\\018_ Shared Library Injection.srt",
+      "duration_sec": 777.357625,
+      "elapsed_sec": 59.110931634902954,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 10179,
+      "timestamp": "2026-05-16 20:37:49"
+    },
+    "Privilege Escalation\\019_Course Conclusion.mp4": {
+      "txt": "Privilege Escalation\\019_Course Conclusion.txt",
+      "srt": "Privilege Escalation\\019_Course Conclusion.srt",
+      "duration_sec": 325.1258125,
+      "elapsed_sec": 25.938708305358887,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 5007,
+      "timestamp": "2026-05-16 20:38:15"
+    },
+    "Privilege Escalation\\01_Course Introduction.mp4": {
+      "txt": "Privilege Escalation\\01_Course Introduction.txt",
+      "srt": "Privilege Escalation\\01_Course Introduction.srt",
+      "duration_sec": 703.10025,
+      "elapsed_sec": 57.56492066383362,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 11168,
+      "timestamp": "2026-05-16 20:39:12"
+    },
+    "Privilege Escalation\\02_Introduction to Privilege Escalation.mp4": {
+      "txt": "Privilege Escalation\\02_Introduction to Privilege Escalation.txt",
+      "srt": "Privilege Escalation\\02_Introduction to Privilege Escalation.srt",
+      "duration_sec": 344.769875,
+      "elapsed_sec": 28.418462991714478,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 5284,
+      "timestamp": "2026-05-16 20:39:41"
+    },
+    "Privilege Escalation\\03_Privilege Escalation with PowerUp.mp4": {
+      "txt": "Privilege Escalation\\03_Privilege Escalation with PowerUp.txt",
+      "srt": "Privilege Escalation\\03_Privilege Escalation with PowerUp.srt",
+      "duration_sec": 1108.8689375,
+      "elapsed_sec": 89.3280599117279,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 16335,
+      "timestamp": "2026-05-16 20:41:10"
+    },
+    "Privilege Escalation\\04_Privilege Escalation with Privesc Check.mp4": {
+      "txt": "Privilege Escalation\\04_Privilege Escalation with Privesc Check.txt",
+      "srt": "Privilege Escalation\\04_Privilege Escalation with Privesc Check.srt",
+      "duration_sec": 516.24925,
+      "elapsed_sec": 44.396889448165894,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 8056,
+      "timestamp": "2026-05-16 20:41:54"
+    },
+    "Privilege Escalation\\05_ Unattended Installation Files.mp4": {
+      "txt": "Privilege Escalation\\05_ Unattended Installation Files.txt",
+      "srt": "Privilege Escalation\\05_ Unattended Installation Files.srt",
+      "duration_sec": 981.32175,
+      "elapsed_sec": 81.54562449455261,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 14534,
+      "timestamp": "2026-05-16 20:43:16"
+    },
+    "Privilege Escalation\\06_Windows Credential Manager.mp4": {
+      "txt": "Privilege Escalation\\06_Windows Credential Manager.txt",
+      "srt": "Privilege Escalation\\06_Windows Credential Manager.srt",
+      "duration_sec": 1160.7423125,
+      "elapsed_sec": 91.80282187461853,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 15964,
+      "timestamp": "2026-05-16 20:44:48"
+    },
+    "Privilege Escalation\\07_ PowerShell History.mp4": {
+      "txt": "Privilege Escalation\\07_ PowerShell History.txt",
+      "srt": "Privilege Escalation\\07_ PowerShell History.srt",
+      "duration_sec": 785.2756875,
+      "elapsed_sec": 65.07095956802368,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 11836,
+      "timestamp": "2026-05-16 20:45:53"
+    },
+    "Privilege Escalation\\08_Exploiting Insecure Service Permissions.mp4": {
+      "txt": "Privilege Escalation\\08_Exploiting Insecure Service Permissions.txt",
+      "srt": "Privilege Escalation\\08_Exploiting Insecure Service Permissions.srt",
+      "duration_sec": 1375.6198125,
+      "elapsed_sec": 107.12579822540283,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 19568,
+      "timestamp": "2026-05-16 20:47:40"
+    },
+    "Privilege Escalation\\09_Privilege Escalation via Registry AutoRuns.mp4": {
+      "txt": "Privilege Escalation\\09_Privilege Escalation via Registry AutoRuns.txt",
+      "srt": "Privilege Escalation\\09_Privilege Escalation via Registry AutoRuns.srt",
+      "duration_sec": 1441.6573125,
+      "elapsed_sec": 86.26884913444519,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 18514,
+      "timestamp": "2026-05-16 20:49:06"
+    },
+    "System Security & x86 Assembly Fundamentals\\010_Setting Up Our Lab.mp4": {
+      "txt": "System Security & x86 Assembly Fundamentals\\010_Setting Up Our Lab.txt",
+      "srt": "System Security & x86 Assembly Fundamentals\\010_Setting Up Our Lab.srt",
+      "duration_sec": 462.0074375,
+      "elapsed_sec": 27.524253845214844,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 6010,
+      "timestamp": "2026-05-16 20:49:34"
+    },
+    "System Security & x86 Assembly Fundamentals\\011_Hello World in Assembly.mp4": {
+      "txt": "System Security & x86 Assembly Fundamentals\\011_Hello World in Assembly.txt",
+      "srt": "System Security & x86 Assembly Fundamentals\\011_Hello World in Assembly.srt",
+      "duration_sec": 1185.54125,
+      "elapsed_sec": 81.40958142280579,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 13861,
+      "timestamp": "2026-05-16 20:50:55"
+    },
+    "System Security & x86 Assembly Fundamentals\\012_Data Types & Variables.mp4": {
+      "txt": "System Security & x86 Assembly Fundamentals\\012_Data Types & Variables.txt",
+      "srt": "System Security & x86 Assembly Fundamentals\\012_Data Types & Variables.srt",
+      "duration_sec": 510.4675,
+      "elapsed_sec": 38.19504189491272,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 5385,
+      "timestamp": "2026-05-16 20:51:33"
+    },
+    "System Security & x86 Assembly Fundamentals\\013_Course Conclusion.mp4": {
+      "txt": "System Security & x86 Assembly Fundamentals\\013_Course Conclusion.txt",
+      "srt": "System Security & x86 Assembly Fundamentals\\013_Course Conclusion.srt",
+      "duration_sec": 375.5595625,
+      "elapsed_sec": 31.391011953353882,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 5683,
+      "timestamp": "2026-05-16 20:52:05"
+    },
+    "System Security & x86 Assembly Fundamentals\\01_Course Introduction.mp4": {
+      "txt": "System Security & x86 Assembly Fundamentals\\01_Course Introduction.txt",
+      "srt": "System Security & x86 Assembly Fundamentals\\01_Course Introduction.srt",
+      "duration_sec": 693.3014375,
+      "elapsed_sec": 53.80675005912781,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 9052,
+      "timestamp": "2026-05-16 20:52:59"
+    },
+    "System Security & x86 Assembly Fundamentals\\02_Introduction to System Security.mp4": {
+      "txt": "System Security & x86 Assembly Fundamentals\\02_Introduction to System Security.txt",
+      "srt": "System Security & x86 Assembly Fundamentals\\02_Introduction to System Security.srt",
+      "duration_sec": 421.093875,
+      "elapsed_sec": 32.115843534469604,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 5598,
+      "timestamp": "2026-05-16 20:53:31"
+    },
+    "System Security & x86 Assembly Fundamentals\\03_CPU Architecture.mp4": {
+      "txt": "System Security & x86 Assembly Fundamentals\\03_CPU Architecture.txt",
+      "srt": "System Security & x86 Assembly Fundamentals\\03_CPU Architecture.srt",
+      "duration_sec": 1092.8471875,
+      "elapsed_sec": 82.07859992980957,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 13816,
+      "timestamp": "2026-05-16 20:54:53"
+    },
+    "System Security & x86 Assembly Fundamentals\\04_Registers.mp4": {
+      "txt": "System Security & x86 Assembly Fundamentals\\04_Registers.txt",
+      "srt": "System Security & x86 Assembly Fundamentals\\04_Registers.srt",
+      "duration_sec": 1403.7159375,
+      "elapsed_sec": 104.61618900299072,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 17379,
+      "timestamp": "2026-05-16 20:56:37"
+    },
+    "System Security & x86 Assembly Fundamentals\\05_Process Memory.mp4": {
+      "txt": "System Security & x86 Assembly Fundamentals\\05_Process Memory.txt",
+      "srt": "System Security & x86 Assembly Fundamentals\\05_Process Memory.srt",
+      "duration_sec": 437.324625,
+      "elapsed_sec": 33.20366430282593,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 5585,
+      "timestamp": "2026-05-16 20:57:11"
+    },
+    "System Security & x86 Assembly Fundamentals\\06_Understanding the Stack.mp4": {
+      "txt": "System Security & x86 Assembly Fundamentals\\06_Understanding the Stack.txt",
+      "srt": "System Security & x86 Assembly Fundamentals\\06_Understanding the Stack.srt",
+      "duration_sec": 1583.32225,
+      "elapsed_sec": 120.19164872169495,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 19547,
+      "timestamp": "2026-05-16 20:59:11"
+    },
+    "System Security & x86 Assembly Fundamentals\\07_Stack Frames.mp4": {
+      "txt": "System Security & x86 Assembly Fundamentals\\07_Stack Frames.txt",
+      "srt": "System Security & x86 Assembly Fundamentals\\07_Stack Frames.srt",
+      "duration_sec": 641.8691875,
+      "elapsed_sec": 50.35549759864807,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 8712,
+      "timestamp": "2026-05-16 21:00:01"
+    },
+    "System Security & x86 Assembly Fundamentals\\08_Assemblers & Compilers.mp4": {
+      "txt": "System Security & x86 Assembly Fundamentals\\08_Assemblers & Compilers.txt",
+      "srt": "System Security & x86 Assembly Fundamentals\\08_Assemblers & Compilers.srt",
+      "duration_sec": 412.014875,
+      "elapsed_sec": 33.76020002365112,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 5554,
+      "timestamp": "2026-05-16 21:00:35"
+    },
+    "System Security & x86 Assembly Fundamentals\\09_Introduction to Assembly.mp4": {
+      "txt": "System Security & x86 Assembly Fundamentals\\09_Introduction to Assembly.txt",
+      "srt": "System Security & x86 Assembly Fundamentals\\09_Introduction to Assembly.srt",
+      "duration_sec": 672.473125,
+      "elapsed_sec": 54.1598482131958,
+      "language": "en",
+      "lang_prob": 1,
+      "chars": 8971,
+      "timestamp": "2026-05-16 21:01:29"
+    }
+  }
+}

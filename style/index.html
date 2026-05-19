@@ -1,0 +1,512 @@
+<!doctype html>
+<html lang="it" class="h-full">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>eCPPT · Appunti</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Serif:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+
+<!-- highlight.js themes — light active by default, dark disabled -->
+<link id="hljs-light" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/atom-one-light.min.css">
+<link id="hljs-dark"  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/atom-one-dark.min.css" disabled>
+
+<script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      fontFamily: {
+        sans:  ['"IBM Plex Sans"',  'system-ui', 'sans-serif'],
+        mono:  ['"IBM Plex Mono"',  'monospace'],
+        serif: ['"IBM Plex Serif"', 'Georgia', 'serif'],
+      },
+      typography: {
+        ecppt: {
+          css: {
+            /* All colors reference CSS custom properties → dark mode just swaps the vars */
+            '--tw-prose-body':          'var(--ink-2)',
+            '--tw-prose-headings':      'var(--ink)',
+            '--tw-prose-links':         'var(--accent)',
+            '--tw-prose-bold':          'var(--ink)',
+            '--tw-prose-counters':      'var(--ink-3)',
+            '--tw-prose-bullets':       'var(--ink-3)',
+            '--tw-prose-hr':            'var(--line)',
+            '--tw-prose-quotes':        'var(--ink-2)',
+            '--tw-prose-quote-borders': 'var(--accent)',
+            '--tw-prose-code':          'var(--accent)',
+            '--tw-prose-pre-code':      'var(--ink)',
+            '--tw-prose-pre-bg':        'var(--bg-code)',
+            '--tw-prose-th-borders':    'var(--line)',
+            '--tw-prose-td-borders':    'var(--line)',
+            maxWidth: 'none',
+            fontSize: '0.9375rem',
+            lineHeight: '1.65',
+            h1: { fontFamily: '"IBM Plex Serif", Georgia, serif', fontWeight: '600', fontSize: '2rem', lineHeight: '1.2', letterSpacing: '-0.01em', marginBottom: '0.2rem', color: 'var(--ink)' },
+            h2: { fontFamily: '"IBM Plex Sans", sans-serif', fontWeight: '600', fontSize: '1.25rem', letterSpacing: '-0.005em', marginTop: '2.25rem', marginBottom: '0.5rem', color: 'var(--ink)' },
+            h3: { fontWeight: '600', fontSize: '1rem', marginTop: '1.5rem', marginBottom: '0.375rem', color: 'var(--ink)' },
+            p:  { color: 'var(--ink-2)', marginTop: '0', marginBottom: '0.75rem' },
+            a:  { color: 'var(--accent)', textDecoration: 'none', borderBottom: '1px solid var(--accent-soft)' },
+            'a:hover': { borderBottomColor: 'var(--accent)' },
+            strong: { color: 'var(--ink)', fontWeight: '600' },
+            code: { fontFamily: '"IBM Plex Mono", monospace', fontSize: '0.8125em', fontWeight: '400', backgroundColor: 'var(--bg-code)', padding: '0.1rem 0.375rem', borderRadius: '3px', color: 'var(--accent)' },
+            'code::before': { content: '""' },
+            'code::after':  { content: '""' },
+            pre: { backgroundColor: 'var(--bg-code)', border: '1px solid var(--line)', borderRadius: '8px', padding: '0', marginTop: '1rem', marginBottom: '1rem', overflow: 'hidden' },
+            'pre code': { backgroundColor: 'transparent', padding: '0.875rem 1rem', display: 'block', fontSize: '0.78rem', lineHeight: '1.6', color: 'var(--ink)', overflowX: 'auto', borderRadius: '0', fontFamily: '"IBM Plex Mono", monospace', fontWeight: '400' },
+            blockquote: { backgroundColor: 'var(--info-bg)', border: '1px solid var(--info-bd)', borderLeft: '3px solid var(--info-bd)', borderRadius: '6px', padding: '11px 14px', fontStyle: 'normal', color: 'var(--ink-2)', fontSize: '0.875rem', marginTop: '0.875rem', marginBottom: '0.875rem', quotes: 'none' },
+            'blockquote p': { color: 'var(--ink-2)', marginBottom: '0', marginTop: '0' },
+            'blockquote p:last-child': { marginBottom: '0' },
+            'ul, ol': { color: 'var(--ink-2)', marginTop: '0', marginBottom: '0.75rem', paddingLeft: '1.25rem' },
+            li: { marginTop: '0.2rem', marginBottom: '0.2rem', color: 'var(--ink-2)' },
+            table: { fontSize: '0.8125rem', borderCollapse: 'collapse', width: '100%', marginTop: '0.875rem', marginBottom: '0.875rem' },
+            th: { backgroundColor: 'var(--bg-side)', fontWeight: '600', color: 'var(--ink)', padding: '6px 10px', textAlign: 'left', border: '1px solid var(--line)' },
+            td: { padding: '6px 10px', border: '1px solid var(--line)', color: 'var(--ink-2)' },
+            'td code': { backgroundColor: 'transparent', padding: '0', color: 'var(--ink)' },
+            hr: { borderColor: 'var(--line)', marginTop: '1.75rem', marginBottom: '1.75rem' },
+          }
+        }
+      }
+    }
+  }
+}
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/highlight.min.js"></script>
+
+<style>
+/* ══ CSS Custom Properties ══════════════════════════════════════════════════ */
+:root {
+  --bg:          #fdfcfa;
+  --bg-side:     #f6f4ef;
+  --bg-code:     #f4f2ed;
+  --ink:         #1a1916;
+  --ink-2:       #4a4842;
+  --ink-3:       #7a7770;
+  --accent:      #b85a36;
+  --accent-soft: rgba(184,90,54,0.14);
+  --accent-2:    #2b5d4a;
+  --line:        rgba(20,18,14,0.08);
+  --line-2:      rgba(20,18,14,0.14);
+  --info-bg:     #eaf2f5;
+  --info-bd:     #a3c5d1;
+  --warn-bg:     #fef6e7;
+  --warn-bd:     #e8c477;
+}
+
+:root.dark {
+  --bg:          #1b1917;
+  --bg-side:     #221f1b;
+  --bg-code:     #2a2722;
+  --ink:         #f0ece6;
+  --ink-2:       #c4bdb5;
+  --ink-3:       #756f66;
+  --accent:      #cf7a46;
+  --accent-soft: rgba(207,122,70,0.15);
+  --accent-2:    #4aac82;
+  --line:        rgba(240,236,230,0.07);
+  --line-2:      rgba(240,236,230,0.13);
+  --info-bg:     #17252c;
+  --info-bd:     #254455;
+  --warn-bg:     #271e0a;
+  --warn-bd:     #574015;
+}
+
+/* ══ Base ════════════════════════════════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
+body {
+  font-family: 'IBM Plex Sans', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+/* ══ Scrollbar ═══════════════════════════════════════════════════════════════ */
+.sidebar, .content, #cheatsheet-view, #toc, #toc-cs {
+  scrollbar-width: thin;
+  scrollbar-color: var(--line-2) transparent;
+}
+.sidebar::-webkit-scrollbar,
+.content::-webkit-scrollbar,
+#cheatsheet-view::-webkit-scrollbar,
+#toc::-webkit-scrollbar,
+#toc-cs::-webkit-scrollbar { width: 5px; }
+.sidebar::-webkit-scrollbar-thumb,
+.content::-webkit-scrollbar-thumb,
+#cheatsheet-view::-webkit-scrollbar-thumb,
+#toc::-webkit-scrollbar-thumb,
+#toc-cs::-webkit-scrollbar-thumb { background: var(--line-2); border-radius: 3px; }
+
+/* ══ Topbar elements ═════════════════════════════════════════════════════════ */
+#topbar  { background: var(--bg); border-bottom-color: var(--line); transition: background 0.2s; }
+.brand   { color: var(--ink); }
+.brand-sub { color: var(--ink-3); }
+
+.tab {
+  padding: 6px 13px;
+  font-size: 13px;
+  font-family: 'IBM Plex Sans', sans-serif;
+  color: var(--ink-2);
+  background: transparent;
+  border: 0;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s;
+}
+.tab:hover  { background: var(--line); }
+.tab.active { background: var(--line-2); color: var(--ink); font-weight: 500; }
+
+.progress-pill {
+  background: var(--bg-side);
+  color: var(--ink-3);
+  transition: background 0.2s;
+}
+.progress-track { background: var(--line); }
+.progress-fill  { background: var(--accent); }
+
+/* Theme toggle */
+.theme-toggle {
+  width: 30px; height: 30px;
+  border-radius: 6px;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  color: var(--ink-3);
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.12s, color 0.12s;
+  flex-shrink: 0;
+}
+.theme-toggle:hover { background: var(--line); color: var(--ink); }
+
+/* ══ Sidebar ═════════════════════════════════════════════════════════════════ */
+.sidebar { background: var(--bg-side); border-right-color: var(--line); transition: background 0.2s; }
+
+#search-input {
+  background: var(--bg);
+  border-color: var(--line-2);
+  color: var(--ink);
+  font-family: 'IBM Plex Sans', sans-serif;
+  width: 100%; padding: 7px 36px 7px 28px;
+  font-size: 13px; border: 1px solid; border-radius: 6px;
+  outline: none; transition: border-color 0.15s, box-shadow 0.15s;
+}
+#search-input::placeholder { color: var(--ink-3); }
+#search-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+
+.nav-label { color: var(--ink-3); }
+
+/* ══ Module tree ═════════════════════════════════════════════════════════════ */
+.module { margin: 0 8px 2px; }
+
+.module-head {
+  display: flex; align-items: center; gap: 6px;
+  padding: 6px 10px;
+  font-size: 13px; font-family: 'IBM Plex Sans', sans-serif;
+  border-radius: 6px; cursor: pointer;
+  color: var(--ink); user-select: none;
+  transition: background 0.12s;
+}
+.module-head:hover     { background: var(--line); }
+.module-head.active-mod { background: var(--line-2); }
+
+.chev { width: 14px; height: 14px; color: var(--ink-3); flex-shrink: 0; transition: transform 0.18s ease; }
+.module.open .chev { transform: rotate(90deg); }
+
+.mod-num   { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--ink-3); flex-shrink: 0; min-width: 20px; }
+.mod-title { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 13px; }
+
+.done-btn {
+  width: 18px; height: 18px; border-radius: 50%;
+  border: 1.5px solid var(--line-2);
+  background: transparent; cursor: pointer;
+  font-size: 10px; font-weight: 600;
+  color: transparent;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; transition: border-color 0.12s, background 0.12s, color 0.12s;
+  padding: 0;
+}
+.done-btn:hover  { border-color: var(--accent-2); color: color-mix(in srgb, var(--accent-2) 50%, transparent); }
+.done-btn.is-done { background: var(--accent-2); border-color: var(--accent-2); color: var(--bg); }
+
+/* ══ Sections accordion ══════════════════════════════════════════════════════ */
+.sections {
+  max-height: 0; overflow: hidden;
+  transition: max-height 0.22s ease-out;
+  padding: 2px 0 4px 22px; position: relative;
+}
+.module.open .sections {
+  max-height: 4000px;
+  transition: max-height 0.35s ease-in;
+}
+.sections::before {
+  content: ''; position: absolute;
+  left: 23px; top: 4px; bottom: 6px;
+  width: 1px; background: var(--line);
+}
+
+.section-item {
+  display: flex; gap: 6px;
+  padding: 3px 10px 3px 18px;
+  font-size: 12.5px; font-family: 'IBM Plex Sans', sans-serif;
+  color: var(--ink-2); border-radius: 4px; cursor: pointer;
+  position: relative;
+  transition: transform 0.1s ease, background 0.1s ease, color 0.1s ease;
+}
+.section-item:hover { background: var(--line); color: var(--ink); transform: translateX(2px); }
+.section-item.active-sec {
+  background: var(--accent-soft); color: var(--accent);
+  font-weight: 500; transform: translateX(2px);
+}
+.section-item.active-sec::before {
+  content: ''; position: absolute;
+  left: 0; top: 4px; bottom: 4px;
+  width: 2px; background: var(--accent); border-radius: 2px;
+}
+.sec-title { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* ══ Content ═════════════════════════════════════════════════════════════════ */
+.content, #cheatsheet-view { background: var(--bg); transition: background 0.2s; }
+
+.crumb { color: var(--ink-2); }
+.sep   { opacity: 0.4; color: var(--ink-3); }
+.active-crumb { color: var(--ink); }
+
+/* ══ Code blocks ═════════════════════════════════════════════════════════════ */
+.codehead {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 7px 12px; border-bottom: 1px solid var(--line);
+  background: var(--line);
+  font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--ink-3);
+}
+.code-lang { letter-spacing: 0.03em; }
+.copy-btn {
+  background: transparent; border: 0;
+  font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--ink-3);
+  cursor: pointer; padding: 2px 7px; border-radius: 4px;
+  transition: background 0.1s, color 0.1s;
+}
+.copy-btn:hover  { background: var(--line-2); color: var(--ink); }
+.copy-btn.copied { color: var(--accent-2); }
+
+/* ══ Warn blockquote ═════════════════════════════════════════════════════════ */
+.prose blockquote.warn {
+  background: var(--warn-bg) !important;
+  border-color: var(--warn-bd) !important;
+}
+
+/* ══ Pager ═══════════════════════════════════════════════════════════════════ */
+.prev, .next {
+  flex: 1; display: block;
+  padding: 12px 14px;
+  border: 1px solid var(--line); border-radius: 8px;
+  cursor: pointer; color: var(--ink); background: var(--bg);
+  text-decoration: none;
+  transition: border-color 0.15s, background 0.15s, transform 0.12s;
+}
+.prev:hover, .next:hover {
+  border-color: var(--line-2); background: var(--bg-side);
+  transform: translateY(-1px);
+}
+.next { text-align: right; }
+.pager-label {
+  display: block;
+  font-family: 'IBM Plex Mono', monospace; font-size: 10.5px;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--ink-3); margin-bottom: 3px;
+}
+.pager-title { font-size: 13px; color: var(--ink); }
+
+/* ══ TOC (shared) ════════════════════════════════════════════════════════════ */
+#toc, #toc-cs {
+  border-left: 1px solid var(--line);
+  background: var(--bg);
+  transition: background 0.2s;
+}
+.toc-title { color: var(--ink-3); }
+
+.toc-list { list-style: none; padding: 0; margin: 0; border-left: 1px solid var(--line); }
+.toc-list li { list-style: none; }
+.toc-list a {
+  display: block; padding: 4px 12px;
+  font-size: 12.5px; color: var(--ink-2); text-decoration: none;
+  margin-left: -1px; border-left: 2px solid transparent;
+  line-height: 1.4; font-family: 'IBM Plex Sans', sans-serif;
+  transition: color 0.12s, border-color 0.12s;
+}
+.toc-list a:hover { color: var(--ink); }
+.toc-list a.active { color: var(--accent); border-left-color: var(--accent); }
+.toc-list a.h3 { padding-left: 24px; font-size: 12px; color: var(--ink-3); }
+.toc-list a.h3.active { color: var(--accent); }
+
+/* ══ Cheatsheet nav (sidebar) ════════════════════════════════════════════════ */
+#cs-nav { display: none; }
+#cs-nav.active { display: block; }
+
+.cs-item {
+  display: flex; align-items: center; gap: 8px;
+  padding: 5px 10px; margin: 0 8px 1px;
+  font-size: 12.5px; font-family: 'IBM Plex Sans', sans-serif;
+  color: var(--ink-2); border-radius: 6px; cursor: pointer;
+  position: relative;
+  transition: transform 0.1s ease, background 0.1s ease, color 0.1s ease;
+}
+.cs-item:hover { background: var(--line); color: var(--ink); transform: translateX(2px); }
+.cs-item.active-cs {
+  background: var(--accent-soft); color: var(--accent);
+  font-weight: 500; transform: translateX(2px);
+}
+.cs-item.active-cs::before {
+  content: ''; position: absolute;
+  left: 0; top: 4px; bottom: 4px;
+  width: 2px; background: var(--accent); border-radius: 2px;
+}
+.cs-item-num   { font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; color: var(--ink-3); flex-shrink: 0; }
+.cs-item-title { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* ══ Show/hide views ═════════════════════════════════════════════════════════ */
+#cheatsheet-view { display: none; }
+#cheatsheet-view.active { display: block; }
+#toc-cs { display: none; }
+#toc-cs.active { display: block; }
+
+/* ══ Animations ══════════════════════════════════════════════════════════════ */
+#doc { transition: opacity 0.15s ease; }
+#progress-fill { transition: width 0.4s ease; }
+
+/* ══ Responsive ══════════════════════════════════════════════════════════════ */
+@media (max-width: 1100px) {
+  .shell { grid-template-columns: 260px 1fr !important; }
+  #toc, #toc-cs { display: none !important; }
+}
+</style>
+</head>
+
+<body class="flex flex-col h-full">
+
+<!-- ╔══════════════════════════════════ TOPBAR ══════════════════════════════╗ -->
+<header id="topbar" class="h-[52px] shrink-0 sticky top-0 z-20 border-b flex items-center px-[22px] gap-5">
+
+  <!-- Brand -->
+  <div class="brand flex items-center gap-2 font-mono text-[13px] font-medium tracking-[0.02em]">
+    <span class="w-2 h-2 rounded-[2px] flex-shrink-0" style="background:var(--accent)"></span>
+    ecppt<span class="brand-sub text-[11.5px] ml-1">/ notes</span>
+  </div>
+
+  <!-- Tabs -->
+  <nav class="flex gap-[2px] ml-5">
+    <button class="tab active" data-view="notes">Appunti</button>
+    <button class="tab"        data-view="cheatsheet">Cheatsheet</button>
+  </nav>
+
+  <!-- Right side: theme toggle + progress -->
+  <div class="ml-auto flex items-center gap-2">
+
+    <!-- Dark mode toggle -->
+    <button id="theme-toggle" class="theme-toggle" title="Cambia tema" type="button">
+      <!-- Moon: shown in light mode -->
+      <svg id="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      </svg>
+      <!-- Sun: shown in dark mode -->
+      <svg id="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+           style="display:none">
+        <circle cx="12" cy="12" r="5"/>
+        <line x1="12" y1="1"  x2="12" y2="3"/>
+        <line x1="12" y1="21" x2="12" y2="23"/>
+        <line x1="4.22" y1="4.22"  x2="5.64"  y2="5.64"/>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+        <line x1="1"  y1="12" x2="3"  y2="12"/>
+        <line x1="21" y1="12" x2="23" y2="12"/>
+        <line x1="4.22"  y1="19.78" x2="5.64"  y2="18.36"/>
+        <line x1="18.36" y1="5.64"  x2="19.78" y2="4.22"/>
+      </svg>
+    </button>
+
+    <!-- Progress pill -->
+    <div class="progress-pill flex items-center gap-[7px] px-[10px] py-[4px] rounded-[6px] font-mono text-[11px]">
+      <div class="progress-track w-[60px] h-[4px] rounded-full overflow-hidden">
+        <div id="progress-fill" class="progress-fill h-full rounded-full" style="width:0%"></div>
+      </div>
+      <span id="progress-label">0 / 9</span>
+    </div>
+  </div>
+</header>
+<!-- ╚════════════════════════════════════════════════════════════════════════╝ -->
+
+<!-- ╔══════════════════════════════════ SHELL ═══════════════════════════════╗ -->
+<div class="shell grid flex-1 min-h-0" style="grid-template-columns: 280px 1fr 240px">
+
+  <!-- ── SIDEBAR ───────────────────────────────────────────────────────── -->
+  <aside class="sidebar border-r overflow-y-auto py-3">
+
+    <div class="mx-3 mb-3 relative">
+      <svg class="absolute left-[9px] top-1/2 -translate-y-1/2 pointer-events-none"
+           style="color:var(--ink-3)"
+           width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
+      </svg>
+      <input id="search-input" type="text" placeholder="Cerca moduli e sezioni…">
+      <kbd class="absolute right-[7px] top-1/2 -translate-y-1/2 pointer-events-none
+                  font-mono text-[10px] rounded px-[5px] py-[1px]"
+           style="color:var(--ink-3);background:var(--bg);border:1px solid var(--line)">⌘K</kbd>
+    </div>
+
+    <div id="nav-label" class="nav-label font-mono text-[10.5px] uppercase tracking-[0.08em] px-[18px] pt-2 pb-[6px]">Moduli</div>
+    <div id="module-tree"></div>
+    <div id="cs-nav"></div>
+  </aside>
+
+  <!-- ── NOTES VIEW ────────────────────────────────────────────────────── -->
+  <main id="notes-view" class="content overflow-y-auto px-14 py-8">
+    <div id="breadcrumb" class="font-mono text-[11.5px] mb-4 flex gap-[6px] items-center"
+         style="color:var(--ink-3)"></div>
+    <article id="doc" class="prose prose-ecppt max-w-none"></article>
+    <nav id="pager" class="flex justify-between gap-3 mt-9 pt-5"
+         style="border-top:1px solid var(--line)"></nav>
+  </main>
+
+  <!-- ── CHEATSHEET VIEW ───────────────────────────────────────────────── -->
+  <main id="cheatsheet-view" class="overflow-y-auto px-14 py-8">
+    <div class="font-mono text-[11.5px] mb-5 flex gap-[6px] items-center"
+         style="color:var(--ink-3)">
+      <span>Appunti</span>
+      <span style="opacity:.4">/</span>
+      <span style="color:var(--ink);font-weight:500">Cheatsheet</span>
+    </div>
+    <article id="cheatsheet-doc" class="prose prose-ecppt max-w-none"></article>
+  </main>
+
+  <!-- ── TOC — Appunti ─────────────────────────────────────────────────── -->
+  <aside id="toc" class="overflow-y-auto px-[22px] py-8">
+    <div class="toc-title font-mono text-[10.5px] uppercase tracking-[0.08em] mb-[10px]">
+      In questa pagina
+    </div>
+    <ul id="toc-list" class="toc-list"></ul>
+  </aside>
+
+  <!-- ── TOC — Cheatsheet ──────────────────────────────────────────────── -->
+  <aside id="toc-cs" class="overflow-y-auto px-[22px] py-8">
+    <div class="toc-title font-mono text-[10.5px] uppercase tracking-[0.08em] mb-[10px]">
+      In questa pagina
+    </div>
+    <ul id="toc-cs-list" class="toc-list"></ul>
+  </aside>
+
+</div>
+<!-- ╚════════════════════════════════════════════════════════════════════════╝ -->
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    window.initNotesApp && window.initNotesApp();
+  });
+</script>
+</body>
+</html>

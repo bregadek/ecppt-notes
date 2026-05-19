@@ -1,0 +1,249 @@
+{
+  "module": "Buffer Overflows",
+  "blocks": [
+    {
+      "after_h2": "5. Memory protections e cosa il corso bypassa",
+      "title": "Fondamenti, stack frame e memory protections",
+      "questions": [
+        {
+          "q": "In un classico stack-based buffer overflow x86, qual e' il target primario dell'overwrite?",
+          "choices": [
+            "L'heap chunk adiacente",
+            "Il saved return address (saved EIP) nel frame della funzione",
+            "Il Thread Information Block (TIB) puntato da FS:[0]",
+            "La Global Offset Table (GOT)"
+          ],
+          "correct": 1,
+          "explanation": "Lo stack BO classico riempie la local variable, sovrascrive saved EBP e poi il saved EIP (return address): al RET la CPU salta all'indirizzo controllato."
+        },
+        {
+          "q": "Dato JMP ESP = 0x625011AF, come va scritto in un payload Python (x86 little-endian)?",
+          "choices": [
+            "b\"\\x62\\x50\\x11\\xAF\"",
+            "b\"\\xAF\\x11\\x50\\x62\"",
+            "b\"\\x11\\xAF\\x62\\x50\"",
+            "b\"\\x50\\x62\\xAF\\x11\""
+          ],
+          "correct": 1,
+          "explanation": "x86 e' little-endian: i byte vengono invertiti. struct.pack(\"<I\", 0x625011AF) produce \\xAF\\x11\\x50\\x62."
+        },
+        {
+          "q": "Quale mitigazione mette un valore random tra le local vars e il saved EIP e lo verifica al RET?",
+          "choices": [
+            "DEP/NX",
+            "ASLR",
+            "Stack canary (/GS o -fstack-protector)",
+            "SafeSEH"
+          ],
+          "correct": 2,
+          "explanation": "Lo stack canary (GCC -fstack-protector, MSVC /GS) inserisce un valore random che, se alterato dall'overflow, fa abortire la funzione prima del RET."
+        },
+        {
+          "q": "Quale mitigazione il corso eCPPT NON bypassa e considera fuori scope?",
+          "choices": [
+            "SafeSEH",
+            "SEHOP",
+            "Stack canary su Linux",
+            "ASLR su una singola DLL"
+          ],
+          "correct": 1,
+          "explanation": "SEHOP (Structured Exception Handler Overwrite Protection) verifica l'integrita' della SEH chain a runtime; il suo bypass e' avanzato e fuori scope eCPPT."
+        },
+        {
+          "q": "Quale linguaggio NON e' tipicamente vulnerabile a un buffer overflow classico?",
+          "choices": [
+            "C",
+            "C++",
+            "Assembly",
+            "Java"
+          ],
+          "correct": 3,
+          "explanation": "Java, come C#, Python, Go e Rust, ha gestione automatica della memoria con bounds check e quindi e' immune al BO classico stile C/C++."
+        }
+      ]
+    },
+    {
+      "after_h2": "7. Fuzzing: tool e workflow",
+      "title": "Discovery, code review e fuzzing",
+      "questions": [
+        {
+          "q": "Quale tra queste funzioni C e' considerata SAFE (con bounds check)?",
+          "choices": [
+            "strcpy",
+            "gets",
+            "snprintf",
+            "sprintf"
+          ],
+          "correct": 2,
+          "explanation": "snprintf accetta la dimensione massima del buffer come parametro. strcpy/gets/sprintf scrivono senza limite e sono unsafe."
+        },
+        {
+          "q": "Qual e' la primitive Spike per indicare la variabile che il fuzzer deve mutare?",
+          "choices": [
+            "s_string(\"COMMAND\")",
+            "s_readline()",
+            "s_string_variable(\"COMMAND\")",
+            "s_binary(\"\\x00\")"
+          ],
+          "correct": 2,
+          "explanation": "s_string_variable() definisce il campo fuzzabile; s_string e' statica, s_readline legge dal server, s_binary inietta byte raw."
+        },
+        {
+          "q": "Comando per lanciare uno script Spike contro un servizio TCP saltando le prime variabili gia' testate?",
+          "choices": [
+            "generic_send_tcp <ip> <port> <script.spk> <SKIPVAR> <SKIPSTR>",
+            "spike-run <script.spk> --resume",
+            "boofuzz --skip <N> <ip> <port>",
+            "spike_tcp <ip> <port> <script.spk> --offset"
+          ],
+          "correct": 0,
+          "explanation": "generic_send_tcp e' l'interprete Spike; SKIPVAR e SKIPSTR permettono di riprendere il fuzzing oltre i campi gia' testati."
+        },
+        {
+          "q": "Dato printf(user_input), di quale tipo di vulnerabilita' si tratta?",
+          "choices": [
+            "Stack-based buffer overflow",
+            "Format string vulnerability",
+            "Heap overflow",
+            "Integer overflow"
+          ],
+          "correct": 1,
+          "explanation": "printf(user_input) senza format specifier permette all'attaccante di passare %s/%n/%x e leggere/scrivere memoria: e' una format string bug, non un BO."
+        },
+        {
+          "q": "Perche' il fuzzing e' descritto come 'problema esponenziale'?",
+          "choices": [
+            "Perche' lo spazio di input cresce esponenzialmente con la lunghezza, impossibile da coprire esaustivamente",
+            "Perche' Spike usa algoritmi NP-hard",
+            "Perche' richiede sempre GPU CUDA",
+            "Perche' moltiplica il payload per il numero di porte aperte"
+          ],
+          "correct": 0,
+          "explanation": "Lo spazio degli input fuzzabili e' combinatorialmente enorme; non si puo' testare tutto, quindi si fuzza in modo mirato per comando/endpoint."
+        }
+      ]
+    },
+    {
+      "after_h2": "9. Windows Stack Overflow — Workflow completo in 7 step",
+      "title": "Lab vulnserver e workflow stack 7-step",
+      "questions": [
+        {
+          "q": "Dopo aver catturato EIP = 0x386F4337 da un cyclic pattern, quale comando mona calcola l'offset?",
+          "choices": [
+            "!mona pattern_create -d 0x386F4337",
+            "!mona pattern_offset -d 0x386F4337",
+            "!mona compare -a 0x386F4337",
+            "!mona find -s 0x386F4337"
+          ],
+          "correct": 1,
+          "explanation": "pattern_offset -d <valore> ricerca quel valore di 4 byte nella cyclic pattern e restituisce l'offset esatto."
+        },
+        {
+          "q": "Comando mona per cercare un gadget JMP ESP escludendo i bad chars e limitato a essfunc.dll?",
+          "choices": [
+            "!mona seh -m essfunc.dll -cpb \"\\x00\\x0a\\x0d\"",
+            "!mona find -s \"\\xff\\xe4\" -cpb \"\\x00\\x0a\\x0d\"",
+            "!mona jmp -r esp -cpb \"\\x00\\x0a\\x0d\" -m essfunc.dll",
+            "!mona modules -m essfunc.dll -r esp"
+          ],
+          "correct": 2,
+          "explanation": "jmp -r esp cerca gadget che reindirizzano a ESP (JMP/CALL/PUSH RET); -cpb esclude i bad chars, -m limita al modulo specifico."
+        },
+        {
+          "q": "Quale comando msfvenom genera una reverse shell Windows in formato C escludendo i bad chars classici?",
+          "choices": [
+            "msfvenom -p windows/shell_rev⁠erse_tcp LHOST=.. LPORT=.. -b \"\\x00\\x0a\\x0d\" -f c",
+            "msfvenom -p windows/shell_rev⁠erse_tcp LHOST=.. -e c -i 3 -b NULL",
+            "msfpayload windows/shell -b \"\\x00\" -t c",
+            "msfvenom -p windows/exec CMD=cmd.exe -f raw"
+          ],
+          "correct": 0,
+          "explanation": "-p indica il payload, -b la lista di bad chars da evitare, -f c il formato C-array; msfpayload e' deprecato."
+        },
+        {
+          "q": "Qual e' il layout corretto del payload per uno stack BO classico con JMP ESP?",
+          "choices": [
+            "shellcode + NOPs + EIP + padding",
+            "padding + EIP + NOPs + shellcode",
+            "NSEH + SEH + NOPs + shellcode",
+            "EIP + padding + shellcode + tail"
+          ],
+          "correct": 1,
+          "explanation": "Layout standard: padding/junk fino all'offset EIP, indirizzo JMP ESP, NOP sled per margine, poi lo shellcode che viene eseguito da ESP."
+        },
+        {
+          "q": "In !mona modules quale combinazione di flag identifica il modulo IDEALE per cercare gadget JMP ESP?",
+          "choices": [
+            "Rebase: True, ASLR: True, SafeSEH: True, NXCompat: True",
+            "Rebase: False, ASLR: False, SafeSEH: False, NXCompat: False",
+            "OS Dll: True, ASLR: True",
+            "Rebase: True, NXCompat: False"
+          ],
+          "correct": 1,
+          "explanation": "Si cerca un modulo con TUTTO a False: nessun ASLR/rebase garantisce indirizzo stabile, niente SafeSEH/NXCompat garantisce che il gadget sia utilizzabile."
+        }
+      ]
+    },
+    {
+      "after_h2": "12. Lab 2 — EasyChat Server (SEH practical)",
+      "title": "SEH theory, workflow e lab EasyChat",
+      "questions": [
+        {
+          "q": "Qual e' la struttura di un SEH record sullo stack?",
+          "choices": [
+            "8 byte: 4 byte saved EBP + 4 byte saved EIP",
+            "8 byte: 4 byte Next SEH (NSEH) + 4 byte SEH Handler",
+            "12 byte: NSEH + Handler + CONTEXT",
+            "16 byte: EXCEPTION_RECORD completo"
+          ],
+          "correct": 1,
+          "explanation": "EXCEPTION_REGISTRATION_RECORD = 8 byte: NSEH (puntatore al record successivo) + handler (puntatore alla funzione handler). La testa e' in FS:[0]."
+        },
+        {
+          "q": "Perche' nel SEH overflow si usa un gadget POP POP RET?",
+          "choices": [
+            "Per saltare direttamente all'indirizzo di ESP",
+            "Per scartare i primi due argomenti sullo stack e tornare al pointer del registration record (= NSEH controllato)",
+            "Per disabilitare DEP a runtime",
+            "Per resettare i registri EAX/EBX a zero prima dello shellcode"
+          ],
+          "correct": 1,
+          "explanation": "Quando il dispatcher chiama il SEH handler, lo stack contiene puntatori a EXCEPTION_RECORD e REGISTRATION_RECORD. POP POP RET li scarta e fa pop dell'indirizzo del registration record (NSEH) controllato dall'attaccante."
+        },
+        {
+          "q": "Cosa rappresentano i byte \\xEB\\x06\\x90\\x90 tipicamente inseriti in NSEH?",
+          "choices": [
+            "Una NOP sled di 4 byte",
+            "Un opcode JMP ESP",
+            "Un short jump in avanti di 6 byte + 2 NOP di padding",
+            "Una call relativa a -6 byte"
+          ],
+          "correct": 2,
+          "explanation": "\\xEB\\x06 = JMP +6 (short jmp avanti), \\x90\\x90 = padding NOP per riempire i 4 byte di NSEH. Il salto scavalca i 4 byte di SEH e atterra sul NOP sled/shellcode."
+        },
+        {
+          "q": "Quale shortcut di Immunity Debugger e' CRITICO nel workflow SEH per far chiamare il SEH handler dal dispatcher?",
+          "choices": [
+            "F9 (Run)",
+            "F7 (Step into)",
+            "Shift+F7 (Pass exception to application)",
+            "Ctrl+F2 (Restart)"
+          ],
+          "correct": 2,
+          "explanation": "Shift+F7 passa l'eccezione all'applicazione, lasciando che il dispatcher SEH chiami l'handler controllato: indispensabile per verificare il controllo di EIP via SEH."
+        },
+        {
+          "q": "Comando mona per cercare gadget POP POP RET in moduli senza SafeSEH, escludendo bad chars HTTP?",
+          "choices": [
+            "!mona jmp -r esp -cpb \"\\x00\\x0a\\x0d\\x20\\x26\\x3d\"",
+            "!mona seh -cpb \"\\x00\\x0a\\x0d\\x20\\x26\\x3d\"",
+            "!mona find -s \"pop pop ret\" -m all",
+            "!mona pattern_offset -seh"
+          ],
+          "correct": 1,
+          "explanation": "!mona seh elenca direttamente gadget POP r32 ; POP r32 ; RET nei moduli con SafeSEH: False. I bad chars (incluse virgola spazio, & e = del GET HTTP) si escludono con -cpb."
+        }
+      ]
+    }
+  ]
+}

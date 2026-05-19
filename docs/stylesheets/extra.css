@@ -1,0 +1,225 @@
+/* eCPPT Study Notes - extra styles */
+
+/* Progress checkbox box sotto al titolo H1 */
+.ecppt-progress-box {
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  margin: -.6rem 0 1.2rem 0;
+  padding: .4rem .7rem;
+  background: var(--md-code-bg-color);
+  border-left: 3px solid var(--md-accent-fg-color);
+  border-radius: 4px;
+  font-size: .85rem;
+  cursor: pointer;
+  user-select: none;
+}
+.ecppt-progress-box input[type="checkbox"] {
+  transform: scale(1.15);
+  cursor: pointer;
+}
+.ecppt-progress-box label {
+  cursor: pointer;
+  color: var(--md-default-fg-color--light);
+}
+
+/* Riepilogo globale nella landing page */
+.ecppt-progress-summary {
+  padding: 1rem 1.2rem;
+  background: var(--md-code-bg-color);
+  border-left: 4px solid var(--md-accent-fg-color);
+  border-radius: 6px;
+  margin: 1.4rem 0;
+}
+.ecppt-progress-summary-text {
+  margin-bottom: .6rem;
+  font-size: 1rem;
+}
+.ecppt-progress-bar {
+  width: 100%;
+  height: 10px;
+  background: var(--md-default-bg-color);
+  border-radius: 5px;
+  overflow: hidden;
+}
+.ecppt-progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--md-accent-fg-color), var(--md-primary-fg-color));
+  transition: width .4s ease;
+}
+
+/* Tabelle: scroll orizzontale su mobile, larghezza piena su desktop */
+.md-typeset table:not([class]) {
+  display: table;
+  width: 100%;
+}
+@media (max-width: 768px) {
+  .md-typeset__table {
+    overflow-x: auto;
+  }
+}
+
+/* Code block leggermente piu' aerato */
+.md-typeset pre > code {
+  line-height: 1.55;
+}
+
+/* Niente uppercase sui titoli sezione (default Material) - piu' leggibili in italiano */
+.md-nav__title { text-transform: none; }
+
+/* Indice (TOC) richiesto a sinistra: nascondi forzatamente la sidebar destra.
+   toc.integrate dovrebbe rimuoverla ma su alcuni browser/versioni resta visibile. */
+@media screen and (min-width: 76.25em) {
+  .md-sidebar--secondary {
+    display: none !important;
+  }
+  /* Allarga il contenuto principale dato che la destra non c'e' piu' */
+  .md-main__inner.md-grid {
+    max-width: 75rem;
+  }
+}
+
+/* Larghezza piu' generosa per la sidebar sinistra (ospita TOC integrato) */
+@media screen and (min-width: 76.25em) {
+  .md-sidebar--primary {
+    width: 16rem;
+  }
+}
+
+/* === Top tabs (i 10 moduli): compatte e scroll orizzontale se non entrano === */
+.md-tabs__list {
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+.md-tabs__item {
+  padding-left: .7rem;
+  padding-right: .7rem;
+  height: 2.4rem;
+  flex-shrink: 0;
+}
+.md-tabs__link {
+  font-size: .72rem;
+  white-space: nowrap;
+  margin-top: .65rem;
+}
+/* Su schermi grandi: padding leggermente piu' generoso */
+@media screen and (min-width: 90em) {
+  .md-tabs__item { padding-left: .9rem; padding-right: .9rem; }
+  .md-tabs__link { font-size: .76rem; }
+}
+
+/* === Nav collapsible: chevron sulla stessa riga del titolo ===
+   JS wrappa <a> + <button.toggle> in <div.ecppt-row> (flex).
+   Le voci SENZA chevron ricevono un padding-left che ne replica la larghezza,
+   cosi' tutti i titoli sono allineati sulla stessa colonna verticale. */
+.ecppt-row {
+  display: flex;
+  align-items: flex-start;       /* chevron in cima quando il titolo va a capo */
+  gap: .15rem;
+}
+.ecppt-row > .md-nav__link {
+  flex: 1 1 auto;
+  padding-left: 0 !important;
+  margin: 0;
+}
+.ecppt-toggle {
+  flex: 0 0 auto;
+  width: 1.1rem;
+  /* Allinea il chevron alla prima riga del titolo:
+     match l'altezza della baseline del link Material (padding-top ~.4rem + font ascender). */
+  height: 1.4rem;
+  padding-top: .35rem;            /* spinge il chevron a livello del testo della 1a riga */
+  background: none;
+  border: none;
+  color: var(--md-accent-fg-color);
+  cursor: pointer;
+  margin: 0;
+  font-size: .95rem;
+  line-height: 1;
+  font-weight: bold;
+  transition: color .15s ease, background .15s ease;
+  display: inline-flex;
+  align-items: flex-start;
+  justify-content: center;
+  border-radius: 3px;
+}
+.ecppt-toggle:hover {
+  color: var(--md-primary-fg-color);
+  background: var(--md-default-fg-color--lightest);
+}
+/* Le voci SENZA chevron (li.md-nav__item NON .ecppt-collapsible) hanno bisogno
+   di un padding-left che compensi la larghezza del chevron (1.1rem + .15rem gap)
+   cosi' i testi sono allineati su tutta la sidebar */
+.md-sidebar--primary li.md-nav__item:not(.ecppt-collapsible) > .md-nav__link {
+  padding-left: 1.4rem !important;
+}
+
+/* === Quiz styling === */
+.ecppt-quiz {
+  margin-top: 1rem;
+}
+.ecppt-quiz-intro {
+  font-style: italic;
+  color: var(--md-default-fg-color--light);
+}
+.ecppt-quiz-stats {
+  padding: .6rem .9rem;
+  background: var(--md-code-bg-color);
+  border-left: 4px solid var(--md-accent-fg-color);
+  border-radius: 4px;
+  margin-bottom: 1.2rem;
+  font-size: .9rem;
+}
+.ecppt-quiz-q {
+  padding: 1rem 1.2rem;
+  margin: 1rem 0;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 6px;
+  transition: border-color .2s ease, background .2s ease;
+}
+.ecppt-quiz-q.ecppt-correct {
+  border-color: #4caf50;
+  background: rgba(76, 175, 80, 0.08);
+}
+.ecppt-quiz-q.ecppt-wrong {
+  border-color: #e53935;
+  background: rgba(229, 57, 53, 0.08);
+}
+.ecppt-quiz-q-text {
+  margin-top: 0;
+  font-size: 1rem;
+}
+.ecppt-quiz-choices {
+  list-style: none;
+  padding-left: 0;
+  margin: .6rem 0;
+}
+.ecppt-quiz-choices li {
+  padding: .35rem 0;
+}
+.ecppt-quiz-choices label {
+  cursor: pointer;
+  display: flex;
+  align-items: flex-start;
+  gap: .5rem;
+}
+.ecppt-quiz-choices input[type="radio"] {
+  margin-top: .25rem;
+  flex-shrink: 0;
+}
+.ecppt-quiz-feedback:not(:empty) {
+  margin-top: .8rem;
+  padding: .6rem .9rem;
+  border-radius: 4px;
+  font-size: .9rem;
+  line-height: 1.45;
+}
+.ecppt-correct .ecppt-quiz-feedback {
+  background: rgba(76, 175, 80, 0.18);
+  color: var(--md-default-fg-color);
+}
+.ecppt-wrong .ecppt-quiz-feedback {
+  background: rgba(229, 57, 53, 0.15);
+  color: var(--md-default-fg-color);
+}

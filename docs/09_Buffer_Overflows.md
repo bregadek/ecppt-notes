@@ -246,12 +246,6 @@ Negli esercizi del corso (vulnserver, EasyChat) le protezioni sono **disabilitat
 
 ---
 
-
-
-### Quiz: Fondamenti, stack frame e memory protections
-
-<div class="ecppt-quiz" data-module="09_Buffer_Overflows" data-block="0"></div>
-
 ## 6. Finding Buffer Overflows: code review & funzioni unsafe
 
 Saper **identificare** una BO vale quanto saperla exploitare. Le tecniche principali sono:
@@ -410,12 +404,6 @@ session.fuzz()
 ```
 
 ---
-
-
-
-### Quiz: Discovery, code review e fuzzing
-
-<div class="ecppt-quiz" data-module="09_Buffer_Overflows" data-block="1"></div>
 
 ## 8. Lab 1 — vulnserver / TRUN (stack-based)
 
@@ -580,12 +568,6 @@ s.close()
 Verifica del successo: listener `nc -lvnp 4444` sull'attacker → reverse shell ricevuta.
 
 ---
-
-
-
-### Quiz: Lab vulnserver e workflow stack 7-step
-
-<div class="ecppt-quiz" data-module="09_Buffer_Overflows" data-block="2"></div>
 
 ## 10. SEH (Structured Exception Handling) — teoria
 
@@ -810,12 +792,6 @@ print(f"[+] Sent {len(http_req)} bytes — check calc.exe on target")
 Questo ciclo "restart + reattach + rerun" è **esattamente** quello ripetuto più volte nel video.
 
 ---
-
-
-
-### Quiz: SEH theory, workflow e lab EasyChat
-
-<div class="ecppt-quiz" data-module="09_Buffer_Overflows" data-block="3"></div>
 
 ## 13. Mona.py cheat sheet
 

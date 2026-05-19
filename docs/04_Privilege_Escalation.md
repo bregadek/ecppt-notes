@@ -621,12 +621,6 @@ Se l'attaccante riesce a far caricare codice arbitrario in quei processi (DLL hi
 
 ---
 
-
-
-### Quiz: Windows Privesc - Enumerazione, Power⁠Up, servizi e DLL hijacking
-
-<div class="ecppt-quiz" data-module="04_Privilege_Escalation" data-block="0"></div>
-
 ## 3. Linux Privilege Escalation
 
 ### 3.1 Locally stored credentials Linux
@@ -1019,23 +1013,11 @@ sudo LD_LIBRARY_PATH=/tmp/evil /usr/sbin/apache2
 
 ---
 
-
-
-### Quiz: Linux Privesc - SUID, SUDO, GTFOBins e LD_PRELOAD
-
-<div class="ecppt-quiz" data-module="04_Privilege_Escalation" data-block="1"></div>
-
 ## 4. Cheat sheet enumeration (da memorizzare)
 
 > 📋 La cheat sheet originalmente qui presente è stata spostata nel modulo dedicato: vedi [Cheat Sheet — sezione Enumeration — Windows & Linux](../10_Cheatsheet.md#enumeration-windows-linux).
 
 ---
-
-
-
-### Quiz: Enumerazione - comandi e tool da ricordare per l'esame
-
-<div class="ecppt-quiz" data-module="04_Privilege_Escalation" data-block="2"></div>
 
 ## 5. Token & Potato chain history
 
@@ -1077,12 +1059,6 @@ Hai SeImpersonate o SeAssignPrimaryToken?
 > **Tecnica comune sotto il cofano:** tutti i Potato sfruttano `SeImpersonatePrivilege` per impersonare un token SYSTEM che arriva tramite un canale (DCOM, RPC, named pipe, NTLM relay).
 
 ---
-
-
-
-### Quiz: Token impersonation - evoluzione Potato chain
-
-<div class="ecppt-quiz" data-module="04_Privilege_Escalation" data-block="3"></div>
 
 ## 6. Tabelle differenze
 
@@ -1134,12 +1110,6 @@ Hai SeImpersonate o SeAssignPrimaryToken?
 | Privilege check | `whoami /priv` | `id`, `sudo -l` |
 
 ---
-
-
-
-### Quiz: Differenze chiave Windows vs Linux e tool comparison
-
-<div class="ecppt-quiz" data-module="04_Privilege_Escalation" data-block="4"></div>
 
 ## 7. Attack chains tipiche d'esame
 
@@ -1278,12 +1248,6 @@ Hai SeImpersonate o SeAssignPrimaryToken?
 
 ---
 
-
-
-### Quiz: Attack chains e checklist esame eCPPT
-
-<div class="ecppt-quiz" data-module="04_Privilege_Escalation" data-block="5"></div>
-
 ## 8. Punti d'attenzione eCPPT — riepilogo finale
 
 ### Mindset
@@ -1340,12 +1304,6 @@ Hai SeImpersonate o SeAssignPrimaryToken?
 - **Dimenticare `2>/dev/null`** nei `find` Linux su tutto il fs → output sommerso da permission denied.
 
 ---
-
-
-
-### Quiz: Riepilogo finale e punti chiave per l'esame eCPPT
-
-<div class="ecppt-quiz" data-module="04_Privilege_Escalation" data-block="6"></div>
 
 ## 9. Mappa video → tecnica
 

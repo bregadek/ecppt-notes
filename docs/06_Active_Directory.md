@@ -304,12 +304,6 @@ Challenge-response, mantenuto per backward compatibility.
 
 ---
 
-
-
-### Quiz: AD Primer + Authentication (Users, OUs, Trusts, Kerberos, NTLM)
-
-<div class="ecppt-quiz" data-module="06_Active_Directory" data-block="0"></div>
-
 ## PARTE 3 — AD PENTESTING METHODOLOGY
 
 ### 3.1 Le due AD Kill Chain
@@ -488,12 +482,6 @@ Find-LocalAdminAccess
 L'enumeration **non richiede privilegi alti**: qualsiasi domain user può leggere via LDAP la quasi totalità degli oggetti AD. È il vero punto debole strutturale di AD.
 
 ---
-
-
-
-### Quiz: Methodology + Enumeration (Blood⁠Hound, Sharp⁠Hound, Power⁠View)
-
-<div class="ecppt-quiz" data-module="06_Active_Directory" data-block="1"></div>
 
 ## PARTE 5 — INITIAL ACCESS / CREDENTIAL ACCESS
 
@@ -681,12 +669,6 @@ Ogni TGS richiesto genera **event 4769** sul DC. Spam di TGS = rumore alto. Pref
 | Event ID generato | 4769 | 4768 (TGT request) |
 
 ---
-
-
-
-### Quiz: Initial Access + Kerberos PrivEsc (Spraying, AS-REP, Kerberoasting)
-
-<div class="ecppt-quiz" data-module="06_Active_Directory" data-block="2"></div>
 
 ## PARTE 7 — LATERAL MOVEMENT AD-SPECIFICO
 
@@ -1051,12 +1033,6 @@ impacket-smbclient -k -no-pass research.security.local/Administrator@prod.resear
 - Abilitare PAC validation (impatto performance).
 
 ---
-
-
-
-### Quiz: Lateral Movement + Persistence (PtH, PtT, Golden, Silver)
-
-<div class="ecppt-quiz" data-module="06_Active_Directory" data-block="3"></div>
 
 ## PARTE 9 — CHEAT SHEET KERBEROS ATTACKS
 

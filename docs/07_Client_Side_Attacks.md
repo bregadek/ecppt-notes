@@ -230,12 +230,6 @@ Workflow completo:
 
 ---
 
-
-
-### Quiz: Concetti base, attack vectors e fingerprinting
-
-<div class="ecppt-quiz" data-module="07_Client_Side_Attacks" data-block="0"></div>
-
 ## 4. Social Engineering — tipi e tassonomia
 
 ### 4.1 Definizione
@@ -443,12 +437,6 @@ Il lab INE non ha internet → modifica `templates/base.html` e `login.html`:
 - CSS locali (`static/css/gophish.css`) restano.
 
 ---
-
-
-
-### Quiz: Social engineering, pretexting, Gophish
-
-<div class="ecppt-quiz" data-module="07_Client_Side_Attacks" data-block="1"></div>
 
 ## 7. Resource Development & Weaponization
 
@@ -844,12 +832,6 @@ End Sub
 
 ---
 
-
-
-### Quiz: Resource Development, Weaponization, VBA Macros
-
-<div class="ecppt-quiz" data-module="07_Client_Side_Attacks" data-block="2"></div>
-
 ## 10. HTA (HTML Applications) e `mshta.exe`
 
 ### 10.1 Cos'è un HTA
@@ -1166,12 +1148,6 @@ Vettore APT-grade, plausibile in scenari red team e domande pratiche eCPPT.
 
 ---
 
-
-
-### Quiz: HTA, MacroPack, HTML Smuggling
-
-<div class="ecppt-quiz" data-module="07_Client_Side_Attacks" data-block="3"></div>
-
 ## 13. Lab end-to-end #1 — Spear Phishing Attachment + pivoting (video 024)
 
 ### 13.1 Scenario
@@ -1412,12 +1388,6 @@ Pannello → **Commands → Social Engineering → Fake Notification Bar (Firefo
 - Browser fingerprinting nel pannello: vedi browser, versione, OS, plugin, ActiveX, Flash, VBScript.
 
 ---
-
-
-
-### Quiz: Lab end-to-end: Spear Phishing chain + BeEF
-
-<div class="ecppt-quiz" data-module="07_Client_Side_Attacks" data-block="4"></div>
 
 ## 15. Cheat sheet `msfvenom` per client-side
 

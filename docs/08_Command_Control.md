@@ -267,12 +267,6 @@ Formula: `delay_effettivo ∈ [delay × (1 - jitter), delay × (1 + jitter)]`.
 
 ---
 
-
-
-### Quiz: Cos'è un C2 framework + terminologia
-
-<div class="ecppt-quiz" data-module="08_Command_Control" data-block="0"></div>
-
 ## 3. C2 Deployment & Operation
 
 ### Fattori da considerare prima di deployare
@@ -380,12 +374,6 @@ Red team Windows-only, requisiti: proxy-aware, custom profiles, jitter, logging,
 5. **Scelta del corso: PowerShell-Em⁠pire** (open source, multi-payload Windows, mantenuto attivamente da BC Security).
 
 ---
-
-
-
-### Quiz: Deployment, operation, scelta framework
-
-<div class="ecppt-quiz" data-module="08_Command_Control" data-block="1"></div>
 
 ## 5. PowerShell-Em⁠pire — Architettura
 
@@ -603,12 +591,6 @@ execute
 
 ---
 
-
-
-### Quiz: PowerShell-Em⁠pire: setup, listener, stager, agent
-
-<div class="ecppt-quiz" data-module="08_Command_Control" data-block="2"></div>
-
 ## 7. Star⁠killer — GUI Electron per Em⁠pire
 
 ### Cosa e'
@@ -785,12 +767,6 @@ hash⁠dump
 - **`invoke_metasploitpayload`** = ponte ufficiale Em⁠pire → MSF.
 
 ---
-
-
-
-### Quiz: Star⁠killer, integrazione MSF e altri framework
-
-<div class="ecppt-quiz" data-module="08_Command_Control" data-block="3"></div>
 
 ## 9. Altri framework C2
 

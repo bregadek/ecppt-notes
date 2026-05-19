@@ -138,10 +138,6 @@ L'istruttore usa **IA32 = x86 = 32-bit Intel assembly**.
 
 
 
-### Quiz: CPU, ISA e fondamenta architetturali
-
-<div class="ecppt-quiz" data-module="01_System_Security_Assembly" data-block="0"></div>
-
 ## 3. Registri x86 (e mapping x64)
 
 Approfondimento in [04_Registers.md](../System%20Security%20%26%20x86%20Assembly%20Fundamentals/04_Registers.md).
@@ -166,7 +162,20 @@ Più, separato dai GPR:
 | Reg. | Ruolo |
 |---|---|
 | **EIP** | **Instruction Pointer** — indirizzo della prossima istruzione. **Target #1 dei buffer overflow.** |
-| **EFLAGS** | Flag di stato della CPU (zero, carry, sign, overflow, ...). |
+| **EFLAGS** | Flag di stato della CPU — aggiornati da operazioni ALU, letti dai salti condizionati. |
+
+### EFLAGS — i flag più importanti
+
+| Flag | Bit | Significato | Quando viene settato |
+|---|---|---|---|
+| **ZF** (Zero) | 6 | Risultato = 0 | `cmp a,b` se a==b; `xor reg,reg` |
+| **CF** (Carry) | 0 | Riporto/prestito fuori dal bit più alto | Overflow unsigned (`add`, `sub`) |
+| **SF** (Sign) | 7 | Bit più alto del risultato = 1 (negativo) | Risultato ha MSB=1 |
+| **OF** (Overflow) | 11 | Overflow in aritmetica signed | Trabocco del valore con segno |
+| **PF** (Parity) | 2 | # bit a 1 nel byte basso è pari | Operazioni ALU |
+| **DF** (Direction) | 10 | Direzione string ops | `cld` (DF=0, avanti) / `std` (DF=1, indietro) |
+
+I salti condizionati (`je`, `jne`, `jg`, `jl`, …) leggono questi flag dopo un `cmp` o un'operazione ALU.
 
 ### Naming convention completa per dimensione
 
@@ -212,10 +221,6 @@ Imparando bene x86 si è già al ~80-90% di x64.
 ---
 
 
-
-### Quiz: Registri x86, mapping x64 e ruolo nei BO
-
-<div class="ecppt-quiz" data-module="01_System_Security_Assembly" data-block="1"></div>
 
 ## 4. Process Memory Layout
 
@@ -286,10 +291,6 @@ int main(void) {
 ---
 
 
-
-### Quiz: Process memory layout e meccanica dello stack
-
-<div class="ecppt-quiz" data-module="01_System_Security_Assembly" data-block="2"></div>
 
 ## 5. Stack: struttura e meccanica LIFO
 
@@ -480,6 +481,16 @@ Step 4: b ret → a        Step 5: a ret → main
 
 Se l'attaccante sovrascrive il return address con un BO, `ret` salterà dove vuole → **controllo del flusso**.
 
+### Calling conventions — chi fa il cleanup dello stack?
+
+| Convention | Usata da | Cleanup args | Note |
+|---|---|---|---|
+| **`cdecl`** | C standard, GCC default | **Caller** fa `add esp, N` dopo la call | Supporta varargs (`printf`) |
+| **`stdcall`** | WinAPI (32-bit) | **Callee** fa `ret N` | Più compatto, no varargs |
+| **`fastcall`** | Ottimizzazioni compilatore | Callee | Primi 2 args in ECX/EDX, resto sullo stack |
+
+In x64 (System V AMD64 ABI su Linux) i primi 6 argomenti vanno in **RDI, RSI, RDX, RCX, R8, R9** — niente stack per i primi 6.
+
 ### Stack vs Stack Frame
 - **Stack** = intera regione di memoria LIFO.
 - **Stack frame** = una singola "fetta" relativa a UNA chiamata di funzione.
@@ -487,10 +498,6 @@ Se l'attaccante sovrascrive il return address con un BO, `ret` salterà dove vuo
 ---
 
 
-
-### Quiz: Stack frames, prologue/epilogue e calling convention
-
-<div class="ecppt-quiz" data-module="01_System_Security_Assembly" data-block="3"></div>
 
 ## 7. Assemblers, Compilers, Linkers e Pipeline di Build
 
@@ -555,6 +562,13 @@ gcc    hello.c -o hello        # eseguibile completo
 - Combina le sezioni (`.text`, `.data`, `.bss`).
 - Aggiunge header del formato eseguibile (ELF / PE).
 
+### Ispezione dell'object file con objdump
+```bash
+objdump -d -M intel hello.o      # disassembla con sintassi Intel
+objdump -d -M intel hello        # disassembla l'eseguibile
+readelf -S hello                 # mostra le sezioni ELF
+```
+
 ### Tabella dei principali assembler x86
 
 | Assembler | Sistema | Sintassi | Note |
@@ -611,10 +625,6 @@ _start:
 ---
 
 
-
-### Quiz: Toolchain di build, Intel vs AT&T
-
-<div class="ecppt-quiz" data-module="01_System_Security_Assembly" data-block="4"></div>
 
 ## 9. Lab Setup (Ubuntu 16.04 32-bit + NASM)
 
@@ -727,7 +737,7 @@ _start:
     mov eax, 0x4         ; syscall # = sys_write
     mov ebx, 0x1         ; fd = 1 (stdout)
     mov ecx, hello       ; pointer alla stringa
-    mov edx, 13          ; lunghezza
+    mov edx, 12          ; lunghezza ("Hello World" = 11 + 0xA = 12 byte)
     int 0x80             ; invoca il kernel
 
     ; --- sys_exit(0) ---
@@ -755,10 +765,6 @@ ld   -m elf_i386 -o helloworld   helloworld.o
 ---
 
 
-
-### Quiz: NASM, syscall Linux x86 e direttive data/bss
-
-<div class="ecppt-quiz" data-module="01_System_Security_Assembly" data-block="5"></div>
 
 ## 11. Data Types & Variables (.data / .bss) + GDB
 
@@ -825,13 +831,21 @@ gdb -q ./variables
 | Comando | Scopo |
 |---|---|
 | `set disassembly-flavor intel` | Disassembly Intel (default è AT&T) |
+| `set pagination off` | Disabilita il pager (utile in sessioni lunghe) |
 | `info functions` | Lista funzioni |
 | `disassemble <fn>` | Disassembla una funzione |
-| `break *_start+N` | Breakpoint a offset N |
-| `run` / `r` | Avvia |
-| `x /s <addr>` | Esamina come stringa |
-| `x /x <addr>` | Esamina come hex |
+| `break *_start+N` | Breakpoint a offset N da _start |
+| `run` / `r` | Avvia il programma |
+| `continue` / `c` | Continua fino al prossimo breakpoint |
+| `nexti` / `ni` | Passo singolo a livello di istruzione (**non** entra nelle call) |
+| `stepi` / `si` | Passo singolo a livello di istruzione (**entra** nelle call) |
+| `x /s <addr>` | Esamina memoria come stringa |
+| `x /x <addr>` | Esamina come 1 word hex |
+| `x /4xw <addr>` | Esamina 4 word (4 × 4 byte) in hex |
+| `x /20xb <addr>` | Esamina 20 byte in hex |
+| `print $eax` | Stampa valore di un registro |
 | `info registers` | Stato di tutti i registri |
+| `info proc mappings` | Layout di memoria del processo |
 
 ---
 
@@ -876,13 +890,22 @@ gdb -q ./variables
 - `movsb` / `rep movsb` — copia byte da `[ESI]` a `[EDI]`, ECX volte.
 - `stosb` / `lodsb` — store/load tramite ESI/EDI.
 
+### NOP sled (rilevante per exploit)
+- `nop` = opcode `0x90` — "No Operation", non fa nulla tranne avanzare EIP di 1.
+- Un **NOP sled** è una sequenza di `nop` che precede lo shellcode nel buffer:
+
+```
+[ 0x90 0x90 0x90 ... 0x90 | shellcode ]
+        NOP sled               ↑
+                         EIP deve atterrare QUI
+```
+
+- Serve per aumentare la finestra di atterraggio di EIP: se l'attaccante non conosce l'indirizzo esatto dello shellcode, basta che EIP atterri **dentro il sled** — scorrerà automaticamente fino allo shellcode.
+- Rilevato banalmente dagli AV/IDS per la presenza di `0x90` ripetuti → shellcode moderni li evitano usando istruzioni equivalenti (`xchg eax,eax`, `lea eax,[eax+0]`).
+
 ---
 
 
-
-### Quiz: Idiomi assembly, GDB e collegamento ai buffer overflow
-
-<div class="ecppt-quiz" data-module="01_System_Security_Assembly" data-block="6"></div>
 
 ## 13. Collegamento ai Buffer Overflow
 
@@ -915,6 +938,17 @@ Pre-requisiti concettuali (tutti coperti qui):
 - Convenzione di chiamata cdecl.
 - Idioma `xor reg, reg` (per evitare null byte negli shellcode).
 - Syscall `int 0x80` con EAX/EBX/ECX/EDX (per scrivere shellcode `execve`).
+
+### Mitigazioni moderne (cenno — dettaglio nel modulo Exploit Development)
+
+| Mitigazione | Cosa fa | Bypass comune |
+|---|---|---|
+| **Stack Canary** | Valore casuale tra locals e ret addr; controllato prima di `ret` | Necessario leak del canary o overwrite selettivo |
+| **DEP / NX** (Data Execution Prevention / No-eXecute) | Segmenti dati/stack non eseguibili | **ROP** (Return-Oriented Programming) |
+| **ASLR** (Address Space Layout Randomization) | Randomizza base di stack, heap, librerie | Leak di indirizzi; brute-force su 32-bit |
+| **PIE** (Position Independent Executable) | Randomizza anche la base del codice | Richiede leak del text segment |
+
+Su sistemi x86 (32-bit) ASLR è molto meno efficace perché lo spazio di indirizzi è piccolo (~4 GB) e ci sono solo ~16 bit di entropia — il brute-force è praticabile.
 
 ---
 

@@ -708,12 +708,6 @@ wmiexec.py -share C$ -hashes :<NT_HASH> administrator@<TARGET>
 
 ---
 
-
-
-### Quiz: Pass-the-Hash con Metasploit e WMIExec
-
-<div class="ecppt-quiz" data-module="05_Lateral_Movement_Pivoting" data-block="2"></div>
-
 ## 4. Linux Lateral Movement
 
 **Video sorgente:** [011_Linux Lateral Movement Techniques.md](../Lateral%20Movement%20&%20Pivoting/011_Linux%20Lateral%20Movement%20Techniques.md)
@@ -878,12 +872,6 @@ su robert
 - Niente PtH (no NTLM), niente WMI nativo: il LM Linux è quasi tutto pratico.
 
 ---
-
-
-
-### Quiz: Linux LM: SSH, chiavi, credential hunting
-
-<div class="ecppt-quiz" data-module="05_Lateral_Movement_Pivoting" data-block="3"></div>
 
 ## 5. Pivoting
 
@@ -1349,12 +1337,6 @@ proxychains ssh root@192.168.x.3
   rinominare e nascondere.
 
 ---
-
-
-
-### Quiz: SSH Tunneling e reGeorg
-
-<div class="ecppt-quiz" data-module="05_Lateral_Movement_Pivoting" data-block="5"></div>
 
 ## 6. Tabelle decisionali
 

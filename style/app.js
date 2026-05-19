@@ -355,6 +355,7 @@
       csNav      && csNav.classList.remove('active');
       if (navLabel)   navLabel.textContent = 'Moduli';
       if (searchInput) searchInput.placeholder = 'Cerca moduli e sezioni…';
+      document.getElementById('cs-back')?.setAttribute('hidden', '');
     } else {
       notesView  && (notesView.style.display = 'none');
       csView     && csView.classList.add('active');
@@ -386,6 +387,13 @@
       a.classList.add('cs-link');
       a.addEventListener('click', e => {
         e.preventDefault();
+        // Show back button pointing to current module
+        const backEl = document.getElementById('cs-back');
+        if (backEl) {
+          const mod = MODULES.find(m => m.id === currentModId);
+          backEl.querySelector('.cs-back-label').textContent = mod ? mod.title : 'Appunti';
+          backEl.removeAttribute('hidden');
+        }
         switchToView('cheatsheet');
         if (!fragment) return;
         requestAnimationFrame(() => {
@@ -468,7 +476,12 @@
       section.querySelector('.quiz-retry').removeAttribute('hidden');
     });
 
-    section.querySelector('.quiz-retry').addEventListener('click', () => renderQuiz(mod));
+    section.querySelector('.quiz-retry').addEventListener('click', () => {
+      renderQuiz(mod);
+      requestAnimationFrame(() =>
+        document.getElementById('quiz-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      );
+    });
 
     const pager = document.getElementById('pager');
     if (pager) pager.before(section);
@@ -687,5 +700,6 @@
     loadModule(MODULES[0].id);
     setupSearch();
     setupTabs();
+    document.getElementById('cs-back-btn')?.addEventListener('click', () => switchToView('notes'));
   };
 })();

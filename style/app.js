@@ -166,10 +166,12 @@
     assignHeadingIds(docEl);
     enhanceCodeBlocks(docEl);
     enhanceBlockquotes(docEl);
+    interceptCheatsheetLinks(docEl);
 
     renderBreadcrumb(mod);
     renderToc(docEl);
     renderPager(mod.id);
+    renderQuiz(mod);
 
     if (scrollToSlugAfter) {
       // Piccolo delay per lasciare finire il render
@@ -366,6 +368,111 @@
       if (navLabel)   navLabel.textContent = 'Sezioni';
       if (searchInput) searchInput.placeholder = 'Cerca sezioni…';
     }
+  }
+
+  // ── Cheatsheet links (intercept ../10_Cheatsheet.md#... → navigate in app) ──
+  function findHeadingByFragment(container, fragment) {
+    const norm = fragment.replace(/[^a-z0-9]/g, '');
+    for (const h of container.querySelectorAll('h2, h3')) {
+      if (h.id.replace(/[^a-z0-9]/g, '') === norm) return h;
+    }
+    return null;
+  }
+
+  function interceptCheatsheetLinks(container) {
+    container.querySelectorAll('a[href*="10_Cheatsheet"]').forEach(a => {
+      const fragment = (a.getAttribute('href').split('#')[1] || '').toLowerCase();
+      a.setAttribute('href', '#');
+      a.classList.add('cs-link');
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        switchToView('cheatsheet');
+        if (!fragment) return;
+        requestAnimationFrame(() => {
+          const csDoc = document.getElementById('cheatsheet-doc');
+          if (!csDoc) return;
+          const h = findHeadingByFragment(csDoc, fragment);
+          if (h) h.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+      });
+    });
+  }
+
+  // ── Quiz ──────────────────────────────────────────────────────────────────
+  function renderQuiz(mod) {
+    document.getElementById('quiz-section')?.remove();
+    if (!mod.quiz || !mod.quiz.length) return;
+
+    // Fisher-Yates shuffle → pick 10
+    const pool = [...mod.quiz];
+    for (let i = pool.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [pool[i], pool[j]] = [pool[j], pool[i]];
+    }
+    const qs = pool.slice(0, Math.min(10, pool.length));
+
+    const section = document.createElement('section');
+    section.id = 'quiz-section';
+    section.innerHTML = `
+      <div class="quiz-header">
+        <h2 class="quiz-title">Quiz · ${escHtml(mod.title)}</h2>
+        <span class="quiz-badge">${qs.length} domande casuali</span>
+      </div>
+      <div class="quiz-body"></div>
+      <div class="quiz-footer">
+        <button class="quiz-submit" type="button">Controlla risposte</button>
+        <div class="quiz-score" hidden></div>
+        <button class="quiz-retry" type="button" hidden>Nuovo quiz</button>
+      </div>
+    `;
+
+    const body = section.querySelector('.quiz-body');
+    qs.forEach((q, idx) => {
+      const div = document.createElement('div');
+      div.className = 'quiz-q';
+      div.dataset.correct = q.correct;
+      div.innerHTML = `
+        <p class="qnum">${idx + 1}<span class="qnum-of"> / ${qs.length}</span></p>
+        <p class="qtext">${escHtml(q.q)}</p>
+        <div class="qchoices">${q.choices.map((c, ci) => `
+          <label class="qchoice">
+            <input type="radio" name="q${idx}" value="${ci}">
+            <span>${escHtml(c)}</span>
+          </label>`).join('')}
+        </div>
+        ${q.explanation ? `<p class="qexp" hidden>${escHtml(q.explanation)}</p>` : ''}
+      `;
+      body.appendChild(div);
+    });
+
+    section.querySelector('.quiz-submit').addEventListener('click', () => {
+      let score = 0;
+      body.querySelectorAll('.quiz-q').forEach((qEl, idx) => {
+        const correct = parseInt(qEl.dataset.correct);
+        const chosen  = qEl.querySelector(`input[name="q${idx}"]:checked`);
+        qEl.querySelectorAll('input').forEach(i => (i.disabled = true));
+        qEl.querySelectorAll('.qchoice').forEach((lbl, ci) => {
+          if (ci === correct) lbl.classList.add('correct');
+          else if (chosen && parseInt(chosen.value) === ci) lbl.classList.add('wrong');
+        });
+        if (chosen && parseInt(chosen.value) === correct) score++;
+        qEl.querySelector('.qexp')?.removeAttribute('hidden');
+      });
+
+      const pct = Math.round(score / qs.length * 100);
+      const cls = pct >= 80 ? 'score-hi' : pct >= 50 ? 'score-mid' : 'score-lo';
+      const scoreEl = section.querySelector('.quiz-score');
+      scoreEl.innerHTML = `<span class="${cls}">${score}/${qs.length} corrette &middot; ${pct}%</span>`;
+      scoreEl.removeAttribute('hidden');
+      section.querySelector('.quiz-submit').setAttribute('hidden', '');
+      section.querySelector('.quiz-retry').removeAttribute('hidden');
+    });
+
+    section.querySelector('.quiz-retry').addEventListener('click', () => renderQuiz(mod));
+
+    const pager = document.getElementById('pager');
+    if (pager) pager.before(section);
+    else document.getElementById('notes-view')?.appendChild(section);
   }
 
   // ── Cheatsheet content ─────────────────────────────────────────────────────

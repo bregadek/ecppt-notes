@@ -10,23 +10,36 @@ import json
 import re
 from pathlib import Path
 
-ROOT = Path(__file__).parent.parent
-DOCS = ROOT / "docs"
-OUT  = ROOT / "style" / "data.js"
+ROOT     = Path(__file__).parent.parent
+DOCS     = ROOT / "docs"
+QUIZ_DIR = DOCS / "quiz"
+OUT      = ROOT / "style" / "data.js"
 
 MODULES = [
-    ("01", "System Security & x86 Assembly",   "01_System_Security_Assembly.md"),
-    ("02", "Network Penetration Testing",       "02_Network_Penetration_Testing.md"),
-    ("03", "PowerShell for Pentesters",         "03_PowerShell_for_Pentesters.md"),
-    ("04", "Privilege Escalation",              "04_Privilege_Escalation.md"),
-    ("05", "Lateral Movement & Pivoting",       "05_Lateral_Movement_Pivoting.md"),
-    ("06", "Active Directory",                  "06_Active_Directory.md"),
-    ("07", "Client-Side Attacks",              "07_Client_Side_Attacks.md"),
-    ("08", "Command & Control (C2)",            "08_Command_Control.md"),
-    ("09", "Exploit Development & Buffer Overflow", "09_Buffer_Overflows.md"),
+    ("01", "System Security & x86 Assembly",        "01_System_Security_Assembly.md"),
+    ("02", "Network Penetration Testing",            "02_Network_Penetration_Testing.md"),
+    ("03", "PowerShell for Pentesters",              "03_PowerShell_for_Pentesters.md"),
+    ("04", "Privilege Escalation",                   "04_Privilege_Escalation.md"),
+    ("05", "Lateral Movement & Pivoting",            "05_Lateral_Movement_Pivoting.md"),
+    ("06", "Active Directory",                       "06_Active_Directory.md"),
+    ("07", "Client-Side Attacks",                    "07_Client_Side_Attacks.md"),
+    ("08", "Command & Control (C2)",                 "08_Command_Control.md"),
+    ("09", "Exploit Development & Buffer Overflow",  "09_Buffer_Overflows.md"),
 ]
 
 CHEATSHEET_FILE = "10_Cheatsheet.md"
+
+QUIZ_MAP = {
+    "01": "01_System_Security_Assembly.json",
+    "02": "02_Network_Penetration_Testing.json",
+    "03": "03_PowerShell_for_Pentesters.json",
+    "04": "04_Privilege_Escalation.json",
+    "05": "05_Lateral_Movement_Pivoting.json",
+    "06": "06_Active_Directory.json",
+    "07": "07_Client_Side_Attacks.json",
+    "08": "08_Command_Control.json",
+    "09": "09_Buffer_Overflows.json",
+}
 
 
 def slugify(text: str) -> str:
@@ -48,18 +61,41 @@ def extract_h2_sections(content: str) -> list[dict]:
     return sections
 
 
+def load_quiz(id_: str) -> list[dict]:
+    """Flatten all questions from a module's quiz JSON into a single list."""
+    fname = QUIZ_MAP.get(id_)
+    if not fname:
+        return []
+    path = QUIZ_DIR / fname
+    if not path.exists():
+        return []
+    data = json.loads(path.read_text(encoding="utf-8"))
+    questions = []
+    for block in data.get("blocks", []):
+        for q in block.get("questions", []):
+            questions.append({
+                "q":           q["q"],
+                "choices":     q["choices"],
+                "correct":     q["correct"],
+                "explanation": q.get("explanation", ""),
+            })
+    return questions
+
+
 def build_module(id_: str, title: str, filename: str) -> dict:
     path = DOCS / filename
     raw = path.read_text(encoding="utf-8")
     content = strip_frontmatter(raw)
     sections = extract_h2_sections(content)
-    print(f"  [{id_}] {title} — {len(sections)} sezioni, {len(content):,} chars")
+    quiz = load_quiz(id_)
+    print(f"  [{id_}] {title} — {len(sections)} sezioni, {len(quiz)} domande quiz, {len(content):,} chars")
     return {
-        "id": id_,
-        "title": title,
+        "id":       id_,
+        "title":    title,
         "filename": filename,
         "sections": sections,
-        "content": content,
+        "content":  content,
+        "quiz":     quiz,
     }
 
 
